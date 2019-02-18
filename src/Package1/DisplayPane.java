@@ -15,14 +15,16 @@ public class DisplayPane extends Pane {
 	public void finalize() throws Throwable {
 		super.finalize();
 	}
-	public DisplayPane()
+	public DisplayPane(double width, double height)
 	{
 		Text Title = new Text("I am the Display Pane");
 		getChildren().add(Title);
-		setPrefSize(500, 100);
-		setLayoutX(210);
-		setLayoutY(370);
-		setStyle("-fx-background-color: 'lightgrey';");
+		setPrefSize(width * 0.75, height * 0.25);
+		
+		//The top left corner of this pane is at (width * 0.25, height * 0.75)
+		setLayoutX(width * 0.25);
+		setLayoutY(height * 0.75);
+		setStyle("-fx-background-color: 'red';");
 
 	}
 }//end DisplayPane

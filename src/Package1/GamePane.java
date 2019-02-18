@@ -17,14 +17,16 @@ public class GamePane extends Pane {
 	public void finalize() throws Throwable {
 		super.finalize();
 	}
-	public GamePane()
+	public GamePane(double width, double height)
 	{
 		Text Title = new Text("I am the Game Pane");
 		getChildren().add(Title);
-		setPrefSize(500, 350);
-		setLayoutX(210);
-		setLayoutY(10);
-		setStyle("-fx-background-color: 'lightgrey';");
+		setPrefSize(width * 0.75, height * 0.75);
+		
+		//The top left corner of this pane is at (width * 0.25, 0)
+		setLayoutX(width * 0.25);
+		setLayoutY(0);
+		setStyle("-fx-background-color: 'blue';");
 
 	}
 }//end GamePane

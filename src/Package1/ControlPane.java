@@ -15,14 +15,16 @@ public class ControlPane extends Pane {
 	public void finalize() throws Throwable {
 		super.finalize();
 	}
-	public ControlPane()
+	public ControlPane(double width, double height)
 	{
 		Text Title = new Text("I am the Control Pane");
 		getChildren().add(Title);
-		setPrefSize(190, 460);
-		setLayoutX(10);
-		setLayoutY(10);
-		setStyle("-fx-background-color: 'lightgrey';");
+		setPrefSize(width * 0.25, height);
+		
+		//The top left corner of this pane is at (0, 0)
+		setLayoutX(0);
+		setLayoutY(0);
+		setStyle("-fx-background-color: 'green';");
 
 	}
 }//end ControlPane
