@@ -8,7 +8,7 @@ package Package1;
  */
 public class GamePane extends GUIManager {
 
-	public Snake Manager m_Snake Manager;
+	public SnakeManager m_SnakeManager;
 
 
 

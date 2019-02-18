@@ -1,3 +1,5 @@
+package Package1;
+
 import Package1.Snake;
 import Package1.AgentManager;
 import Package1.ControlPane;
@@ -8,7 +10,7 @@ import Package1.DisplayPane;
  * @version 1.0
  * @created 17-Feb-2019 5:39:59 PM
  */
-public class Snake Manager {
+public class SnakeManager {
 
 	private AgentManager agentMan;
 	private int Epoch;
@@ -18,7 +20,7 @@ public class Snake Manager {
 	public ControlPane m_ControlPane;
 	public DisplayPane m_DisplayPane;
 
-	public Snake Manager(){
+	public SnakeManager(){
 
 	}
 

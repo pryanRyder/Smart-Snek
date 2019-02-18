@@ -1,5 +1,6 @@
 package Package1;
 
+import javafx.stage.Stage;
 
 /**
  * @author Danny

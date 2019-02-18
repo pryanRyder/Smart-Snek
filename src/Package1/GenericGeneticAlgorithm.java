@@ -1,5 +1,6 @@
 package Package1;
 
+import java.util.Random;
 
 /**
  * @author Danny
@@ -51,8 +52,8 @@ public abstract class GenericGeneticAlgorithm {
 	 * 
 	 * @param chromosome
 	 */
-	public double getFitness(String chromosome){
-		return 0;
+	public Agent getFitness(String chromosome){
+		return null;
 	}
 
 	public int getGeneration(){
@@ -63,7 +64,7 @@ public abstract class GenericGeneticAlgorithm {
 		return 0;
 	}
 
-	public int getPopulation(){
+	public int getPopulationSize(){
 		return 0;
 	}
 
