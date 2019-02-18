@@ -52,8 +52,8 @@ public abstract class GenericGeneticAlgorithm {
 	 * 
 	 * @param chromosome
 	 */
-	public double getFitness(String chromosome){
-		return 0;
+	public Agent getFitness(String chromosome){
+		return null;
 	}
 
 	public int getGeneration(){
