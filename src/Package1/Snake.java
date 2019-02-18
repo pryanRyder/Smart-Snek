@@ -1,5 +1,6 @@
 package Package1;
 
+import java.util.ArrayList;
 
 /**
  * @author Danny
@@ -29,7 +30,7 @@ public class Snake {
 	 * 
 	 * @param direction
 	 */
-	public void changeDirection()(CurrentDirection direction){
+	public void changeDirection(CurrentDirection direction){
 
 	}
 
@@ -41,7 +42,7 @@ public class Snake {
 
 	}
 
-	public void move()(){
+	public void move(){
 
 	}
 

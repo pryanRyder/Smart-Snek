@@ -1,5 +1,6 @@
 package Package1;
 
+import java.util.Random;
 
 /**
  * @author Danny
@@ -63,7 +64,7 @@ public abstract class GenericGeneticAlgorithm {
 		return 0;
 	}
 
-	public int getPopulation(){
+	public int getPopulationSize(){
 		return 0;
 	}
 
