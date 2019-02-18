@@ -17,6 +17,7 @@ public class ControlPane extends Pane {
 		super.finalize();
 	}
 	public ControlPane()
+	{
 		Text Title = new Text("I am the Control Pane");
 		getChildren().add(Title);
 		setPrefSize(190, 460);
