@@ -32,10 +32,8 @@ public class GUIManager extends Application
 	 * @param primaryStage
 	 */
 	public void start(Stage primaryStage)
-	{
-		Pane pane = new Pane();
-		Scene scene = new Scene(pane, 500, 500);
-		
+	{		
+		Scene scene = new Scene(new MasterPane(), 720, 480);
 		
 		primaryStage.setTitle("Smart-Snek");
 		primaryStage.setScene(scene);
