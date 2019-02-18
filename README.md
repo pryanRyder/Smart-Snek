@@ -1,6 +1,3 @@
-Smart-Snek
+#Smart-Snek
 
-
-Practice pushing and pulling through this readme. 
-
-test test test
+SE300 Project in which our team will create a deep learning algorithm to play the game snake
