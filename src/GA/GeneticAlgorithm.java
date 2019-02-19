@@ -1,5 +1,6 @@
-package Package1;
+package GA;
 
+import Agent.Agent;
 
 /**
  * @author Danny

@@ -1,4 +1,4 @@
-package Package1;
+package Snake;
 
 import java.util.ArrayList;
 
