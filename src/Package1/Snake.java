@@ -7,7 +7,8 @@ import java.util.ArrayList;
  * @version 1.0
  * @created 17-Feb-2019 5:39:59 PM
  */
-public class Snake {
+public class Snake 
+{
 
 	private CurrentDirection Direction;
 	private int[] objectiveItem;
@@ -15,14 +16,17 @@ public class Snake {
 	private int score;
 	public CurrentDirection m_CurrentDirection;
 
-	public Snake(){
+	public Snake()
+	{
 
 	}
 
-	public void finalize() throws Throwable {
+	public void finalize() throws Throwable 
+	{
 
 	}
-	public void ateObjectiveItem(){
+	public void ateObjectiveItem()
+	{
 
 	}
 
@@ -30,23 +34,28 @@ public class Snake {
 	 * 
 	 * @param direction
 	 */
-	public void changeDirection(CurrentDirection direction){
+	public void changeDirection(CurrentDirection direction)
+	{
 
 	}
 
-	public boolean checkIfDead(){
+	public boolean checkIfDead()
+	{
 		return false;
 	}
 
-	public void didEatObjectiveItem(){
+	public void didEatObjectiveItem()
+	{
 
 	}
 
-	public void move(){
+	public void move()
+	{
 
 	}
 
-	public void randomObjectiveItem(){
+	public void randomObjectiveItem()
+	{
 
 	}
 
@@ -55,7 +64,8 @@ public class Snake {
 	 * @param x
 	 * @param y
 	 */
-	public void updatePosition(int x, int y){
+	public void updatePosition(int x, int y)
+	{
 
 	}
 }//end Snake
