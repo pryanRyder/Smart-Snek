@@ -1,5 +1,6 @@
-package Package1;
+package Agent;
 
+import GA.GeneticAlgorithm;
 
 /**
  * @author Danny
