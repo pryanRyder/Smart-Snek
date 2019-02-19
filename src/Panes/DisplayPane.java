@@ -32,7 +32,7 @@ public class DisplayPane extends Pane {
 		getChildren().add(content);
 		
 		Text Title = new Text("Display Panel");
-		Title.setStyle("-fx-font-size: 20;");
+		Title.setStyle("-fx-font-size: 20;");// NEEDS TO BE CHANGED BASED ON SIZE
 		Title.setLayoutX(content.getPrefWidth()*0.01);
 		Title.setLayoutY(content.getPrefHeight()*0.15);
 		content.getChildren().add(Title);
