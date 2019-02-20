@@ -11,11 +11,9 @@ public class MasterPane extends Pane
 		//Pane helpTabPane = new HelpTabPane(width, height);
 		Pane displayPane = new DisplayPane(width, height);
 		
-		
 		getChildren().add(controlPane);
 		getChildren().add(gamePane);
 		//getChildren().add(helpTabPane);
 		getChildren().add(displayPane);
 	}
-
 }

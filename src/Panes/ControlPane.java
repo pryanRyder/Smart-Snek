@@ -24,12 +24,14 @@ public class ControlPane extends Pane {
 		setLayoutY(0);
 		setStyle("-fx-background-color: '#4f4f4f';");
 		
+		//Pane inside of ControlPane
 		Pane content = new Pane();
 		content.setPrefSize(getPrefWidth()*0.95, getPrefHeight()*0.975);
 		content.setLayoutX(getPrefWidth()*0.02);
 		content.setLayoutY(getPrefHeight()*0.01);
 		content.setStyle("-fx-background-color: '#a5a5a5'");
 		getChildren().add(content);
+		
 		Text Title = new Text("Control Panel");
 		Title.setStyle("-fx-font-size: 20;"); // NEEDS TO BE CHANGED BASED ON SIZE
 		Title.setLayoutX(content.getPrefWidth()*0.04);
