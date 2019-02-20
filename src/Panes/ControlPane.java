@@ -17,20 +17,22 @@ public class ControlPane extends Pane {
 	}
 	public ControlPane(double width, double height)
 	{
-		setPrefSize(width * 0.25, height);
+		//this is the ControlPane
+		
+		this.setPrefSize(width * 0.25, height);
 		
 		//The top left corner of this pane is at (0, 0)
-		setLayoutX(0);
-		setLayoutY(0);
-		setStyle("-fx-background-color: '#4f4f4f';");
+		this.setLayoutX(0);
+		this.setLayoutY(0);
+		this.setStyle("-fx-background-color: '#4f4f4f';");
 		
 		//Pane inside of ControlPane
 		Pane content = new Pane();
-		content.setPrefSize(getPrefWidth()*0.95, getPrefHeight()*0.975);
-		content.setLayoutX(getPrefWidth()*0.02);
-		content.setLayoutY(getPrefHeight()*0.01);
+		content.setPrefSize(this.getPrefWidth()*0.95, this.getPrefHeight()*0.975);
+		content.setLayoutX(this.getPrefWidth()*0.02);
+		content.setLayoutY(this.getPrefHeight()*0.01);
 		content.setStyle("-fx-background-color: '#a5a5a5'");
-		getChildren().add(content);
+		this.getChildren().add(content);
 		
 		Text Title = new Text("Control Panel");
 		Title.setStyle("-fx-font-size: 20;"); // NEEDS TO BE CHANGED BASED ON SIZE

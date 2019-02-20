@@ -17,19 +17,21 @@ public class DisplayPane extends Pane {
 	}
 	public DisplayPane(double width, double height)
 	{
-		setPrefSize(width * 0.75, height * 0.25);
+		//this is the DisplayPane
+		
+		this.setPrefSize(width * 0.75, height * 0.25);
 		
 		//The top left corner of this pane is at (width * 0.25, height * 0.75)
-		setLayoutX(width * 0.25);
-		setLayoutY(height * 0.75);
-		setStyle("-fx-background-color: '#4f4f4f';");
+		this.setLayoutX(width * 0.25);
+		this.setLayoutY(height * 0.75);
+		this.setStyle("-fx-background-color: '#4f4f4f';");
 		
 		Pane content = new Pane();
 		content.setPrefSize(getPrefWidth()*0.98, getPrefHeight()*0.90);
 		content.setLayoutX(getPrefWidth()*0.001);
 		content.setLayoutY(getPrefHeight()*0.05);
 		content.setStyle("-fx-background-color: '#a5a5a5'");
-		getChildren().add(content);
+		this.getChildren().add(content);
 		
 		Text Title = new Text("Display Panel");
 		Title.setStyle("-fx-font-size: 20;");// NEEDS TO BE CHANGED BASED ON SIZE
