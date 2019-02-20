@@ -13,7 +13,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 
 /**
- * @author Danny
+ * @author Danny, Paul, Yara
  * @version 1.0
  * @created 17-Feb-2019 5:39:59 PM
  */
@@ -59,13 +59,13 @@ public class GamePane extends Pane {
 		    tilepane.setBackground(new Background(new BackgroundFill(Color.AQUAMARINE, null, null)));
 		   
 		 
-		Pane content = new Pane();
-		content.setPrefSize(getPrefWidth()*0.90, getPrefHeight()*0.90);
-		content.setLayoutX(getPrefWidth()*0.05);
-		content.setLayoutY(getPrefHeight()*0.05);
-		content.setStyle("-fx-background-color: 'black'");
+	//	Pane content = new Pane();
+	//	content.setPrefSize(getPrefWidth()*0.90, getPrefHeight()*0.90);
+	//	content.setLayoutX(getPrefWidth()*0.05);
+	//	content.setLayoutY(getPrefHeight()*0.05);
+	//	content.setStyle("-fx-background-color: 'black'");
 		
-		getChildren().addAll(content,tilepane);
+		getChildren().addAll(tilepane);
 
 	}
 }//end GamePane
