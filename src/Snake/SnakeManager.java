@@ -1,9 +1,9 @@
-package Package1;
+package Snake;
 
-import Package1.Snake;
-import Package1.AgentManager;
-import Package1.ControlPane;
-import Package1.DisplayPane;
+import Agent.AgentManager;
+import Panes.ControlPane;
+import Panes.DisplayPane;
+import Snake.Snake;
 
 /**
  * @author Danny

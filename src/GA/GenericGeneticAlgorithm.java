@@ -1,6 +1,8 @@
-package Package1;
+package GA;
 
 import java.util.Random;
+
+import Agent.Agent;
 
 /**
  * @author Danny
