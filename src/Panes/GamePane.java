@@ -40,7 +40,6 @@ public class GamePane extends Pane {
 		TilePane tilepane = new TilePane();
 		
 				tilepane.setPrefColumns(20);
-			
 				tilepane.setPadding(new Insets(5,5,5,5));
 
 				
@@ -51,6 +50,8 @@ public class GamePane extends Pane {
 				rec.setFill(Color.DARKCYAN);
 				tilepane.getChildren().add(rec);
 			}
+			
+			
 			
 		    tilepane.setHgap(2);
 		    tilepane.setVgap(2);
