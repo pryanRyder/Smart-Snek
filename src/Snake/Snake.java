@@ -17,10 +17,17 @@ public class Snake {
 	public ArrayList<int[]> Positions;
 	public int score;
 	public CurrentDirection m_CurrentDirection;
-
-	public void Snake() {
-		int[] x = {2,2};
-		Positions.add(x);	
+	
+// Paul R. Stuff Here
+	public int[] size = new int[3];
+	public int[] start = new int[2];
+	public int x;
+	public int y;
+//
+	
+	public void Sneek() {
+		x = 2;
+		y = 3;
 	}
 
 	public void finalize() throws Throwable {
