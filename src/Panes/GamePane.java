@@ -2,13 +2,16 @@ package Panes;
 
 import java.util.Collection;
 
+import Snake.CurrentDirection;
 import Snake.Snake;
 import Snake.SnakeManager;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.GridPane;
@@ -26,10 +29,11 @@ import javafx.util.Duration;
  * @created 17-Feb-2019 5:39:59 PM
  */
 public class GamePane extends Pane {
-
-	int p = 0;
-	int q = 0;
 	
+	boolean onlyOneDirection = true;
+	Rectangle recs[][] = new Rectangle[25][15];
+	Scene scene;
+
 	
 	public SnakeManager m_SnakeManager;
 	Snake snek = new Snake();
@@ -42,6 +46,7 @@ public class GamePane extends Pane {
 	
 	public GamePane(double width, double height)
 	{
+		this.scene = scene;
 		Text Title = new Text("I am the Game Pane");
 		getChildren().add(Title);
 		setPrefSize(width * 0.75, height * 0.75);
@@ -52,7 +57,6 @@ public class GamePane extends Pane {
 		setStyle("-fx-background-color: '#6d6d6d';");
 		
 		
-		Rectangle recs[][] = new Rectangle[25][15];
 		GridPane gridpane = new GridPane();
 		
 				gridpane.setPadding(new Insets(5,5,5,5));
@@ -79,24 +83,136 @@ public class GamePane extends Pane {
 		    gridpane.setBackground(new Background(new BackgroundFill(Color.AQUAMARINE, null, null)));
 		   
 		    
+		    
 		    snek.randomObjectiveItem();
-		    snek.Sneek();
+		   // snek.Sneek();
 		    
 		    recs[snek.objectiveItem[0]][snek.objectiveItem[1]].setFill(Color.RED);
-		    recs[snek.x][snek.y].setFill(Color.DARKMAGENTA);
+		    //recs[snek.x][snek.y].setFill(Color.DARKMAGENTA);
+		    
+		    for(int i = 0; i < snek.Positions.size(); i++)
+		    {
+		    	recs[snek.Positions.get(i)[0]][snek.Positions.get(i)[1]].setFill(Color.DARKMAGENTA);
+		    }
 		    
 		    
 		    Timeline timeline = new Timeline();
 			timeline.setCycleCount(Timeline.INDEFINITE);
 	
-			KeyFrame keyframe = new KeyFrame(Duration.millis(500), action -> {
+			KeyFrame keyframe = new KeyFrame(Duration.millis(75), action -> 
+			{
+				onlyOneDirection = true;
 				
-				
-				recs[5][p++ + 3].setFill(Color.DARKMAGENTA);
-				
+				getScene().setOnKeyPressed(e ->
+				{	if(onlyOneDirection)
+					{
+						if(e.getCode() == KeyCode.A && snek.m_CurrentDirection != CurrentDirection.RIGHT)
+						{
+							snek.changeDirection(CurrentDirection.LEFT);
+							System.out.println("LEFT");
+							onlyOneDirection = false;
+						}
+						else if(e.getCode() == KeyCode.D && snek.m_CurrentDirection != CurrentDirection.LEFT)
+						{
+							snek.changeDirection(CurrentDirection.RIGHT);
+							System.out.println("RIGHT");
+							onlyOneDirection = false;
+
+						}
+						else if(e.getCode() == KeyCode.S && snek.m_CurrentDirection != CurrentDirection.UP)
+						{
+							snek.changeDirection(CurrentDirection.DOWN);
+							System.out.println("DOWN");
+							onlyOneDirection = false;
 			
-				recs[5][q++].setFill(Color.DARKCYAN);
+						}
+						else if(e.getCode() == KeyCode.W && snek.m_CurrentDirection != CurrentDirection.DOWN)
+						{
+							snek.changeDirection(CurrentDirection.UP);
+							System.out.println("UP");
+							onlyOneDirection = false;
+			
+						}
+						
+						else if(e.getCode() == KeyCode.LEFT && snek.m_CurrentDirection != CurrentDirection.RIGHT)
+						{
+							snek.changeDirection(CurrentDirection.LEFT);
+							System.out.println("LEFT");
+							onlyOneDirection = false;
+			
+			
+						}
+						else if(e.getCode() == KeyCode.RIGHT && snek.m_CurrentDirection != CurrentDirection.LEFT)
+						{
+							snek.changeDirection(CurrentDirection.RIGHT);
+							System.out.println("RIGHT");
+							onlyOneDirection = false;
+			
+						}
+						else if(e.getCode() == KeyCode.DOWN && snek.m_CurrentDirection != CurrentDirection.UP)
+						{
+							snek.changeDirection(CurrentDirection.DOWN);
+							System.out.println("DOWN");
+							onlyOneDirection = false;
+			
+						}
+						else if(e.getCode() == KeyCode.UP && snek.m_CurrentDirection != CurrentDirection.DOWN)
+						{
+							snek.changeDirection(CurrentDirection.UP);
+							System.out.println("UP");
+							onlyOneDirection = false;
+			
+						}
+					}
+				});
 				
+			    snek.move();
+
+			    for( int i = 0; i < snek.Positions.size(); i++) 
+			    {
+			    	if((snek.Positions.get(0)[0] > recs.length-1) 	||
+			    		(snek.Positions.get(0)[0] < 0) 				||
+			    		(snek.Positions.get(0)[1] > recs[0].length-1) ||
+			    		(snek.Positions.get(0)[1] < 0))
+			    	{
+			    		snek = new Snake();
+			    	}
+			    }
+				
+				for(int i = 0; i < recs.length; i++)
+				{
+					for(int j = 0; j < recs[i].length; j++)
+					{
+						recs[i][j].setFill(Color.DARKCYAN);
+					}
+				}
+				
+			    recs[snek.objectiveItem[0]][snek.objectiveItem[1]].setFill(Color.RED);
+
+				
+			    for(int i = 0; i < snek.Positions.size(); i++) //moves the display of the snake
+			    {
+			    	try
+			    	{
+			    		recs[snek.Positions.get(i)[0]][snek.Positions.get(i)[1]].setFill(Color.DARKMAGENTA);
+			    	}
+			    	catch(ArrayIndexOutOfBoundsException e)
+			    	{
+			    		//:P
+			    	}
+			    }
+			    
+			    
+			    if( snek.checkIfDead())
+			    {
+			    	snek = new Snake();
+			    }
+			    
+			    snek.ateObjectiveItem();
+
+
+			    
+
 				
 			});
 	
