@@ -1,6 +1,7 @@
 package Snake;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 /**
  * @author Danny
@@ -8,15 +9,18 @@ import java.util.ArrayList;
  * @created 17-Feb-2019 5:39:59 PM
  */
 public class Snake {
-
+	
+	
+	
 	private CurrentDirection Direction;
-	private int[] objectiveItem;
-	private ArrayList<int[]> Positions;
-	private int score;
+	public int[] objectiveItem = new int[2];
+	public ArrayList<int[]> Positions;
+	public int score;
 	public CurrentDirection m_CurrentDirection;
 
-	public Snake(){
-
+	public void Snake() {
+		int[] x = {2,2};
+		Positions.add(x);	
 	}
 
 	public void finalize() throws Throwable {
@@ -26,10 +30,6 @@ public class Snake {
 
 	}
 
-	/**
-	 * 
-	 * @param direction
-	 */
 	public void changeDirection(CurrentDirection direction){
 
 	}
@@ -47,14 +47,15 @@ public class Snake {
 	}
 
 	public void randomObjectiveItem(){
-
+			Random spot = new Random();
+			
+			int row = spot.nextInt(25);
+			int col = spot.nextInt(15);
+			
+			objectiveItem[0] = row;
+			objectiveItem[1] = col;
 	}
 
-	/**
-	 * 
-	 * @param x
-	 * @param y
-	 */
 	public void updatePosition(int x, int y){
 
 	}

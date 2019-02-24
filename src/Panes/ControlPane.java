@@ -1,5 +1,6 @@
 package Panes;
 
+import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 
@@ -9,6 +10,7 @@ import javafx.scene.text.Text;
  * @created 17-Feb-2019 5:39:58 PM
  */
 public class ControlPane extends Pane {
+
 
 	public void finalize() throws Throwable {
 		super.finalize();
