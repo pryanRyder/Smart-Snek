@@ -4,6 +4,8 @@ import java.util.Collection;
 
 import Snake.Snake;
 import Snake.SnakeManager;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.TextField;
@@ -16,6 +18,7 @@ import javafx.scene.layout.TilePane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
+import javafx.util.Duration;
 
 /**
  * @author Danny, Paul, Yara
@@ -24,6 +27,10 @@ import javafx.scene.text.Text;
  */
 public class GamePane extends Pane {
 
+	int p = 0;
+	int q = 0;
+	
+	
 	public SnakeManager m_SnakeManager;
 	Snake snek = new Snake();
 
@@ -31,7 +38,7 @@ public class GamePane extends Pane {
 	public void finalize() throws Throwable {
 		super.finalize();
 	}
-	
+
 	
 	public GamePane(double width, double height)
 	{
@@ -73,12 +80,29 @@ public class GamePane extends Pane {
 		   
 		    
 		    snek.randomObjectiveItem();
+		    snek.Sneek();
+		    
 		    recs[snek.objectiveItem[0]][snek.objectiveItem[1]].setFill(Color.RED);
+		    recs[snek.x][snek.y].setFill(Color.DARKMAGENTA);
 		    
-		   // recs[snek.Positions.get(0)[0]][snek.Positions.get(1)[1]].setFill(Color.DARKMAGENTA);
 		    
-		
-		    
+		    Timeline timeline = new Timeline();
+			timeline.setCycleCount(Timeline.INDEFINITE);
+	
+			KeyFrame keyframe = new KeyFrame(Duration.millis(500), action -> {
+				
+				
+				recs[5][p++ + 3].setFill(Color.DARKMAGENTA);
+				
+			
+				recs[5][q++].setFill(Color.DARKCYAN);
+				
+				
+			});
+	
+			timeline.getKeyFrames().add(keyframe);
+			timeline.play();
+			
 		getChildren().addAll(gridpane);
 
 	}
