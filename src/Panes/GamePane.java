@@ -194,7 +194,7 @@ public class GamePane extends Pane {
 			    {
 			    	try
 			    	{
-			    		recs[snek.Positions.get(i)[0]][snek.Positions.get(i)[1]].setFill(Color.DARKMAGENTA);
+			    		recs[snek.Positions.get(i)[0]][snek.Positions.get(i)[1]].setFill(Color.WHITE);
 			    	}
 			    	catch(ArrayIndexOutOfBoundsException e)
 			    	{
