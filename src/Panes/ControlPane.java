@@ -1,5 +1,6 @@
 package Panes;
 
+import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 
@@ -10,15 +11,21 @@ import javafx.scene.text.Text;
  */
 public class ControlPane extends Pane {
 
+
 	public void finalize() throws Throwable {
 		super.finalize();
 	}
 	public ControlPane(double width, double height)
 	{
+
 		//this is the ControlPane
 		
 		this.setPrefSize(width * 0.25, height);
 		
+
+		setPrefSize(width * 0.25, height);
+
+
 		//The top left corner of this pane is at (0, 0)
 		this.setLayoutX(0);
 		this.setLayoutY(0);
@@ -39,8 +46,6 @@ public class ControlPane extends Pane {
 		//Title.setLayoutX(value);
 		//Title.setLayoutY();
 		content.getChildren().add(Title);
-		
-
 
 
 	}

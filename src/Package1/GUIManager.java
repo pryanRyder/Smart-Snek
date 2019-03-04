@@ -20,12 +20,8 @@ import javafx.stage.Stage;
  */
 public class GUIManager extends Application
 {
-
-	private ControlPane myControl;
-	private DisplayPane myDisplay;
-	private GamePane myGame;
-	private HelpTabPane myHelp;
-
+	Scene scene;
+	
 	public GUIManager()
 	{
 
@@ -51,7 +47,7 @@ public class GUIManager extends Application
 	    //Make the height 90% of the screen to avoid off-screen defects.
 	    width = screenBounds.getWidth() * 1;
 	    height = screenBounds.getHeight() * 0.9;
-		Scene scene = new Scene(new MasterPane(width, height), width, height);
+		scene = new Scene(new MasterPane(width, height), width, height);
 		primaryStage.setTitle("Smart-Snek");
 		primaryStage.setScene(scene);
 		primaryStage.show();
