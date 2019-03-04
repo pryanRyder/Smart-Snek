@@ -10,8 +10,6 @@ import javafx.scene.text.Text;
  */
 public class ControlPane extends Pane {
 
-
-
 	public void finalize() throws Throwable {
 		super.finalize();
 	}

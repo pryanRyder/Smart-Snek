@@ -14,8 +14,6 @@ public class GamePane extends Pane {
 
 	public SnakeManager m_SnakeManager;
 
-
-
 	public void finalize() throws Throwable {
 		super.finalize();
 	}
