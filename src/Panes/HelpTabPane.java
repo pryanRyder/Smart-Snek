@@ -7,7 +7,6 @@ import javafx.scene.layout.Pane;
 /**
  * @author Danny
  * @version 1.0
- * @created 17-Feb-2019 5:39:59 PM
  */
 public class HelpTabPane extends Pane {
 
@@ -16,6 +15,9 @@ public class HelpTabPane extends Pane {
 	public void finalize() throws Throwable {
 		super.finalize();
 	}
+	/**
+	 * creates a question mark that when clicked tells the user how the game works
+	 */
 	public void HelpTabPane(){
 
 

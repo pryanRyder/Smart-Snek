@@ -8,7 +8,7 @@ import Snake.Snake;
 /**
  * @author Danny
  * @version 1.0
- * @created 17-Feb-2019 5:39:59 PM
+ * 
  */
 public class SnakeManager {
 

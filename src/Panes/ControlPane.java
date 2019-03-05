@@ -18,7 +18,6 @@ import javafx.scene.input.MouseEvent;
 /**
  * @author Danny
  * @version 1.0
- * @created 17-Feb-2019 5:39:58 PM
  */
 public class ControlPane extends Pane {
 	
@@ -29,8 +28,8 @@ public class ControlPane extends Pane {
 		super.finalize();
 	}
 	/**
-	 * @param width
-	 * @param height
+	 * @param width double 
+	 * @param height double
 	 * creates a pane called Control pane
 	 */
 	public ControlPane(double width, double height)

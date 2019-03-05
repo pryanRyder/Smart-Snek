@@ -28,7 +28,6 @@ import javafx.util.Duration;
 /**
  * @author Danny, Paul, Yara
  * @version 1.0
- * @created 17-Feb-2019 5:39:59 PM
  */
 public class GamePane extends Pane {
 	
@@ -52,12 +51,10 @@ public class GamePane extends Pane {
 
 	
 	/**
-	 * @param width
-	 * @param height
+	 * @param width double
+	 * @param height double 
 	 * creates a gridpane that will have the game running within it, also calls other functions
 	 * from other classes that will run the game
-	 * keyboard inputs can be done by the up, down, right, left cursors or W, A,S, and D
-	 * makes sure that when snake grows it'ss update the snake length in the Snake class
 	 */
 	public GamePane(double width, double height)
 	{
@@ -152,6 +149,12 @@ public class GamePane extends Pane {
 	}
 	
 	
+	/**
+	 * this code creates buttons that'll make the user be able to play, pause, and stop the game
+	 *  keyboard inputs can be done by the W, A,S, and D keyboard inputs
+	 * makes sure that when snake grows it'ss update the snake length in the Snake class
+	 * display score and number of iterations
+	 */
 	public void StartTraining()
 	{
 		timeline = new Timeline();
