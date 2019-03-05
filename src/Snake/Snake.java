@@ -40,7 +40,7 @@ public class Snake {
 	/**
 	 * adds to the score which counts how many objectives the snake has eaten
 	 */
-	public void ateObjectiveItem(){
+	public int ateObjectiveItem(){
 		if(Positions.get(0)[0] == objectiveItem[0] && Positions.get(0)[1] == objectiveItem[1])
 		{
 			score++;
