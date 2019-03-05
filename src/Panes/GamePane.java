@@ -11,6 +11,7 @@ import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TextInputControl;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
@@ -20,6 +21,7 @@ import javafx.scene.layout.RowConstraints;
 import javafx.scene.layout.TilePane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
 
@@ -37,7 +39,11 @@ public class GamePane extends Pane {
 	
 	public SnakeManager m_SnakeManager;
 	Snake snek = new Snake();
-
+	
+	Text stringScore = new Text(Integer.toString(snek.ateObjectiveItem()));
+	
+	int iteration = 0;
+	Text iterationString = new Text();
 	
 	public void finalize() throws Throwable {
 		super.finalize();
@@ -94,6 +100,7 @@ public class GamePane extends Pane {
 		    {
 		    	recs[snek.Positions.get(i)[0]][snek.Positions.get(i)[1]].setFill(Color.DARKMAGENTA);
 		    }
+		    
 		    
 		    
 		    Timeline timeline = new Timeline();
@@ -176,6 +183,8 @@ public class GamePane extends Pane {
 			    		(snek.Positions.get(0)[1] < 0))
 			    	{
 			    		snek = new Snake();
+			    		
+			    		iteration = iteration + 1;
 			    	}
 			    }
 				
@@ -206,20 +215,68 @@ public class GamePane extends Pane {
 			    if( snek.checkIfDead())
 			    {
 			    	snek = new Snake();
+			    	
+			    	iteration = iteration + 1;
+			    	System.out.print(iteration);
 			    }
 			    
 			    snek.ateObjectiveItem();
 
-
+			    stringScore.setText(Integer.toString(snek.score));
 			    
-
-				
+			    iterationString.setText(Integer.toString(iteration));
+			    
+			   
 			});
 	
+		
 			timeline.getKeyFrames().add(keyframe);
 			timeline.play();
 			
-		getChildren().addAll(gridpane);
+			Pane scorePane = new Pane();
+			Text Score = new Text("Score");
+			scorePane.setBackground(new Background(new BackgroundFill(Color.IVORY, null, null)));
+			scorePane.setPrefSize(120, 115);
+			scorePane.setLayoutX(10);
+			scorePane.setLayoutY(580);
+			
+		    stringScore.setLayoutX(scorePane.getPrefWidth()*0.25);
+		    stringScore.setLayoutY(scorePane.getPrefWidth()*0.6);
+		    stringScore.setFont(Font.font(35));
+		   
+			Score.setLayoutX(scorePane.getPrefWidth()*0.02);
+			Score.setLayoutY(scorePane.getPrefHeight()*0.15);
+			scorePane.setStyle("-fx-font-size: 18 ;");
+			scorePane.getChildren().addAll(Score, stringScore);
+			
+			
+			Pane iterationPane = new Pane();
+			iterationPane.setBackground(new Background(new BackgroundFill(Color.IVORY, null, null)));
+			//iterationPane.setStyle("-fx-background-color: '#ffffff' ");
+			iterationPane.setPrefSize(120, 115);
+			iterationPane.setLayoutX(140);
+			iterationPane.setLayoutY(580);
+			
+			//Text iterationString = new Text(Integer.toString(iteration));
+			iterationString.setLayoutX(scorePane.getPrefWidth()*0.25);
+			iterationString.setLayoutY(scorePane.getPrefWidth()*0.6);
+			iterationString.setFont(Font.font(35));
+			
+			Text Iteration = new Text("Iterations");
+			Iteration.setLayoutX(scorePane.getPrefWidth()*0.02);
+			Iteration.setLayoutY(scorePane.getPrefHeight()*0.15);
+			iterationPane.setStyle("-fx-font-size: 18 ;");
+			
+			iterationPane.getChildren().addAll(Iteration, iterationString);
+			
+			
+			
+			
+			
+			
+			
+			
+		getChildren().addAll(gridpane, scorePane, iterationPane);
 
 	}
 }//end GamePane

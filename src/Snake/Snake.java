@@ -37,10 +37,11 @@ public class Snake {
 	public void finalize() throws Throwable {
 
 	}
-	public void ateObjectiveItem(){
+	public int ateObjectiveItem(){
 		if(Positions.get(0)[0] == objectiveItem[0] && Positions.get(0)[1] == objectiveItem[1])
 		{
 			score++;
+			
 			randomObjectiveItem();
 			
 			int[] tempPosition = new int[2];
@@ -50,6 +51,7 @@ public class Snake {
 
 			Positions.add(tempPosition);
 		}
+		return score;
 	}
 
 	public void changeDirection(CurrentDirection direction){

@@ -1,6 +1,11 @@
 package Panes;
 
+import javafx.scene.control.TextField;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
 /**
@@ -10,11 +15,11 @@ import javafx.scene.text.Text;
  */
 public class DisplayPane extends Pane {
 
-
-
 	public void finalize() throws Throwable {
 		super.finalize();
 	}
+	
+	
 	public DisplayPane(double width, double height)
 	{
 		setPrefSize(width * 0.75, height * 0.25);
@@ -36,9 +41,32 @@ public class DisplayPane extends Pane {
 		Title.setLayoutX(content.getPrefWidth()*0.01);
 		Title.setLayoutY(content.getPrefHeight()*0.15);
 		content.getChildren().add(Title);
-
+		
+	/*	
+		Pane scorePane = new Pane();
+		Text Score = new Text("Score");
+		scorePane.setBackground(new Background(new BackgroundFill(Color.IVORY, null, null)));
+		scorePane.setPrefSize(120, 115);
+		scorePane.setLayoutX(10);
+		scorePane.setLayoutY(30);
+		
+		int x = snekScore.ateObjectiveItem();
+	    
+	    Text aString = new Text(Integer.toString(x));
+	    aString.setLayoutX(scorePane.getPrefWidth()*0.4);
+	    aString.setLayoutY(scorePane.getPrefWidth()*0.5);
+	    aString.setFont(Font.font(35));
+	    
+	    
+		Score.setLayoutX(scorePane.getPrefWidth()*0.02);
+		Score.setLayoutY(scorePane.getPrefHeight()*0.15);
+		scorePane.setStyle("-fx-font-size: 18 ;");
+		scorePane.getChildren().addAll(Score, aString);
+		content.getChildren().add(scorePane);
+	 */
 		
 		
 
 	}
+	
 }//end DisplayPane

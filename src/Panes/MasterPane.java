@@ -14,9 +14,9 @@ public class MasterPane extends Pane
 		
 		
 		getChildren().add(controlPane);
-		getChildren().add(gamePane);
 		//getChildren().add(helpTabPane);
 		getChildren().add(displayPane);
+		getChildren().add(gamePane);
 	}
 
 }
