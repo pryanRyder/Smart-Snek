@@ -1,9 +1,14 @@
 package Panes;
 
+import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
@@ -187,9 +192,7 @@ public class ControlPane extends Pane {
 		btRestart.setLayoutY(trainingPane.getPrefHeight()*.3);
 		trainingPane.getChildren().add(btRestart);
 		
-		btUpload.setLayoutX(content.getPrefWidth()*.02);
-		btUpload.setLayoutY(content.getPrefHeight()*.15);
-		content.getChildren().add(btUpload);
+
 		
 		AgentPane.setStyle("-fx-background-color: '#e0e0e0'");
 		AgentPane.setLayoutX(getPrefWidth()*0.02);
@@ -252,6 +255,10 @@ public class ControlPane extends Pane {
 		btCreateNew.setLayoutX(AgentPane.getPrefWidth()*.02);
 		btCreateNew.setLayoutY(AgentPane.getPrefHeight()*.80);
 		AgentPane.getChildren().add(btCreateNew);
+		
+		btUpload.setLayoutX(AgentPane.getPrefWidth()*.02);
+		btUpload.setLayoutY(AgentPane.getPrefHeight()*.90);
+		AgentPane.getChildren().add(btUpload);
 
 		
 		getChildren().add(content);
@@ -267,6 +274,7 @@ public class ControlPane extends Pane {
 		*/
 		
 		Pane TitlePane = new Pane();
+		
 		TitlePane.setStyle("-fx-background-color: '#e0e0e0'");
 		TitlePane.setLayoutX(getPrefWidth()*0.02);
 		TitlePane.setLayoutY(getPrefHeight()*0.02);
@@ -279,6 +287,30 @@ public class ControlPane extends Pane {
 		Title.setStyle("-fx-font-size: 20;"); // NEEDS TO BE CHANGED BASED ON SIZE
 		Title.setLayoutX(content.getPrefWidth()*0.04);
 		Title.setLayoutY(content.getPrefHeight()*0.04);
+		
+		Image questionMark = new Image("questionMark.jpg");
+		ImageView questionMarkPicture = new ImageView(questionMark);
+		questionMarkPicture.setScaleX(.025);
+		questionMarkPicture.setScaleY(.025);
+		questionMarkPicture.setLayoutX(-200);
+		questionMarkPicture.setLayoutY(-460);
+		TitlePane.getChildren().add(questionMarkPicture);
+		
+		questionMarkPicture.setOnMouseClicked( new EventHandler<MouseEvent>()
+		{
+			@Override
+			public void handle(MouseEvent event) 
+			{
+				final String aboutText = "Hello this is the snek game, to move your snek use your arrow keys. ";
+
+				Alert popup = new Alert(Alert.AlertType.INFORMATION, aboutText, ButtonType.OK);
+				popup.setHeaderText("About This Game");
+				popup.setTitle("About");
+				popup.showAndWait();
+			}
+		});
+		
+		
 		//Title.setLayoutX(value);
 		//Title.setLayoutY();
 
