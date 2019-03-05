@@ -8,7 +8,7 @@ import com.sun.xml.internal.ws.dump.LoggingDumpTube.Position;
 /**
  * @author Danny
  * @version 1.0
- * @created 17-Feb-2019 5:39:59 PM
+ * 
  */
 
 
@@ -37,10 +37,12 @@ public class Snake {
 	{
 
 	}
+	
 	/**
-	 * adds to the score which counts how many objectives the snake has eaten
+	 * @return interger score
+	 *  adds to the score which counts how many objectives the snake has eaten
 	 */
-	public void ateObjectiveItem(){
+	public int ateObjectiveItem(){
 		if(Positions.get(0)[0] == objectiveItem[0] && Positions.get(0)[1] == objectiveItem[1])
 		{
 			score++;
@@ -97,7 +99,7 @@ public class Snake {
 	}
 
 	/**
-	 * the snake starts out going right and depending on what the keyboard input is it will chnage its direction
+	 * the snake starts out going right and depending on what the keyboard input is it will change its direction
 	 * its either right, left, up, or down
 	 */
 	public void move(){

@@ -11,7 +11,6 @@ import javafx.scene.text.Text;
 /**
  * @author Danny
  * @version 1.0
- * @created 17-Feb-2019 5:39:58 PM
  */
 
 public class DisplayPane extends Pane {
@@ -20,8 +19,8 @@ public class DisplayPane extends Pane {
 		super.finalize();
 	}
 	/**
-	 * @param width
-	 * @param height
+	 * @param width double 
+	 * @param height double
 	 * creates a pane called display pane
 	 */
 	public DisplayPane(double width, double height)
