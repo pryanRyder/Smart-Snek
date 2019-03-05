@@ -81,7 +81,7 @@ public class HelpTabPane extends Pane {
 		/** Shows information about the program in it's own window */
 		//private void showAbout()
 
-			final String aboutText = "This is the snek game";
+			final String aboutText = "Hello this is the snek game, to move your snek use your arrow keys. ";
 
 			Alert popup = new Alert(Alert.AlertType.INFORMATION, aboutText, ButtonType.OK);
 			
@@ -98,29 +98,7 @@ public class HelpTabPane extends Pane {
 	 * @param primaryStage
 	 */
 	
-	//@Override
-	/*public void start(Stage primaryStage) {
-	// about 
-			miAbout.setOnAction(e -> showAbout());
-			
-			// close event, using lamba expression
-			miClose.setOnAction( e -> Platform.exit());
-			
-			//Put everything together:
-				Scene scene = new Scene(borderPane, 450, 400);
-				// Add the menubar and shapes to the borderpane
-				borderPane.setTop(menuBar);
-				// Configure and display the stage
-				primaryStage.setScene(scene);
-				primaryStage.setTitle("JavaFX Fun Stuff");
-				primaryStage.show();		
-				
-				*/
-				
-	//}
-	
-
-
 
 	
-}
+
+} // End of HelpTabPane
