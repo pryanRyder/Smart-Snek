@@ -14,7 +14,6 @@ public class Snake {
 	
 	
 	
-	private CurrentDirection Direction;
 	public int[] objectiveItem = new int[2];
 	public ArrayList<int[]> Positions = new ArrayList<int[]>();
 	public int score;
@@ -80,7 +79,6 @@ public class Snake {
 	}
 
 	public void move(){
-		//System.out.println("X: " + Positions.get(0)[0] + " Y: " + Positions.get(1)[1]);
 		
 		for(int i = Positions.size()-1; i > 0; i--)
 		{
