@@ -30,6 +30,9 @@ public class ControlPane extends Pane {
 	}
 	public ControlPane(double width, double height)
 	{
+		Pane gamePane = new GamePane(width, height);
+		getChildren().add(gamePane);
+		
 		setPrefSize(width * 0.25, height);
 
 		//The top left corner of this pane is at (0, 0)
@@ -176,17 +179,61 @@ public class ControlPane extends Pane {
 		btStop.setLayoutY(trainingPane.getPrefHeight()*.6);
 		trainingPane.getChildren().add(btStop);
 		
+		btStartTraining.setDisable(false);
+		btPlay.setDisable(true);
+		btPause.setDisable(true);
+		btRestart.setDisable(true);
+		btStop.setDisable(true);
+		
+		btStop.setOnAction(e ->{
+			
+			((GamePane) gamePane).Stop();
+			btStartTraining.setDisable(false);
+			btPlay.setDisable(true);
+			btPause.setDisable(true);
+			btRestart.setDisable(true);
+			btStop.setDisable(true);
+			
+		});
+		
 		btStartTraining.setLayoutX(trainingPane.getPrefWidth()*.02);
 		btStartTraining.setLayoutY(trainingPane.getPrefHeight()*.6);
 		trainingPane.getChildren().add(btStartTraining);
+		
+		btStartTraining.setOnAction(e ->{
+			
+			((GamePane) gamePane).StartTraining();
+			btStartTraining.setDisable(true);
+			btPlay.setDisable(false);
+			btPause.setDisable(false);
+			btRestart.setDisable(false);
+			btStop.setDisable(false);
+			
+		});
 		
 		btPlay.setLayoutX(trainingPane.getPrefWidth()*.02);
 		btPlay.setLayoutY(trainingPane.getPrefHeight()*.3);
 		trainingPane.getChildren().add(btPlay);
 		
+		btPlay.setOnAction(e ->{
+			
+			((GamePane) gamePane).Play();
+			btPlay.setDisable(true);
+			btPause.setDisable(false);
+			
+		});
+		
 		btPause.setLayoutX(trainingPane.getPrefWidth()*.2);
 		btPause.setLayoutY(trainingPane.getPrefHeight()*.3);
 		trainingPane.getChildren().add(btPause);
+		
+		btPause.setOnAction(e ->{
+			
+			((GamePane) gamePane).Pause();
+			btPause.setDisable(true);
+			btPlay.setDisable(false);
+			
+		});
 		
 		btRestart.setLayoutX(trainingPane.getPrefWidth()*.4);
 		btRestart.setLayoutY(trainingPane.getPrefHeight()*.3);

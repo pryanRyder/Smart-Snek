@@ -8,15 +8,17 @@ public class MasterPane extends Pane
 	public MasterPane(double width, double height)
 	{
 
-		ControlPane controlPane = new ControlPane(width, height);
-		GamePane gamePane = new GamePane(width, height);
+		//Pane gamePane = new GamePane(width, height);
 		//Pane helpTabPane = new HelpTabPane(width, height);
-		DisplayPane displayPane = new DisplayPane(width, height);
+		Pane displayPane = new DisplayPane(width, height);
+		Pane controlPane = new ControlPane(width, height);
 
-		getChildren().add(controlPane);
+
 		//getChildren().add(helpTabPane);
 		getChildren().add(displayPane);
-		getChildren().add(gamePane);
+		//getChildren().add(gamePane);
+		getChildren().add(controlPane);
+
 	}
 
 }

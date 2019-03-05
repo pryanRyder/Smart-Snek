@@ -37,6 +37,8 @@ public class GUIManager extends Application
 	public void start(Stage primaryStage)
 	{		
 		double width, height;
+		
+
 		//Get the dimensions of user's screen.
 	    Rectangle2D screenBounds = Screen.getPrimary().getBounds();
 	    

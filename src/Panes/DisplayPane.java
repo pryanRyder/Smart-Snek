@@ -38,9 +38,9 @@ public class DisplayPane extends Pane {
 		
 		Pane information = new Pane();
 		
-		information.setPrefSize(getPrefWidth()*0.92, getPrefHeight()*0.88);
-		information.setLayoutX(content.getPrefWidth()*0.01);
-		information.setLayoutY(content.getPrefHeight()*0.05);
+		information.setPrefSize(content.getPrefWidth()*0.95, content.getPrefHeight()*0.95);
+		information.setLayoutX(content.getPrefWidth()*0.005);
+		information.setLayoutY(content.getPrefHeight()*0.025);
 		information.setStyle("-fx-background-color: '#e0e0e0';");
 		content.getChildren().add(information);
 
