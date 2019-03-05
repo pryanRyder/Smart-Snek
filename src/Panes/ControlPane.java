@@ -1,9 +1,14 @@
 package Panes;
 
+import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
+import javafx.scene.shape.Rectangle;
+import javafx.scene.input.MouseEvent;
 
 /**
  * @author Danny
@@ -11,6 +16,8 @@ import javafx.scene.text.Text;
  * @created 17-Feb-2019 5:39:58 PM
  */
 public class ControlPane extends Pane {
+	
+	boolean GAChecked = false;
 
 
 	public void finalize() throws Throwable {
@@ -42,6 +49,8 @@ public class ControlPane extends Pane {
 		
 		Pane geneticAlgorithmPane = new Pane();
 		
+
+		
 		geneticAlgorithmPane.setStyle("-fx-background-color: '#e0e0e0'");
 		geneticAlgorithmPane.setLayoutX(getPrefWidth()*0.02);
 		geneticAlgorithmPane.setLayoutY(getPrefHeight()*0.6);
@@ -49,16 +58,30 @@ public class ControlPane extends Pane {
 		geneticAlgorithmPane.setPrefWidth(content.getPrefWidth()*.95);
 		content.getChildren().add(geneticAlgorithmPane);
 		
+		Rectangle gaCheckBox = new Rectangle(25,25);
+		gaCheckBox.setFill(Color.WHITE);
+		gaCheckBox.setStroke(Color.BLACK);
+		gaCheckBox.setLayoutX(geneticAlgorithmPane.getPrefWidth()*0.6);
+		gaCheckBox.setLayoutY(geneticAlgorithmPane.getPrefHeight()*0.05);
+		geneticAlgorithmPane.getChildren().add(gaCheckBox);
+		
+		
 		Text txtGeneticAlgorithm = new Text("Genetic Algorithm");
 		txtGeneticAlgorithm.setStyle("-fx-font-size: 18");
 		txtGeneticAlgorithm.setLayoutX(geneticAlgorithmPane.getPrefWidth()*0.02);
 		txtGeneticAlgorithm.setLayoutY(geneticAlgorithmPane.getPrefHeight()*0.15);
+		txtGeneticAlgorithm.setDisable(true);
 		geneticAlgorithmPane.getChildren().add(txtGeneticAlgorithm);
+		txtGeneticAlgorithm.setFill(Color.DARKGREY);
+
+		
 		
 		Text txtPopulationSize = new Text("Population Size");
 		txtPopulationSize.setStyle("-fx-font-size: 15");
 		txtPopulationSize.setLayoutX(geneticAlgorithmPane.getPrefWidth()*0.02);
 		txtPopulationSize.setLayoutY(geneticAlgorithmPane.getPrefHeight()*0.35);
+		txtPopulationSize.setFill(Color.DARKGREY);
+
 		geneticAlgorithmPane.getChildren().add(txtPopulationSize);
 		
 		TextField tfPopulationSize = new TextField();
@@ -66,12 +89,17 @@ public class ControlPane extends Pane {
 		tfPopulationSize.setLayoutX(geneticAlgorithmPane.getPrefWidth()*0.02);
 		tfPopulationSize.setLayoutY(geneticAlgorithmPane.getPrefHeight()*0.40);
 		tfPopulationSize.setPrefWidth(geneticAlgorithmPane.getPrefWidth()*0.2);
+		tfPopulationSize.setDisable(true);
+
 		geneticAlgorithmPane.getChildren().add(tfPopulationSize);
 		
 		Text txtMutationRate = new Text("Mutation Rate");
 		txtMutationRate.setStyle("-fx-font-size: 15");
 		txtMutationRate.setLayoutX(geneticAlgorithmPane.getPrefWidth()*0.02);
 		txtMutationRate.setLayoutY(geneticAlgorithmPane.getPrefHeight()*0.70);
+		txtMutationRate.setFill(Color.DARKGREY);
+
+
 		geneticAlgorithmPane.getChildren().add(txtMutationRate);
 		
 		TextField tfMutationRate = new TextField();
@@ -79,6 +107,40 @@ public class ControlPane extends Pane {
 		tfMutationRate.setLayoutX(geneticAlgorithmPane.getPrefWidth()*0.02);
 		tfMutationRate.setLayoutY(geneticAlgorithmPane.getPrefHeight()*0.75);
 		tfMutationRate.setPrefWidth(geneticAlgorithmPane.getPrefWidth()*0.2);
+		tfMutationRate.setDisable(true);
+
+		
+		gaCheckBox.setOnMouseClicked(new EventHandler<MouseEvent>() {
+
+			@Override
+			public void handle(MouseEvent event) {
+				// TODO Auto-generated method stub
+				
+				GAChecked = !GAChecked;
+
+				if(GAChecked)
+				{
+					gaCheckBox.setFill(Color.BLACK);
+					gaCheckBox.setStroke(Color.WHITE);
+					txtMutationRate.setFill(Color.BLACK);
+					tfMutationRate.setDisable(false);
+					txtPopulationSize.setFill(Color.BLACK);
+					tfPopulationSize.setDisable(false);
+					txtGeneticAlgorithm.setFill(Color.BLACK);
+				}
+				else
+				{
+					gaCheckBox.setFill(Color.WHITE);
+					gaCheckBox.setStroke(Color.BLACK);
+					txtMutationRate.setFill(Color.DARKGREY);
+					tfMutationRate.setDisable(true);
+					txtPopulationSize.setFill(Color.DARKGREY);
+					tfPopulationSize.setDisable(true);
+					txtGeneticAlgorithm.setFill(Color.DARKGREY);
+				}
+			}
+			
+		});
 		geneticAlgorithmPane.getChildren().add(tfMutationRate);
 		
 		Button btCreateNew = new Button("Create New");
@@ -145,6 +207,21 @@ public class ControlPane extends Pane {
 		AgentPane.setPrefWidth(content.getPrefWidth()*.95);
 		content.getChildren().add(AgentPane);
 		
+		Button btDeepReinforcement = new Button("Deep Reinforcement");
+		btDeepReinforcement.setLayoutX(AgentPane.getPrefWidth()*.02);
+		btDeepReinforcement.setLayoutY(AgentPane.getPrefHeight()*.1);
+		AgentPane.getChildren().add(btDeepReinforcement);
+		
+		Button btDeep2 = new Button("Deep2");
+		btDeep2.setLayoutX(AgentPane.getPrefWidth()*.50);
+		btDeep2.setLayoutY(AgentPane.getPrefHeight()*.1);
+		AgentPane.getChildren().add(btDeep2);
+		
+		Button btDeep3 = new Button("Deep3");
+		btDeep3.setLayoutX(AgentPane.getPrefWidth()*.75);
+		btDeep3.setLayoutY(AgentPane.getPrefHeight()*.1);
+		AgentPane.getChildren().add(btDeep3);
+		
 		txtAgentPane = new Text("Agent Controller");
 		txtAgentPane.setLayoutX(AgentPane.getPrefWidth()*.02);
 		txtAgentPane.setLayoutY(AgentPane.getPrefHeight()*.05);
@@ -188,12 +265,31 @@ public class ControlPane extends Pane {
 		
 		getChildren().add(content);
 		Text Title = new Text("Control Panel");
+		
+		/*
+		AgentPane.setStyle("-fx-background-color: '#e0e0e0'");
+		AgentPane.setLayoutX(getPrefWidth()*0.02);
+		AgentPane.setLayoutY(getPrefHeight()*0.10);
+		AgentPane.setPrefHeight(content.getPrefHeight()*.50);
+		AgentPane.setPrefWidth(content.getPrefWidth()*.95);
+		content.getChildren().add(AgentPane);
+		*/
+		
+		Pane TitlePane = new Pane();
+		TitlePane.setStyle("-fx-background-color: '#e0e0e0'");
+		TitlePane.setLayoutX(getPrefWidth()*0.02);
+		TitlePane.setLayoutY(getPrefHeight()*0.02);
+		TitlePane.setPrefHeight(content.getPrefHeight()*.073);
+		TitlePane.setPrefWidth(content.getPrefWidth()*.95);
+		TitlePane.getChildren().add(Title);
+		content.getChildren().add(TitlePane);
+		
+		
 		Title.setStyle("-fx-font-size: 20;"); // NEEDS TO BE CHANGED BASED ON SIZE
 		Title.setLayoutX(content.getPrefWidth()*0.04);
 		Title.setLayoutY(content.getPrefHeight()*0.04);
 		//Title.setLayoutX(value);
 		//Title.setLayoutY();
-		content.getChildren().add(Title);
 
 
 	}
