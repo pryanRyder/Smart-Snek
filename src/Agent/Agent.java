@@ -6,13 +6,16 @@ package Agent;
  * @version 1.0
  * @created 17-Feb-2019 5:39:58 PM
  */
-public class Agent {
+public class Agent 
+{
 
-	public Agent(){
+	public Agent()
+	{
 
 	}
 
-	public void finalize() throws Throwable {
+	public void finalize() throws Throwable 
+	{
 
 	}
 }//end Agent
