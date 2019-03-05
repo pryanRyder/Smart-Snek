@@ -9,8 +9,7 @@ import javafx.scene.text.Text;
  * @created 17-Feb-2019 5:39:58 PM
  */
 public class DisplayPane extends Pane {
-
-
+	
 
 	public void finalize() throws Throwable {
 		super.finalize();

@@ -186,15 +186,6 @@ public class ControlPane extends Pane {
 		btRestart.setLayoutX(trainingPane.getPrefWidth()*.4);
 		btRestart.setLayoutY(trainingPane.getPrefHeight()*.3);
 		trainingPane.getChildren().add(btRestart);
-
-		
-		/*
-		txtAgentPane.setLayoutX(content.getPrefWidth()*.04);
-		txtAgentPane.setLayoutY(content.getPrefHeight()*.12);
-		txtAgentPane.setStyle("-fx-font-size: 18;");
-		content.getChildren().add(txtAgentPane);
-*/
-
 		
 		btUpload.setLayoutX(content.getPrefWidth()*.02);
 		btUpload.setLayoutY(content.getPrefHeight()*.15);
