@@ -17,6 +17,9 @@ public abstract class GenericGeneticAlgorithm {
 	private int populationSize;
 	private Random rand;
 
+	/**
+	 * creates a new instance of GenericGeneticAlgorithm 
+	 */
 	public GenericGeneticAlgorithm(){
 
 	}
@@ -42,10 +45,16 @@ public abstract class GenericGeneticAlgorithm {
 		return "";
 	}
 
+	/**
+	 * 
+	 */
 	public void Evolve(){
 
 	}
 
+	/**
+	 * 
+	 */
 	public void generatePopulation(){
 
 	}
@@ -54,10 +63,17 @@ public abstract class GenericGeneticAlgorithm {
 	 * 
 	 * @param chromosome
 	 */
+	/**
+	 * @param chromosome
+	 * @return
+	 */
 	public Agent getFitness(String chromosome){
 		return null;
 	}
 
+	/**
+	 * @return
+	 */
 	public int getGeneration(){
 		return 0;
 	}

@@ -44,6 +44,14 @@ public class GamePane extends Pane {
 	}
 
 	
+	/**
+	 * @param width
+	 * @param height
+	 * creates a gridpane that will have the game running within it, also calls other functions
+	 * from other classes that will run the game
+	 * keyboard inputs can be done by the up, down, right, left cursors or W, A,S, and D
+	 * makes sure that when snake grows it'ss update the snake length in the Snake class
+	 */
 	public GamePane(double width, double height)
 	{
 		this.scene = scene;

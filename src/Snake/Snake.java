@@ -10,11 +10,9 @@ import com.sun.xml.internal.ws.dump.LoggingDumpTube.Position;
  * @version 1.0
  * @created 17-Feb-2019 5:39:59 PM
  */
-public class Snake 
-{
+
 
 public class Snake {
-	
 	
 	
 	private CurrentDirection Direction;
@@ -24,6 +22,9 @@ public class Snake {
 	public CurrentDirection m_CurrentDirection;
 
 	
+	/**
+	 * Constructs a new Snake instance
+	 */
 	public Snake()
 	{
 		int[] x = {2,2};
@@ -36,48 +37,9 @@ public class Snake {
 	{
 
 	}
-	public void ateObjectiveItem()
-	{
-
-	}
-
 	/**
-	 * 
-	 * @param direction
+	 * adds to the score which counts how many objectives the snake has eaten 
 	 */
-	public void changeDirection(CurrentDirection direction)
-	{
-
-	}
-
-	public boolean checkIfDead()
-	{
-		return false;
-	}
-
-	public void didEatObjectiveItem()
-	{
-
-	}
-
-	public void move()
-	{
-
-	}
-
-	public void randomObjectiveItem()
-	{
-
-	}
-
-	/**
-	 * 
-	 * @param x
-	 * @param y
-	 */
-	public void updatePosition(int x, int y)
-	{
-
 	public void ateObjectiveItem(){
 		if(Positions.get(0)[0] == objectiveItem[0] && Positions.get(0)[1] == objectiveItem[1])
 		{
@@ -93,10 +55,19 @@ public class Snake {
 		}
 	}
 
+	
+	/**
+	 * @param direction 
+	 * changes the current direction of the snake depending on the input by the keyboard
+	 */
 	public void changeDirection(CurrentDirection direction){
 		m_CurrentDirection = direction;
 	}
 
+	/**
+	 * @return isDead
+	 * checks if the snake ran into a wall or over itself and returning the status of if its dead 
+	 */
 	public boolean checkIfDead(){
 		boolean isDead = false;
 		for(int i = 1; i < Positions.size(); i++)
@@ -111,6 +82,10 @@ public class Snake {
 		}
 		return isDead;	}
 
+	/**
+	 * @return boolean
+	 * checks if snake ate an objective item and if the answer is yes then add a unit length to the snake, if not then do nothing
+	 */
 	public boolean didEatObjectiveItem(){
 		if(Positions.get(0)[0] == objectiveItem[0] && Positions.get(0)[1] == objectiveItem[1])
 		{
@@ -119,6 +94,10 @@ public class Snake {
 		return false;
 	}
 
+	/**
+	 * the snake starts out going right and depending on what the keyboard input is it will chnage its direction
+	 * its either right, left, up, or down
+	 */
 	public void move(){
 		//System.out.println("X: " + Positions.get(0)[0] + " Y: " + Positions.get(1)[1]);
 		
@@ -143,6 +122,9 @@ public class Snake {
 			updatePosition(0, 1);//subtract 1 to y direction
 	}
 
+	/**
+	 * generates a random objective item that is not within the snakes unit length 
+	 */
 	public void randomObjectiveItem(){
 			Random spot = new Random();
 			
@@ -162,6 +144,11 @@ public class Snake {
 			objectiveItem[1] = col;
 	}
 
+	/**
+	 * @param x rows
+	 * @param y columns
+	 * updates the positions of the snake (how long it is) 
+	 */
 	public void updatePosition(int x, int y)
 	{
 		Positions.get(0)[0] += x;

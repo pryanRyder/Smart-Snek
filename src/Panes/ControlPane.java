@@ -15,6 +15,11 @@ public class ControlPane extends Pane {
 	public void finalize() throws Throwable {
 		super.finalize();
 	}
+	/**
+	 * @param width
+	 * @param height
+	 * creates a pane called Control pane
+	 */
 	public ControlPane(double width, double height)
 	{
 		setPrefSize(width * 0.25, height);

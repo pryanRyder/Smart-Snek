@@ -20,6 +20,9 @@ public class SnakeManager {
 	public ControlPane m_ControlPane;
 	public DisplayPane m_DisplayPane;
 
+	/**
+	 * constructs a new SnakeManager instance
+	 */
 	public SnakeManager(){
 
 	}
