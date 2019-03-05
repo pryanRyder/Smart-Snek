@@ -35,12 +35,20 @@ public class DisplayPane extends Pane {
 		content.setLayoutY(getPrefHeight()*0.05);
 		content.setStyle("-fx-background-color: '#a5a5a5'");
 		getChildren().add(content);
+		
+		Pane information = new Pane();
+		
+		information.setPrefSize(getPrefWidth()*0.92, getPrefHeight()*0.88);
+		information.setLayoutX(content.getPrefWidth()*0.01);
+		information.setLayoutY(content.getPrefHeight()*0.05);
+		information.setStyle("-fx-background-color: '#e0e0e0';");
+		content.getChildren().add(information);
 
 		Text Title = new Text("Display Panel");
 		Title.setStyle("-fx-font-size: 20;");// NEEDS TO BE CHANGED BASED ON SIZE
 		Title.setLayoutX(content.getPrefWidth()*0.01);
 		Title.setLayoutY(content.getPrefHeight()*0.15);
-		content.getChildren().add(Title);
+		information.getChildren().add(Title);
 
 	/*
 		Pane scorePane = new Pane();

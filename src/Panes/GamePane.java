@@ -232,37 +232,34 @@ public class GamePane extends Pane {
 			timeline.play();
 			
 			Pane scorePane = new Pane();
-			Text Score = new Text("Score");
-			scorePane.setBackground(new Background(new BackgroundFill(Color.IVORY, null, null)));
 			scorePane.setPrefSize(120, 115);
-			scorePane.setLayoutX(10);
-			scorePane.setLayoutY(580);
+		    scorePane.setLayoutX(getPrefWidth()*0.05);
+			scorePane.setLayoutY(getPrefHeight()*1.1);	
 			
 		    stringScore.setLayoutX(scorePane.getPrefWidth()*0.25);
-		    stringScore.setLayoutY(scorePane.getPrefWidth()*0.6);
+		    stringScore.setLayoutY(scorePane.getPrefHeight()*0.6);
 		    stringScore.setFont(Font.font(35));
-		   
+			
+			Text Score = new Text("Score");
 			Score.setLayoutX(scorePane.getPrefWidth()*0.02);
 			Score.setLayoutY(scorePane.getPrefHeight()*0.15);
 			scorePane.setStyle("-fx-font-size: 18 ;");
+			
 			scorePane.getChildren().addAll(Score, stringScore);
 			
 			
 			Pane iterationPane = new Pane();
-			iterationPane.setBackground(new Background(new BackgroundFill(Color.IVORY, null, null)));
-			//iterationPane.setStyle("-fx-background-color: '#ffffff' ");
 			iterationPane.setPrefSize(120, 115);
-			iterationPane.setLayoutX(140);
-			iterationPane.setLayoutY(580);
+			iterationPane.setLayoutX(getPrefWidth()*0.13);
+			iterationPane.setLayoutY(getPrefHeight()*1.1);
 			
-			//Text iterationString = new Text(Integer.toString(iteration));
-			iterationString.setLayoutX(scorePane.getPrefWidth()*0.25);
-			iterationString.setLayoutY(scorePane.getPrefWidth()*0.6);
+			iterationString.setLayoutX(iterationPane.getPrefWidth()*0.25);
+			iterationString.setLayoutY(iterationPane.getPrefHeight()*0.6);
 			iterationString.setFont(Font.font(35));
 			
 			Text Iteration = new Text("Iterations");
-			Iteration.setLayoutX(scorePane.getPrefWidth()*0.02);
-			Iteration.setLayoutY(scorePane.getPrefHeight()*0.15);
+			Iteration.setLayoutX(iterationPane.getPrefWidth()*0.02);
+			Iteration.setLayoutY(iterationPane.getPrefHeight()*0.15);
 			iterationPane.setStyle("-fx-font-size: 18 ;");
 			
 			iterationPane.getChildren().addAll(Iteration, iterationString);
