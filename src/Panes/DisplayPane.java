@@ -15,6 +15,7 @@ import javafx.scene.text.Text;
  */
 public class DisplayPane extends Pane {
 
+
 	public void finalize() throws Throwable {
 		super.finalize();
 	}

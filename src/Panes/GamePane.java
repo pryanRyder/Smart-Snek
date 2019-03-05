@@ -35,7 +35,6 @@ public class GamePane extends Pane {
 	boolean onlyOneDirection = true;
 	Rectangle recs[][] = new Rectangle[25][15];
 	Scene scene;
-
 	
 	public SnakeManager m_SnakeManager;
 	Snake snek = new Snake();
@@ -52,7 +51,6 @@ public class GamePane extends Pane {
 	
 	public GamePane(double width, double height)
 	{
-		this.scene = scene;
 		Text Title = new Text("I am the Game Pane");
 		getChildren().add(Title);
 		setPrefSize(width * 0.75, height * 0.75);
