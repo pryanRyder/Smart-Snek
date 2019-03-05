@@ -1,5 +1,6 @@
 package Panes;
 
+import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
@@ -29,6 +30,162 @@ public class ControlPane extends Pane {
 		content.setLayoutX(getPrefWidth()*0.02);
 		content.setLayoutY(getPrefHeight()*0.01);
 		content.setStyle("-fx-background-color: '#a5a5a5'");
+		
+		Text txtAgentPane = new Text("Agent");
+		Pane AgentPane = new Pane();
+		Text txtLearningRate = new Text("Learning Rate");
+		TextField tfLearningRate = new TextField();
+		Text txtDiscountFactor = new Text("Discount Factor");
+		TextField tfDiscountFactor = new TextField();
+		Text txtMaximumReward = new Text("Maximum Reward");
+		TextField tfMaximumReward = new TextField();
+		
+		Pane geneticAlgorithmPane = new Pane();
+		
+		geneticAlgorithmPane.setStyle("-fx-background-color: '#e0e0e0'");
+		geneticAlgorithmPane.setLayoutX(getPrefWidth()*0.02);
+		geneticAlgorithmPane.setLayoutY(getPrefHeight()*0.6);
+		geneticAlgorithmPane.setPrefHeight(content.getPrefHeight()*.195);
+		geneticAlgorithmPane.setPrefWidth(content.getPrefWidth()*.95);
+		content.getChildren().add(geneticAlgorithmPane);
+		
+		Text txtGeneticAlgorithm = new Text("Genetic Algorithm");
+		txtGeneticAlgorithm.setStyle("-fx-font-size: 18");
+		txtGeneticAlgorithm.setLayoutX(geneticAlgorithmPane.getPrefWidth()*0.02);
+		txtGeneticAlgorithm.setLayoutY(geneticAlgorithmPane.getPrefHeight()*0.15);
+		geneticAlgorithmPane.getChildren().add(txtGeneticAlgorithm);
+		
+		Text txtPopulationSize = new Text("Population Size");
+		txtPopulationSize.setStyle("-fx-font-size: 15");
+		txtPopulationSize.setLayoutX(geneticAlgorithmPane.getPrefWidth()*0.02);
+		txtPopulationSize.setLayoutY(geneticAlgorithmPane.getPrefHeight()*0.35);
+		geneticAlgorithmPane.getChildren().add(txtPopulationSize);
+		
+		TextField tfPopulationSize = new TextField();
+		tfPopulationSize.setStyle("-fx-font-size: 15");
+		tfPopulationSize.setLayoutX(geneticAlgorithmPane.getPrefWidth()*0.02);
+		tfPopulationSize.setLayoutY(geneticAlgorithmPane.getPrefHeight()*0.40);
+		tfPopulationSize.setPrefWidth(geneticAlgorithmPane.getPrefWidth()*0.2);
+		geneticAlgorithmPane.getChildren().add(tfPopulationSize);
+		
+		Text txtMutationRate = new Text("Mutation Rate");
+		txtMutationRate.setStyle("-fx-font-size: 15");
+		txtMutationRate.setLayoutX(geneticAlgorithmPane.getPrefWidth()*0.02);
+		txtMutationRate.setLayoutY(geneticAlgorithmPane.getPrefHeight()*0.70);
+		geneticAlgorithmPane.getChildren().add(txtMutationRate);
+		
+		TextField tfMutationRate = new TextField();
+		tfMutationRate.setStyle("-fx-font-size: 15");
+		tfMutationRate.setLayoutX(geneticAlgorithmPane.getPrefWidth()*0.02);
+		tfMutationRate.setLayoutY(geneticAlgorithmPane.getPrefHeight()*0.75);
+		tfMutationRate.setPrefWidth(geneticAlgorithmPane.getPrefWidth()*0.2);
+		geneticAlgorithmPane.getChildren().add(tfMutationRate);
+		
+		Button btCreateNew = new Button("Create New");
+		Button btUpload = new Button("Upload");
+		
+		Pane trainingPane = new Pane();
+		
+		trainingPane.setStyle("-fx-background-color: '#e0e0e0'");
+		trainingPane.setLayoutX(getPrefWidth()*0.02);
+		trainingPane.setLayoutY(getPrefHeight()*0.80);
+		trainingPane.setPrefHeight(content.getPrefHeight()*.15);
+		trainingPane.setPrefWidth(content.getPrefWidth()*.95);
+		content.getChildren().add(trainingPane);
+		
+		Button btStop = new Button("STOP");
+		Button btStartTraining = new Button("Start Training");
+		Button btPlay = new Button("Play");
+		Button btPause = new Button("Pause");
+		Button btRestart = new Button("Restart");
+		
+		Text txtTrainingController = new Text("Training Controller");
+		txtTrainingController.setStyle("-fx-font-size: 18");
+		txtTrainingController.setLayoutX(trainingPane.getPrefWidth()*0.02);
+		txtTrainingController.setLayoutY(trainingPane.getPrefHeight()*0.2);
+		trainingPane.getChildren().add(txtTrainingController);
+		
+		btStop.setLayoutX(trainingPane.getPrefWidth()*.4);
+		btStop.setLayoutY(trainingPane.getPrefHeight()*.6);
+		trainingPane.getChildren().add(btStop);
+		
+		btStartTraining.setLayoutX(trainingPane.getPrefWidth()*.02);
+		btStartTraining.setLayoutY(trainingPane.getPrefHeight()*.6);
+		trainingPane.getChildren().add(btStartTraining);
+		
+		btPlay.setLayoutX(trainingPane.getPrefWidth()*.02);
+		btPlay.setLayoutY(trainingPane.getPrefHeight()*.3);
+		trainingPane.getChildren().add(btPlay);
+		
+		btPause.setLayoutX(trainingPane.getPrefWidth()*.2);
+		btPause.setLayoutY(trainingPane.getPrefHeight()*.3);
+		trainingPane.getChildren().add(btPause);
+		
+		btRestart.setLayoutX(trainingPane.getPrefWidth()*.4);
+		btRestart.setLayoutY(trainingPane.getPrefHeight()*.3);
+		trainingPane.getChildren().add(btRestart);
+
+		
+		/*
+		txtAgentPane.setLayoutX(content.getPrefWidth()*.04);
+		txtAgentPane.setLayoutY(content.getPrefHeight()*.12);
+		txtAgentPane.setStyle("-fx-font-size: 18;");
+		content.getChildren().add(txtAgentPane);
+*/
+
+		
+		btUpload.setLayoutX(content.getPrefWidth()*.02);
+		btUpload.setLayoutY(content.getPrefHeight()*.15);
+		content.getChildren().add(btUpload);
+		
+		AgentPane.setStyle("-fx-background-color: '#e0e0e0'");
+		AgentPane.setLayoutX(getPrefWidth()*0.02);
+		AgentPane.setLayoutY(getPrefHeight()*0.10);
+		AgentPane.setPrefHeight(content.getPrefHeight()*.50);
+		AgentPane.setPrefWidth(content.getPrefWidth()*.95);
+		content.getChildren().add(AgentPane);
+		
+		txtAgentPane = new Text("Agent Controller");
+		txtAgentPane.setLayoutX(AgentPane.getPrefWidth()*.02);
+		txtAgentPane.setLayoutY(AgentPane.getPrefHeight()*.05);
+		txtAgentPane.setStyle("-fx-font-size: 18");
+		AgentPane.getChildren().add(txtAgentPane);
+		
+		txtLearningRate.setLayoutX(AgentPane.getPrefWidth()*.02);
+		txtLearningRate.setLayoutY(AgentPane.getPrefHeight()*.30);
+		AgentPane.getChildren().add(txtLearningRate);
+		txtLearningRate.setStyle("-fx-font-size: 15;");
+
+
+		tfLearningRate.setLayoutX(AgentPane.getPrefWidth()*.02);
+		tfLearningRate.setLayoutY(AgentPane.getPrefHeight()* .33);
+		AgentPane.getChildren().add(tfLearningRate);
+		
+		txtDiscountFactor.setLayoutX(AgentPane.getPrefWidth()*.02);
+		txtDiscountFactor.setLayoutY(AgentPane.getPrefHeight()*.46);
+		txtDiscountFactor.setStyle("-fx-font-size: 15;");
+
+		AgentPane.getChildren().add(txtDiscountFactor);
+		
+		tfDiscountFactor.setLayoutX(AgentPane.getPrefWidth()*.02);
+		tfDiscountFactor.setLayoutY(AgentPane.getPrefHeight()*.49);
+		AgentPane.getChildren().add(tfDiscountFactor);
+		
+		txtMaximumReward.setLayoutX(AgentPane.getPrefWidth()*.02);
+		txtMaximumReward.setLayoutY(AgentPane.getPrefHeight()*.61);
+		txtMaximumReward.setStyle("-fx-font-size: 15;");
+
+		AgentPane.getChildren().add(txtMaximumReward);		
+		
+		tfMaximumReward.setLayoutX(AgentPane.getPrefWidth()*.02);
+		tfMaximumReward.setLayoutY(AgentPane.getPrefHeight()*.64);
+		AgentPane.getChildren().add(tfMaximumReward);
+		
+		btCreateNew.setLayoutX(AgentPane.getPrefWidth()*.02);
+		btCreateNew.setLayoutY(AgentPane.getPrefHeight()*.80);
+		AgentPane.getChildren().add(btCreateNew);
+
+		
 		getChildren().add(content);
 		Text Title = new Text("Control Panel");
 		Title.setStyle("-fx-font-size: 20;"); // NEEDS TO BE CHANGED BASED ON SIZE
