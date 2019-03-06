@@ -11,6 +11,7 @@ import javafx.scene.control.Button;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.TextField;
@@ -56,8 +57,6 @@ public class GamePane extends Pane {
 		//this is the GamePane
 		
 
-		this.scene = scene;
-
 		Text Title = new Text("I am the Game Pane");
 		this.getChildren().add(Title);
 		this.setPrefSize(width * 0.75, height * 0.75);
@@ -67,38 +66,31 @@ public class GamePane extends Pane {
 		this.setLayoutY(0);
 		this.setStyle("-fx-background-color: '#6d6d6d';");
 		
-
+/*
 		Pane content = new Pane();
 		content.setPrefSize(this.getPrefWidth()*0.90, this.getPrefHeight()*0.90);
 		content.setLayoutX(this.getPrefWidth()*0.05);
 		content.setLayoutY(this.getPrefHeight()*0.05);
 		content.setStyle("-fx-background-color: 'black'");
 		this.getChildren().add(content);
-
+*/
 		
 		GridPane gridpane = new GridPane();
 		
-				gridpane.setPadding(new Insets(5,5,5,5));
-
-				
-			for(int x = 0; x < recs.length; x++) {
-				for(int y = 0; y < recs[x].length; y++) {
-		
-					Rectangle rec = new Rectangle();
-					rec.setHeight(28);
-					rec.setWidth(28);
-					rec.setFill(Color.DARKCYAN);
-					recs[x][y] = rec;
-					
-					gridpane.add(recs[x][y], x, y);
-				}
-			}
+		MakeGridPane.MakeTheGridPane(this, gridpane, recs);
+		    
+			//System.out.println(recs.length); //25
+		    
 			
-			
-			
-		    gridpane.setHgap(2);
-		    gridpane.setVgap(2);
-		    gridpane.relocate(80.0, 60.0);
+		    System.out.println(this.getPrefHeight());
+		    System.out.println(this.getPrefWidth());
+		    
+		    
+		    //FIXME need to center the gamegrid.
+		    //gridpane.relocate(80.0, 60.0);
+		    //GamePane.setAlignment(gridpane, Pos.CENTER);
+		    //gridpane.relocate(this.getPrefWidth()*, this.getPrefHeight()*);
+		    
 		    gridpane.setBackground(new Background(new BackgroundFill(Color.AQUAMARINE, null, null)));
 		   
 		    

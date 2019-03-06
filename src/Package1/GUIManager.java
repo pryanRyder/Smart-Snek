@@ -20,7 +20,12 @@ import javafx.stage.Stage;
  */
 public class GUIManager extends Application
 {
-	Scene scene;
+	private static Stage guiStage;
+	
+	
+	public static Stage getStage() {
+		return guiStage;
+	}
 	
 	public GUIManager()
 	{
@@ -36,22 +41,25 @@ public class GUIManager extends Application
 	 * @param primaryStage
 	 */
 	public void start(Stage primaryStage)
-	{		
-		double width, height;
-		//Get the dimensions of user's screen.
-	    Rectangle2D screenBounds = Screen.getPrimary().getBounds();
-	    
-	    //Test to see what the dimensions of the screen are.
-	    System.out.println(screenBounds);
-	    
-	    //Make the height 90% of the screen to avoid off-screen defects.
-	    width = screenBounds.getWidth() * 1;
-	    height = screenBounds.getHeight() * 0.9;
-		scene = new Scene(new MasterPane(width, height), width, height);
-		primaryStage.setTitle("Smart-Snek");
-		primaryStage.setScene(scene);
-		primaryStage.show();
+	{
+			guiStage = primaryStage;
+			
+			double width, height;
+			//Get the dimensions of user's screen.
+		    Rectangle2D screenBounds = Screen.getPrimary().getBounds();
+		    
+		    //Test to see what the dimensions of the screen are.
+		    System.out.println(screenBounds);
+		    
+		    //Make the height 90% of the screen to avoid off-screen defects.
+		    width = screenBounds.getWidth() * 1;
+		    height = screenBounds.getHeight() * 0.9;
+			Scene scene = new Scene(new MasterPane(width, height), width, height);
+			primaryStage.setTitle("Smart-Snek");
+			primaryStage.setScene(scene);
+			primaryStage.show();
 	}
+	
 	
 	public static void main(String[] args)
 	{
