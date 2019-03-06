@@ -183,7 +183,8 @@ public class ControlPane extends Pane {
 
 		btStop.setOnAction(e -> {
 
-			((GamePane) gamePane).Stop();
+			//((GamePane) gamePane).Stop();
+			TimelineMethods.Stop();
 			btStartTraining.setDisable(false);
 			btPlay.setDisable(true);
 			btPause.setDisable(true);
@@ -213,7 +214,8 @@ public class ControlPane extends Pane {
 
 		btPlay.setOnAction(e -> {
 
-			((GamePane) gamePane).Play();
+			//((GamePane) gamePane).Play();
+			TimelineMethods.Play();
 			btPlay.setDisable(true);
 			btPause.setDisable(false);
 
@@ -225,7 +227,8 @@ public class ControlPane extends Pane {
 
 		btPause.setOnAction(e -> {
 
-			((GamePane) gamePane).Pause();
+			//((GamePane) gamePane).Pause();
+			TimelineMethods.Pause();
 			btPause.setDisable(true);
 			btPlay.setDisable(false);
 
