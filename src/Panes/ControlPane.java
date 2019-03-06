@@ -1,26 +1,49 @@
 package Panes;
 
+import javafx.event.ActionEvent;
+import javafx.event.Event;
+import javafx.event.EventHandler;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
+import javafx.scene.shape.Rectangle;
+import javafx.scene.input.MouseEvent;
 
 /**
  * @author Danny
  * @version 1.0
- * @created 17-Feb-2019 5:39:58 PM
  */
 public class ControlPane extends Pane {
+	
+	boolean GAChecked = false;
 
 
 	public void finalize() throws Throwable {
 		super.finalize();
 	}
+	/**
+	 * @param width double 
+	 * @param height double
+	 * creates a pane called Control pane
+	 */
 	public ControlPane(double width, double height)
 	{
+
 
 		//this is the ControlPane
 		
 		this.setPrefSize(width * 0.25, height);
+		
+
+
+		Pane gamePane = new GamePane(width, height);
+		getChildren().add(gamePane);
 		
 
 		setPrefSize(width * 0.25, height);
@@ -37,15 +60,11 @@ public class ControlPane extends Pane {
 		content.setLayoutX(this.getPrefWidth()*0.02);
 		content.setLayoutY(this.getPrefHeight()*0.01);
 		content.setStyle("-fx-background-color: '#a5a5a5'");
+
 		this.getChildren().add(content);
 		
-		Text Title = new Text("Control Panel");
-		Title.setStyle("-fx-font-size: 20;"); // NEEDS TO BE CHANGED BASED ON SIZE
-		Title.setLayoutX(content.getPrefWidth()*0.04);
-		Title.setLayoutY(content.getPrefHeight()*0.04);
 		//Title.setLayoutX(value);
 		//Title.setLayoutY();
-		content.getChildren().add(Title);
 
 
 	}

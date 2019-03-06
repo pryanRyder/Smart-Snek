@@ -20,13 +20,7 @@ import javafx.stage.Stage;
  */
 public class GUIManager extends Application
 {
-	private static Stage guiStage;
-	
-	
-	public static Stage getStage() {
-		return guiStage;
-	}
-	
+
 	public GUIManager()
 	{
 
@@ -42,7 +36,6 @@ public class GUIManager extends Application
 	 */
 	public void start(Stage primaryStage)
 	{
-			guiStage = primaryStage;
 			
 			double width, height;
 			//Get the dimensions of user's screen.
