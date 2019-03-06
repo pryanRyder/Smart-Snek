@@ -1,14 +1,9 @@
 package Package1;
 
-import Panes.ControlPane;
-import Panes.DisplayPane;
-import Panes.GamePane;
-import Panes.HelpTabPane;
 import Panes.MasterPane;
 import javafx.application.Application;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
-import javafx.scene.layout.Pane;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 
@@ -16,10 +11,15 @@ import javafx.stage.Stage;
  * @author Danny
  * @author Raymond Kwasneski
  * @version 1.0
- * @created 17-Feb-2019 5:39:59 PM
  */
 public class GUIManager extends Application
 {
+
+	Scene scene;
+	
+	/**
+	 * creates a new GUIManger instance 
+	 */
 
 	public GUIManager()
 	{
@@ -30,11 +30,15 @@ public class GUIManager extends Application
 	{
 
 	}
-	/**
-	 * 
-	 * @param primaryStage
+	
+	
+	/* (non-Javadoc)
+	 * @see javafx.application.Application#start(javafx.stage.Stage)
+	 * the class you run to run the project and it creates a stage and scene that
+	 *  considers the device it's running from in terms of its size
 	 */
 	public void start(Stage primaryStage)
+
 	{
 			
 			double width, height;
