@@ -2,6 +2,7 @@ package Panes;
 
 import java.util.Collection;
 
+import Agent.SnakeBrain;
 import Snake.CurrentDirection;
 import Snake.Snake;
 import Snake.SnakeManager;
@@ -30,13 +31,16 @@ import javafx.util.Duration;
  * @version 1.0
  */
 public class GamePane extends Pane {
-	
+
+
 	boolean onlyOneDirection = true;
 	Rectangle recs[][] = new Rectangle[25][15];
 	Scene scene;
 	
 	public SnakeManager m_SnakeManager;
 	Snake snek = new Snake();
+	SnakeBrain brain = new SnakeBrain(snek);
+
 	
 	Text stringScore = new Text(Integer.toString(snek.ateObjectiveItem()));
 	
@@ -164,9 +168,9 @@ public class GamePane extends Pane {
 		stringScore.setText(0+"");
 		iteration = 0;
 		
-		snek = new Snake();
 		
-		KeyFrame keyframe = new KeyFrame(Duration.millis(75), action -> 
+		
+		KeyFrame keyframe = new KeyFrame(Duration.millis(50), action -> 
 		{
 			onlyOneDirection = true;
 			
@@ -233,6 +237,7 @@ public class GamePane extends Pane {
 				}
 			});
 			
+			
 		    snek.move();
 
 		    for( int i = 0; i < snek.Positions.size(); i++) 
@@ -243,6 +248,7 @@ public class GamePane extends Pane {
 		    		(snek.Positions.get(0)[1] < 0))
 		    	{
 		    		snek = new Snake();
+		    		brain = new SnakeBrain(snek);
 		    		
 		    		iteration = iteration + 1;
 		    	}
@@ -275,7 +281,7 @@ public class GamePane extends Pane {
 		    if( snek.checkIfDead())
 		    {
 		    	snek = new Snake();
-		    	
+		    	brain = new SnakeBrain(snek);
 		    	iteration = iteration + 1;
 		    	System.out.print(iteration);
 		    }
@@ -286,7 +292,11 @@ public class GamePane extends Pane {
 		    
 		    iterationString.setText(Integer.toString(iteration));
 		    
-		   
+		    brain.updateSnake(snek);
+			brain.MakeDecision();
+			snek.setDirection(brain.getDecidedDecidedDirection());
+			
+		    
 		});
 
 	

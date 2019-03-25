@@ -14,13 +14,10 @@ import com.sun.xml.internal.ws.dump.LoggingDumpTube.Position;
 
 public class Snake {
 
-
-	private CurrentDirection Direction;
 	public int[] objectiveItem = new int[2];
 	public ArrayList<int[]> Positions = new ArrayList<int[]>();
 	public int score;
-	public CurrentDirection m_CurrentDirection;
-
+	public CurrentDirection m_CurrentDirection = CurrentDirection.RIGHT;
 
 	/**
 	 * Constructs a new Snake instance
@@ -29,7 +26,6 @@ public class Snake {
 	{
 		int[] x = {2,2};
 		Positions.add(x);
-		m_CurrentDirection = CurrentDirection.RIGHT;
 		randomObjectiveItem();
 	}
 
@@ -157,4 +153,13 @@ public class Snake {
 		Positions.get(0)[0] += x;
 		Positions.get(0)[1] += y;
 	}
+
+	public CurrentDirection getDirection() {
+		return m_CurrentDirection;
+	}
+	
+	public void setDirection(CurrentDirection x) {
+		m_CurrentDirection = x;
+	}
+
 }//end Snake
