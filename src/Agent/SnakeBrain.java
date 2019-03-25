@@ -252,6 +252,57 @@ public class SnakeBrain
 				}	
 			}
 		}
+		/*
+		for(int i = 0; i < snake.Positions.size(); i++)
+		{
+			if(snake.Positions.get(0)[1] == snake.Positions.get(i)[1] && snake.Positions.get(0)[0] == snake.Positions.get(i)[0]+1 && direction == CurrentDirection.RIGHT)
+			{
+				int maybe = (Math.random() <= 0.5) ? 1 : 2;
+				switch(maybe)
+				{
+					case 1: direction = CurrentDirection.UP;
+						break;
+					case 2: direction = CurrentDirection.DOWN;
+						break;
+				}
+			}
+			else if(snake.Positions.get(0)[1] == snake.Positions.get(i)[1] && snake.Positions.get(0)[0] == snake.Positions.get(i)[0]-1 && direction == CurrentDirection.LEFT)
+			{
+				int maybe = (Math.random() <= 0.5) ? 1 : 2;
+				switch(maybe)
+				{
+					case 1: direction = CurrentDirection.UP;
+						break;
+					case 2: direction = CurrentDirection.DOWN;
+						break;
+				}
+			}
+			else if(snake.Positions.get(0)[1] == snake.Positions.get(i)[1]+1 && snake.Positions.get(0)[0] == snake.Positions.get(i)[0] && direction == CurrentDirection.UP)
+			{
+				int maybe = (Math.random() <= 0.5) ? 1 : 2;
+				switch(maybe)
+				{
+					case 1: direction = CurrentDirection.LEFT;
+						break;
+					case 2: direction = CurrentDirection.RIGHT;
+						break;
+				}
+			
+			}
+			else if(snake.Positions.get(0)[1] == snake.Positions.get(i)[1]-1 && snake.Positions.get(0)[0] == snake.Positions.get(i)[0] && direction == CurrentDirection.DOWN)
+			{
+				int maybe = (Math.random() <= 0.5) ? 1 : 2;
+				switch(maybe)
+				{
+					case 1: direction = CurrentDirection.LEFT;
+						break;
+					case 2: direction = CurrentDirection.RIGHT;
+						break;
+				}
+			}
+
+		}
+			*/
 		
 			
 			DecidedDirection = direction;
