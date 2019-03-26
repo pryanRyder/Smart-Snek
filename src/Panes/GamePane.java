@@ -35,7 +35,9 @@ public class GamePane extends Pane {
 
 
 	boolean onlyOneDirection = true;
-	Rectangle recs[][] = new Rectangle[25][15];
+	//[row][col]
+	Rectangle recs[][] = new Rectangle[15][25];
+	
 	Scene scene;
 	
 	public SnakeManager m_SnakeManager;
@@ -163,9 +165,9 @@ public class GamePane extends Pane {
 
 		    for( int i = 0; i < snek.Positions.size(); i++) 
 		    {
-		    	if((snek.Positions.get(0)[0] > recs.length-1) 	||
+		    	if((snek.Positions.get(0)[0] > recs[0].length-1) 	||
 		    		(snek.Positions.get(0)[0] < 0) 				||
-		    		(snek.Positions.get(0)[1] > recs[0].length-1) ||
+		    		(snek.Positions.get(0)[1] > recs.length-1) ||
 		    		(snek.Positions.get(0)[1] < 0))
 		    	{
 		    		snek = new Snake();
@@ -175,6 +177,18 @@ public class GamePane extends Pane {
 		    	}
 		    }
 			
+			int row=0;
+			for(row=0; row < recs.length; row++) {
+				
+				int col=0;
+				for(col=0; col < recs[row].length; col++) {
+					
+					recs[row][col].setFill(Color.DARKCYAN);
+					
+				}
+			}
+		    
+		    /*
 			for(int i = 0; i < recs.length; i++)
 			{
 				for(int j = 0; j < recs[i].length; j++)
@@ -182,15 +196,16 @@ public class GamePane extends Pane {
 					recs[i][j].setFill(Color.DARKCYAN);
 				}
 			}
-			
-		    recs[snek.objectiveItem[0]][snek.objectiveItem[1]].setFill(Color.RED);
+			*/
+			//Color the objective
+			recs[snek.objectiveItem[1]][snek.objectiveItem[0]].setFill(Color.RED);
 
 			
 		    for(int i = 0; i < snek.Positions.size(); i++) //moves the display of the snake
 		    {
 		    	try
 		    	{
-		    		recs[snek.Positions.get(i)[0]][snek.Positions.get(i)[1]].setFill(Color.WHITE);
+		    		recs[snek.Positions.get(i)[1]][snek.Positions.get(i)[0]].setFill(Color.WHITE);
 		    	}
 		    	catch(ArrayIndexOutOfBoundsException e)
 		    	{
@@ -247,6 +262,19 @@ public class GamePane extends Pane {
 	{
 		timeline.stop();
 		
+		
+		int row=0;
+		for(row=0; row < recs.length; row++) {
+			
+			int col=0;
+			for(col=0; col < recs[row].length; col++) {
+				
+				recs[row][col].setFill(Color.DARKCYAN);
+				
+			}
+		}
+		
+		/*
 		for(int i = 0; i < recs.length; i++)
 		{
 			for(int j = 0; j < recs[i].length; j++)
@@ -254,6 +282,7 @@ public class GamePane extends Pane {
 				recs[i][j].setFill(Color.DARKCYAN);
 			}
 		}
+		*/
 		
 	}
 }//end GamePane
