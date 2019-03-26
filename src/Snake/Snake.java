@@ -24,8 +24,8 @@ public class Snake {
 	 */
 	public Snake()
 	{
-		int[] x = {2,2};
-		Positions.add(x);
+		int[] startingPos = {0,0};
+		Positions.add(startingPos);
 		randomObjectiveItem();
 	}
 
