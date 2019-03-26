@@ -3,6 +3,7 @@ package Panes;
 import java.util.Collection;
 
 import Agent.SnakeBrain;
+import PaneHelper.AddGridPaneContent;
 import Snake.CurrentDirection;
 import Snake.Snake;
 import Snake.SnakeManager;
