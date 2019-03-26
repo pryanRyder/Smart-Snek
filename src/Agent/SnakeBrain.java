@@ -301,10 +301,52 @@ public class SnakeBrain
 				}
 			}
 
-		}
-			*/
-		
+		}*/
 			
+			if(DecidedDirection == CurrentDirection.UP && direction == CurrentDirection.DOWN)
+			{
+				int maybe = (Math.random() <= 0.5) ? 1 : 2;
+				switch(maybe)
+				{
+					case 1: direction = CurrentDirection.LEFT;
+						break;
+					case 2: direction = CurrentDirection.RIGHT;
+						break;
+				}
+			}
+			else if(DecidedDirection == CurrentDirection.DOWN && direction == CurrentDirection.UP)
+			{
+				int maybe = (Math.random() <= 0.5) ? 1 : 2;
+				switch(maybe)
+				{
+					case 1: direction = CurrentDirection.LEFT;
+						break;
+					case 2: direction = CurrentDirection.RIGHT;
+						break;
+				}
+			}
+			else if(DecidedDirection == CurrentDirection.LEFT && direction == CurrentDirection.RIGHT)
+			{
+				int maybe = (Math.random() <= 0.5) ? 1 : 2;
+				switch(maybe)
+				{
+					case 1: direction = CurrentDirection.DOWN;
+						break;
+					case 2: direction = CurrentDirection.UP;
+						break;
+				}
+			}
+			else if(DecidedDirection == CurrentDirection.RIGHT && direction == CurrentDirection.LEFT)
+			{
+				int maybe = (Math.random() <= 0.5) ? 1 : 2;
+				switch(maybe)
+				{
+					case 1: direction = CurrentDirection.DOWN;
+						break;
+					case 2: direction = CurrentDirection.UP;
+						break;
+				}
+			}
 			DecidedDirection = direction;
 	}
 	

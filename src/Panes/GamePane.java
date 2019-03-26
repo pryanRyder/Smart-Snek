@@ -46,6 +46,8 @@ public class GamePane extends Pane {
 	
 	int iteration = 0;
 	Text iterationString = new Text();
+	Text highScoreString = new Text();
+	int highscore = 0;
 
     Timeline timeline = new Timeline();
 	
@@ -147,8 +149,24 @@ public class GamePane extends Pane {
 			
 			iterationPane.getChildren().addAll(Iteration, iterationString);
 			
+			Pane highScorePane = new Pane();
+			highScorePane.setPrefSize(120, 115);
+			highScorePane.setLayoutX(getPrefWidth()*0.23);
+			highScorePane.setLayoutY(getPrefHeight()*1.1);
 			
-		getChildren().addAll(gridpane, scorePane, iterationPane);
+			highScoreString.setLayoutX(iterationPane.getPrefWidth()*0.25);
+			highScoreString.setLayoutY(iterationPane.getPrefHeight()*0.6);
+			highScoreString.setFont(Font.font(35));
+			
+			Text highScore = new Text("High Score");
+			highScore.setLayoutX(iterationPane.getPrefWidth()*0.02);
+			highScore.setLayoutY(iterationPane.getPrefHeight()*0.15);
+			highScore.setStyle("-fx-font-size: 18 ;");
+			
+			highScorePane.getChildren().addAll(highScoreString, highScore);
+			
+			
+		getChildren().addAll(gridpane, scorePane, iterationPane, highScorePane);
 
 	}
 	
@@ -170,7 +188,7 @@ public class GamePane extends Pane {
 		
 		
 		
-		KeyFrame keyframe = new KeyFrame(Duration.millis(50), action -> 
+		KeyFrame keyframe = new KeyFrame(Duration.millis(20), action -> 
 		{
 			onlyOneDirection = true;
 			
@@ -289,6 +307,12 @@ public class GamePane extends Pane {
 		    snek.ateObjectiveItem();
 
 		    stringScore.setText(Integer.toString(snek.score));
+		    
+		    if(Integer.parseInt(stringScore.getText())>highscore)
+		    {
+		    	highScoreString.setText(stringScore.getText());
+		    	highscore = Integer.parseInt(stringScore.getText());
+		    }
 		    
 		    iterationString.setText(Integer.toString(iteration));
 		    
