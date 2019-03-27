@@ -5,6 +5,11 @@ import java.util.Random;
 
 import com.sun.xml.internal.ws.dump.LoggingDumpTube.Position;
 
+import ErrorMessages.*;
+import Panes.GamePane;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
+
 /**
  * @author Danny
  * @version 1.0
@@ -18,15 +23,16 @@ public class Snake {
 	public ArrayList<int[]> Positions = new ArrayList<int[]>();
 	public int score;
 	public CurrentDirection m_CurrentDirection = CurrentDirection.RIGHT;
+	private boolean justAte = false;
 
 	/**
 	 * Constructs a new Snake instance
 	 */
-	public Snake()
+	public Snake(Rectangle[][] recs)
 	{
 		int[] startingPos = {0,0};
 		Positions.add(startingPos);
-		randomObjectiveItem();
+		randomObjectiveItem(GamePane.getRecsRow(), GamePane.getRecsCol(), recs);
 	}
 
 	public void finalize() throws Throwable
@@ -38,19 +44,18 @@ public class Snake {
 	 * @return interger score
 	 *  adds to the score which counts how many objectives the snake has eaten
 	 */
-	public int ateObjectiveItem(){
+	public int ateObjectiveItem(Rectangle[][] recs){
+		
+		
 		if(Positions.get(0)[0] == objectiveItem[0] && Positions.get(0)[1] == objectiveItem[1])
 		{
 			score++;
 
-			randomObjectiveItem();
-
-			int[] tempPosition = new int[2];
-
-				tempPosition[0] = Positions.get(0)[0];
-				tempPosition[1] = Positions.get(0)[1];
-
-			Positions.add(tempPosition);
+			recs[this.Positions.get(0)[1]][this.Positions.get(0)[0]].setFill(Color.WHITE);
+			
+			justAte = true;
+			
+			randomObjectiveItem(GamePane.getRecsRow(), GamePane.getRecsCol(), recs);
 		}
 		return score;
 	}
@@ -98,49 +103,61 @@ public class Snake {
 	 * the snake starts out going right and depending on what the keyboard input is it will change its direction
 	 * its either right, left, up, or down
 	 */
-	public void move(){
-
-		for(int i = Positions.size()-1; i > 0; i--)
-		{
-			int[] temp = new int[2];
-			temp[0] = Positions.get(i-1)[0];
-			temp[1] = Positions.get(i-1)[1];
-
-			Positions.set(i, temp);
-
-
+	public void move(Rectangle[][] recs){
+		
+		if(m_CurrentDirection == CurrentDirection.RIGHT) {
+			updatePosition(1, 0, recs);//add 1 to x direction
 		}
-
-		if(m_CurrentDirection == CurrentDirection.RIGHT)
-			updatePosition(1, 0);//add 1 to x direction
-		else if(m_CurrentDirection == CurrentDirection.LEFT)
-			updatePosition(-1, 0);//subtract 1 to x direction
-		else if(m_CurrentDirection == CurrentDirection.UP)
-			updatePosition(0, -1);//add 1 to y direction
-		else if(m_CurrentDirection == CurrentDirection.DOWN)
-			updatePosition(0, 1);//subtract 1 to y direction
+		else if(m_CurrentDirection == CurrentDirection.LEFT) {
+			updatePosition(-1, 0, recs);//subtract 1 to x direction
+		}
+		else if(m_CurrentDirection == CurrentDirection.UP) {
+			updatePosition(0, -1, recs);//add 1 to y direction
+		}
+		else if(m_CurrentDirection == CurrentDirection.DOWN) {
+			updatePosition(0, 1, recs);//subtract 1 to y direction
+		}
+		
+		justAte = false;
+		
+		
+		//For testing...
+		/*
+		int i=0;
+		for(i=0; i < this.Positions.size(); i++) {
+			System.out.print("[" + this.Positions.get(i)[1] +"," +this.Positions.get(i)[0] + "]");
+		}
+		System.out.println("");
+		*/
+		
 	}
 
 	/**
 	 * generates a random objective item that is not within the snakes unit length
 	 */
-	public void randomObjectiveItem(){
+	public void randomObjectiveItem(int rowSize, int colSize, Rectangle[][] recs){
 			Random spot = new Random();
 
-			int row = spot.nextInt(25);
-			int col = spot.nextInt(15);
+			int col = spot.nextInt(colSize);
+			int row = spot.nextInt(rowSize);
 
 			for(int i = 0; i < Positions.size(); i++)
 			{
-				if(Positions.get(i)[0] == row && Positions.get(i)[1] == col)
+				if(Positions.get(i)[1] == row && Positions.get(i)[0] == col)
 				{
-					row = spot.nextInt(25); // col
-					col = spot.nextInt(15); // row
+					col = spot.nextInt(colSize);
+					row = spot.nextInt(rowSize);
 				}
 			}
 
-			objectiveItem[0] = row;
-			objectiveItem[1] = col;
+			objectiveItem[1] = row;
+			objectiveItem[0] = col;
+			
+			
+			if(justAte == true) {
+				recs[objectiveItem[1]][objectiveItem[0]].setFill(Color.RED);
+			}
+			
 	}
 
 	/**
@@ -148,10 +165,49 @@ public class Snake {
 	 * @param y columns
 	 * updates the positions of the snake (how long it is)
 	 */
-	public void updatePosition(int x, int y)
+	public void updatePosition(int x, int y, Rectangle[][] recs)
 	{
-		Positions.get(0)[0] += x;
-		Positions.get(0)[1] += y;
+		
+		if(justAte == true) {
+			int[] block = new int[2];
+			block[0] = this.Positions.get(0)[0] + x;
+			block[1] = this.Positions.get(0)[1] + y;
+			
+			if(block[0] < 0 || block[0] >= GamePane.getRecsCol() || block[1] < 0 || block[1] >= GamePane.getRecsRow()) {
+				System.out.println("Out of bounds error!");
+				System.exit(-1);
+			}
+			
+			this.Positions.add(0, block);
+			recs[this.Positions.get(0)[1]][this.Positions.get(0)[0]].setFill(Color.WHITE);
+		}
+		else if(justAte == false) {
+			
+			
+			recs[this.Positions.get(this.Positions.size()-1)[1]][this.Positions.get(this.Positions.size()-1)[0]].setFill(Color.DARKCYAN);
+			
+			
+			int[] block = new int[2];
+			block[0] = this.Positions.get(0)[0] + x;
+			block[1] = this.Positions.get(0)[1] + y;
+			
+			if(block[0] < 0 || block[0] >= GamePane.getRecsCol() || block[1] < 0 || block[1] >= GamePane.getRecsRow()) {
+				System.out.println("Out of bounds error!");
+				System.exit(-1);
+			}
+			
+			this.Positions.add(0, block);
+			this.Positions.remove(this.Positions.size()-1);
+			
+			
+			
+			
+			recs[this.Positions.get(0)[1]][this.Positions.get(0)[0]].setFill(Color.WHITE);
+			
+		}
+		
+		//Positions.get(0)[0] += x;
+		//Positions.get(0)[1] += y;
 	}
 
 	public CurrentDirection getDirection() {

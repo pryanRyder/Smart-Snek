@@ -36,16 +36,27 @@ public class GamePane extends Pane {
 
 	boolean onlyOneDirection = true;
 	//[row][col]
-	Rectangle recs[][] = new Rectangle[15][25];
+	private static Rectangle recs[][] = new Rectangle[15][25];
+	
+	public static int getRecsRow() {
+		
+		return recs.length;
+	}
+	
+	public static int getRecsCol() {
+		
+		return recs[0].length;
+	}
+	
 	
 	Scene scene;
 	
 	public SnakeManager m_SnakeManager;
-	Snake snek = new Snake();
+	Snake snek = new Snake(recs);
 	SnakeBrain brain = new SnakeBrain(snek);
 
 	
-	Text stringScore = new Text(Integer.toString(snek.ateObjectiveItem()));
+	Text stringScore = new Text(Integer.toString(snek.ateObjectiveItem(recs)));
 	
 	int iteration = 0;
 	Text iterationString = new Text();
@@ -73,6 +84,7 @@ public class GamePane extends Pane {
 		
 		// this will add the gridpane
 		AddGridPaneContent.addGridPaneContent(this, gridpane, width, height, recs, stringScore, iterationString);
+		
 	}
 	
 	
@@ -92,9 +104,14 @@ public class GamePane extends Pane {
 		iteration = 0;
 		
 		
+		if(snek.Positions.size() == 1) {
+			recs[snek.objectiveItem[1]][snek.objectiveItem[0]].setFill(Color.RED);
+		}
+		
 		
 		KeyFrame keyframe = new KeyFrame(Duration.millis(20), action -> 
 		{
+			
 			onlyOneDirection = true;
 			
 			getScene().setOnKeyPressed(e ->
@@ -161,22 +178,39 @@ public class GamePane extends Pane {
 			});
 			
 			
-		    snek.move();
+		    snek.move(recs);
 
-		    for( int i = 0; i < snek.Positions.size(); i++) 
-		    {
+		    
+		    	//If the snake head hits a wall...
 		    	if((snek.Positions.get(0)[0] > recs[0].length-1) 	||
 		    		(snek.Positions.get(0)[0] < 0) 				||
 		    		(snek.Positions.get(0)[1] > recs.length-1) ||
 		    		(snek.Positions.get(0)[1] < 0))
 		    	{
-		    		snek = new Snake();
+		    		snek = new Snake(recs);
 		    		brain = new SnakeBrain(snek);
 		    		
+					int row=0;
+					for(row=0; row < recs.length; row++) {
+						
+						int col=0;
+						for(col=0; col < recs[row].length; col++) {
+							
+							recs[row][col].setFill(Color.DARKCYAN);
+							
+						}
+					}
+					
 		    		iteration = iteration + 1;
 		    	}
-		    }
 			
+			
+			
+		    
+		    //Resets the entire grid to the default color.
+		    //To much calculation
+		    	
+		    /*	
 			int row=0;
 			for(row=0; row < recs.length; row++) {
 				
@@ -187,20 +221,16 @@ public class GamePane extends Pane {
 					
 				}
 			}
+		    */
 		    
-		    /*
-			for(int i = 0; i < recs.length; i++)
-			{
-				for(int j = 0; j < recs[i].length; j++)
-				{
-					recs[i][j].setFill(Color.DARKCYAN);
-				}
-			}
-			*/
+		    
 			//Color the objective
-			recs[snek.objectiveItem[1]][snek.objectiveItem[0]].setFill(Color.RED);
+			//recs[snek.objectiveItem[1]][snek.objectiveItem[0]].setFill(Color.RED);
 
 			
+			
+			
+			/*
 		    for(int i = 0; i < snek.Positions.size(); i++) //moves the display of the snake
 		    {
 		    	try
@@ -212,17 +242,28 @@ public class GamePane extends Pane {
 		    		//:P
 		    	}
 		    }
-		    
+		    */
 		    
 		    if( snek.checkIfDead())
 		    {
-		    	snek = new Snake();
+		    	snek = new Snake(recs);
 		    	brain = new SnakeBrain(snek);
 		    	iteration = iteration + 1;
 		    	System.out.print(iteration);
+		    	
+				int row=0;
+				for(row=0; row < recs.length; row++) {
+					
+					int col=0;
+					for(col=0; col < recs[row].length; col++) {
+						
+						recs[row][col].setFill(Color.DARKCYAN);
+						
+					}
+				}
 		    }
 		    
-		    snek.ateObjectiveItem();
+		    snek.ateObjectiveItem(recs);
 
 		    stringScore.setText(Integer.toString(snek.score));
 		    
@@ -273,16 +314,6 @@ public class GamePane extends Pane {
 				
 			}
 		}
-		
-		/*
-		for(int i = 0; i < recs.length; i++)
-		{
-			for(int j = 0; j < recs[i].length; j++)
-			{
-				recs[i][j].setFill(Color.DARKCYAN);
-			}
-		}
-		*/
 		
 	}
 }//end GamePane

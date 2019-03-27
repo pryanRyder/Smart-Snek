@@ -2,8 +2,38 @@ package Agent;
 
 import java.util.Random;
 
+import Panes.GamePane;
 import Snake.CurrentDirection;
 import Snake.Snake;
+
+/*
+ * 
+ * 
+ * Danny, I noticed that the snake goes off screen when it is going directly away from the objective.
+ * 
+ * And I found that the objective can spawn in the snake.
+ * 
+ * I put a letter every time you assign a direction to help you find out which assignment is wrong.
+ * 
+ * 
+ * 
+ * EX:
+ * -----------------------------|
+ * |							|
+ * |			----|			|			<- This will crash.
+ * |				|			|
+ * |	[]			|---------> |
+ * |							|
+ * |							|
+ * |----------------------------|
+ * 
+ * 
+ * Watch the snake a few times and you will see what I mean.
+ * 
+ * 
+ */
+
+
 
 public class SnakeBrain
 {
@@ -42,6 +72,7 @@ public class SnakeBrain
 				if(!snakeBodyIsCloser)
 				{
 					direction = CurrentDirection.UP;
+					System.out.println("A");
 				}
 			}
 			else if(snake.objectiveItem[1] > snake.Positions.get(0)[1])
@@ -56,6 +87,7 @@ public class SnakeBrain
 				if(!snakeBodyIsCloser)
 				{
 					direction = CurrentDirection.DOWN;
+					System.out.println("B");
 				}			
 				
 			}
@@ -74,6 +106,7 @@ public class SnakeBrain
 				}
 				if(!snakeBodyIsCloser)
 					direction = CurrentDirection.LEFT;
+				System.out.println("C");
 			}
 			else if(snake.objectiveItem[0] > snake.Positions.get(0)[0])
 			{
@@ -85,7 +118,9 @@ public class SnakeBrain
 						snakeBodyIsCloser = true;
 				}
 				if(!snakeBodyIsCloser)
-					direction = CurrentDirection.RIGHT;			}
+					direction = CurrentDirection.RIGHT; //Original: RIGHT
+				System.out.println("D");
+				}
 		}		
 
 			
@@ -117,15 +152,17 @@ public class SnakeBrain
 			}
 		}*/
 		
-		else if(snake.Positions.get(0)[0] == 24 && snake.getDirection() == CurrentDirection.RIGHT)
+		else if(snake.Positions.get(0)[0] == GamePane.getRecsCol()-1 && snake.getDirection() == CurrentDirection.RIGHT)
 		{
 			if(snake.Positions.get(0)[1] == 0)
 			{
 				direction = CurrentDirection.DOWN;
+				System.out.println("E");
 			}
-			else if(snake.Positions.get(0)[1] == 14)
+			else if(snake.Positions.get(0)[1] == GamePane.getRecsRow()-1)
 			{
 				direction = CurrentDirection.UP;
+				System.out.println("F");
 			}
 			else
 			{
@@ -133,10 +170,12 @@ public class SnakeBrain
 				if(snake.objectiveItem[1] > snake.Positions.get(0)[1])
 				{
 					direction = CurrentDirection.DOWN;
+					System.out.println("G");
 				}
 				else if(snake.objectiveItem[1] < snake.Positions.get(0)[1])
 				{
 					direction = CurrentDirection.UP;
+					System.out.println("H");
 				}
 				
 				else
@@ -145,8 +184,10 @@ public class SnakeBrain
 					switch(maybe)
 					{
 						case 1: direction = CurrentDirection.UP;
+						System.out.println("I");
 							break;
 						case 2: direction = CurrentDirection.DOWN;
+						System.out.println("J");
 							break;
 					}
 				}
@@ -158,20 +199,24 @@ public class SnakeBrain
 			if(snake.Positions.get(0)[1] == 0)
 			{
 				direction = CurrentDirection.DOWN;
+				System.out.println("K");
 			}
-			else if(snake.Positions.get(0)[1] == 14)
+			else if(snake.Positions.get(0)[1] == GamePane.getRecsRow()-1)
 			{
 				direction = CurrentDirection.UP;
+				System.out.println("L");
 			}
 			else
 			{
 				if(snake.objectiveItem[1] > snake.Positions.get(0)[1])
 				{
 					direction = CurrentDirection.DOWN;
+					System.out.println("M");
 				}
 				else if(snake.objectiveItem[1] < snake.Positions.get(0)[1])
 				{
 					direction = CurrentDirection.UP;
+					System.out.println("N");
 				}
 				else
 				{
@@ -179,32 +224,38 @@ public class SnakeBrain
 					switch(maybe)
 					{
 						case 1: direction = CurrentDirection.UP;
+						System.out.println("O");
 							break;
 						case 2: direction = CurrentDirection.DOWN;
+						System.out.println("P");
 							break;
 					}
 				}	
 			}
 		}
-		else if(snake.Positions.get(0)[1] == 14 && snake.getDirection() == CurrentDirection.DOWN)
+		else if(snake.Positions.get(0)[1] == GamePane.getRecsRow()-1 && snake.getDirection() == CurrentDirection.DOWN)
 		{
-			if(snake.Positions.get(0)[0] == 24)
+			if(snake.Positions.get(0)[0] == GamePane.getRecsCol()-1)
 			{
 				direction = CurrentDirection.LEFT;
+				System.out.println("Q");
 			}
 			else if(snake.Positions.get(0)[0] == 0)
 			{
 				direction = CurrentDirection.RIGHT;
+				System.out.println("R");
 			}
 			else
 			{
 				if(snake.objectiveItem[0] > snake.Positions.get(0)[0])
 				{
 					direction = CurrentDirection.RIGHT;
+					System.out.println("S");
 				}
 				else if(snake.objectiveItem[0] < snake.Positions.get(0)[0])
 				{
 					direction = CurrentDirection.LEFT;
+					System.out.println("T");
 				}
 				else
 				{
@@ -212,8 +263,10 @@ public class SnakeBrain
 					switch(maybe)
 					{
 						case 1: direction = CurrentDirection.LEFT;
+						System.out.println("U");
 							break;
 						case 2: direction = CurrentDirection.RIGHT;
+						System.out.println("V");
 							break;
 					}
 				}					
@@ -221,23 +274,27 @@ public class SnakeBrain
 			}
 		else if(snake.Positions.get(0)[1] == 0 && snake.getDirection() == CurrentDirection.UP)
 		{
-			if(snake.Positions.get(0)[0] == 24)
+			if(snake.Positions.get(0)[0] == GamePane.getRecsCol()-1)
 			{
 				direction = CurrentDirection.LEFT;
+				System.out.println("W");
 			}
 			else if(snake.Positions.get(0)[0] == 0)
 			{
 				direction = CurrentDirection.RIGHT;
+				System.out.println("X");
 			}
 			else
 			{
 				if(snake.objectiveItem[0] > snake.Positions.get(0)[0])
 				{
 					direction = CurrentDirection.RIGHT;
+					System.out.println("Y");
 				}
 				else if(snake.objectiveItem[0] < snake.Positions.get(0)[0])
 				{
 					direction = CurrentDirection.LEFT;
+					System.out.println("Z");
 				}
 				else
 				{
@@ -245,8 +302,10 @@ public class SnakeBrain
 					switch(maybe)
 					{
 						case 1: direction = CurrentDirection.LEFT;
+						System.out.println("AA");
 							break;
 						case 2: direction = CurrentDirection.RIGHT;
+						System.out.println("AB");
 							break;
 					}
 				}	
@@ -309,8 +368,10 @@ public class SnakeBrain
 				switch(maybe)
 				{
 					case 1: direction = CurrentDirection.LEFT;
+					System.out.println("AC");
 						break;
 					case 2: direction = CurrentDirection.RIGHT;
+					System.out.println("AD");
 						break;
 				}
 			}
@@ -320,8 +381,10 @@ public class SnakeBrain
 				switch(maybe)
 				{
 					case 1: direction = CurrentDirection.LEFT;
+					System.out.println("AE");
 						break;
 					case 2: direction = CurrentDirection.RIGHT;
+					System.out.println("AF");
 						break;
 				}
 			}
@@ -331,8 +394,10 @@ public class SnakeBrain
 				switch(maybe)
 				{
 					case 1: direction = CurrentDirection.DOWN;
+					System.out.println("AG");
 						break;
 					case 2: direction = CurrentDirection.UP;
+					System.out.println("AH");
 						break;
 				}
 			}
@@ -342,8 +407,10 @@ public class SnakeBrain
 				switch(maybe)
 				{
 					case 1: direction = CurrentDirection.DOWN;
+					System.out.println("AI");
 						break;
 					case 2: direction = CurrentDirection.UP;
+					System.out.println("AJ");
 						break;
 				}
 			}
