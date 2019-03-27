@@ -24,8 +24,8 @@ public class Snake {
 	 */
 	public Snake()
 	{
-		int[] x = {2,2};
-		Positions.add(x);
+		int[] startingPos = {0,0};
+		Positions.add(startingPos);
 		randomObjectiveItem();
 	}
 
@@ -134,8 +134,8 @@ public class Snake {
 			{
 				if(Positions.get(i)[0] == row && Positions.get(i)[1] == col)
 				{
-					row = spot.nextInt(25);
-					col = spot.nextInt(15);
+					row = spot.nextInt(25); // col
+					col = spot.nextInt(15); // row
 				}
 			}
 
