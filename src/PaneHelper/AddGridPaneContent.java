@@ -25,7 +25,7 @@ public class AddGridPaneContent {
 		
 		GridPaneSetUp.gridPaneSetUp(gamePane, gridpane, recs);
 		    
-		gridpane.setBackground(new Background(new BackgroundFill(Color.AQUAMARINE, null, null)));
+		gridpane.setBackground(new Background(new BackgroundFill(Color.BLACK, null, null)));
 		   
 		    AddGridPaneContentParts.addGridPaneContentParts(stringScore, gamePane, iterationString, gridpane);
 	}

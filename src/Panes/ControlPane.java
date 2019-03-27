@@ -211,7 +211,7 @@ public class ControlPane extends Pane {
 		btStartTraining.setLayoutX(trainingPane.getPrefWidth()*.02);
 		btStartTraining.setLayoutY(trainingPane.getPrefHeight()*.6);
 		trainingPane.getChildren().add(btStartTraining);
-		
+		btStartTraining.setDisable(true);
 		btStartTraining.setOnAction(e ->{
 			
 			((GamePane) gamePane).StartTraining();
@@ -293,6 +293,8 @@ public class ControlPane extends Pane {
 					typeOfAlgorithm[i] = false;
 			}
 			
+			((GamePane) gamePane).setTypeOfAlgorithm(typeOfAlgorithm);
+			
 			btDEEPANN.setStyle("-fx-background-color: 'white'; -fx-text-fill: '#270054'; -fx-border-width: 1; -fx-border-style: solid; -fx-border-color: '#270054';");
 			btDEEPRL.setStyle("-fx-background-color: 'white'; -fx-text-fill: '#005400'; -fx-border-width: 1; -fx-border-style: solid; -fx-border-color: '#005400';");
 
@@ -304,6 +306,8 @@ public class ControlPane extends Pane {
 			tfDiscountFactor.setVisible(false);
 			txtMaximumReward.setVisible(false);
 			tfMaximumReward.setVisible(false);
+			
+			btStartTraining.setDisable(false);
 			
 		});
 		
@@ -318,6 +322,8 @@ public class ControlPane extends Pane {
 					typeOfAlgorithm[i] = false;
 			}
 			
+			((GamePane) gamePane).setTypeOfAlgorithm(typeOfAlgorithm);
+			
 			txtLearningRate.setVisible(true);
 			tfLearningRate.setVisible(true);
 			txtDiscountFactor.setVisible(true);
@@ -331,6 +337,8 @@ public class ControlPane extends Pane {
 
 			btDEEPRL.setStyle("-fx-background-color: '#005400'; -fx-text-fill: 'white'; -fx-border-width: 1; -fx-border-style: solid; -fx-border-color: 'white';");
 			
+			btStartTraining.setDisable(false);
+
 		});
 		
 		btDEEPANN.setOnAction(e ->
@@ -343,6 +351,8 @@ public class ControlPane extends Pane {
 				else
 					typeOfAlgorithm[i] = false;
 			}
+
+			((GamePane) gamePane).setTypeOfAlgorithm(typeOfAlgorithm);
 			
 			txtLearningRate.setVisible(false);
 			tfLearningRate.setVisible(false);
@@ -355,6 +365,8 @@ public class ControlPane extends Pane {
 			btDEEPRL.setStyle("-fx-background-color: 'white'; -fx-text-fill: '#005400'; -fx-border-width: 1; -fx-border-style: solid; -fx-border-color: '#005400';");
 
 			btDEEPANN.setStyle("-fx-background-color: '#270054'; -fx-text-fill: 'white'; -fx-border-width: 1; -fx-border-style: solid; -fx-border-color: 'white';");
+			
+			btStartTraining.setDisable(false);
 			
 		});
 		

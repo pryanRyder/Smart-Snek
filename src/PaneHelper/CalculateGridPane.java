@@ -48,7 +48,7 @@ public class CalculateGridPane {
 				Rectangle rec = new Rectangle();
 				rec.setHeight(boxSide);
 				rec.setWidth(boxSide);
-				rec.setFill(Color.DARKCYAN);
+				rec.setFill(Color.WHITE);
 				
 				recs[row][col] = rec;
 				

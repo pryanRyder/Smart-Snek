@@ -34,6 +34,8 @@ import javafx.util.Duration;
 public class GamePane extends Pane {
 
 
+	boolean[] typeOfAlgorithm = { false, false, false };
+	
 	boolean onlyOneDirection = true;
 	//[row][col]
 	Rectangle recs[][] = new Rectangle[15][25];
@@ -60,8 +62,7 @@ public class GamePane extends Pane {
 	public void finalize() throws Throwable {
 		super.finalize();
 	}
-
-
+	
 	/**
 	 * @param width double
 	 * @param height double
@@ -70,7 +71,6 @@ public class GamePane extends Pane {
 	 */
 	public GamePane(double width, double height)
 	{
-
 		// this will add the gridpane
 		AddGridPaneContent.addGridPaneContent(this, gridpane, width, height, recs, stringScore, iterationString);
 	}
@@ -183,7 +183,7 @@ public class GamePane extends Pane {
 				int col=0;
 				for(col=0; col < recs[row].length; col++) {
 					
-					recs[row][col].setFill(Color.DARKCYAN);
+					recs[row][col].setFill(Color.WHITE);
 					
 				}
 			}
@@ -196,7 +196,12 @@ public class GamePane extends Pane {
 		    {
 		    	try
 		    	{
-		    		recs[snek.Positions.get(i)[1]][snek.Positions.get(i)[0]].setFill(Color.WHITE);
+		    		if(typeOfAlgorithm[0])
+		    			recs[snek.Positions.get(i)[1]][snek.Positions.get(i)[0]].setFill(Color.DARKRED);
+		    		else if(typeOfAlgorithm[1])
+		    			recs[snek.Positions.get(i)[1]][snek.Positions.get(i)[0]].setFill(Color.GREEN);
+		    		else
+		    			recs[snek.Positions.get(i)[1]][snek.Positions.get(i)[0]].setFill(Color.PURPLE);
 		    	}
 		    	catch(ArrayIndexOutOfBoundsException e)
 		    	{
@@ -228,8 +233,7 @@ public class GamePane extends Pane {
 		    brain.updateSnake(snek);
 			brain.MakeDecision();
 			snek.setDirection(brain.getDecidedDecidedDirection());
-
-
+			
 		});
 
 
@@ -260,11 +264,15 @@ public class GamePane extends Pane {
 			int col=0;
 			for(col=0; col < recs[row].length; col++) {
 				
-				recs[row][col].setFill(Color.DARKCYAN);
+				recs[row][col].setFill(Color.WHITE);
 				
 			}
 		}
-		
-
 	}
+	
+	public void setTypeOfAlgorithm(boolean[] typeOfAlgorithm)
+	{
+		this.typeOfAlgorithm = typeOfAlgorithm;
+	}
+
 }//end GamePane
