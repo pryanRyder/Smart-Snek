@@ -196,7 +196,7 @@ public class GamePane extends Pane {
 						int col=0;
 						for(col=0; col < recs[row].length; col++) {
 
-							recs[row][col].setFill(Color.DARKCYAN);
+							recs[row][col].setFill(Color.WHITE);
 
 						}
 					}
@@ -230,7 +230,7 @@ public class GamePane extends Pane {
 
 
 
-			/*
+			
 		    for(int i = 0; i < snek.Positions.size(); i++) //moves the display of the snake
 		    {
 		    	try
@@ -247,7 +247,7 @@ public class GamePane extends Pane {
 		    		//:P
 		    	}
 		    }
-		    */
+		    
 
 		    if( snek.checkIfDead())
 		    {
@@ -262,7 +262,7 @@ public class GamePane extends Pane {
 					int col=0;
 					for(col=0; col < recs[row].length; col++) {
 
-						recs[row][col].setFill(Color.DARKCYAN);
+						recs[row][col].setFill(Color.WHITE);
 
 					}
 				}

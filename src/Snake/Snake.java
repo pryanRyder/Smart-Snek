@@ -184,7 +184,7 @@ public class Snake {
 		else if(justAte == false) {
 			
 			
-			recs[this.Positions.get(this.Positions.size()-1)[1]][this.Positions.get(this.Positions.size()-1)[0]].setFill(Color.DARKCYAN);
+			recs[this.Positions.get(this.Positions.size()-1)[1]][this.Positions.get(this.Positions.size()-1)[0]].setFill(Color.WHITE);
 			
 			
 			int[] block = new int[2];
