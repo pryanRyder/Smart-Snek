@@ -2,6 +2,7 @@ package Agent;
 
 import java.util.Random;
 
+import GamePaneHelper.GamePaneSetsGets;
 import Panes.GamePane;
 import Snake.CurrentDirection;
 import Snake.Snake;
@@ -152,14 +153,14 @@ public class SnakeBrain
 			}
 		}*/
 		
-		else if(snake.Positions.get(0)[0] == GamePane.getRecsCol()-1 && snake.getDirection() == CurrentDirection.RIGHT)
+		else if(snake.Positions.get(0)[0] == GamePaneSetsGets.getRecsCol()-1 && snake.getDirection() == CurrentDirection.RIGHT)
 		{
 			if(snake.Positions.get(0)[1] == 0)
 			{
 				direction = CurrentDirection.DOWN;
 				System.out.println("E");
 			}
-			else if(snake.Positions.get(0)[1] == GamePane.getRecsRow()-1)
+			else if(snake.Positions.get(0)[1] == GamePaneSetsGets.getRecsRow()-1)
 			{
 				direction = CurrentDirection.UP;
 				System.out.println("F");
@@ -201,7 +202,7 @@ public class SnakeBrain
 				direction = CurrentDirection.DOWN;
 				System.out.println("K");
 			}
-			else if(snake.Positions.get(0)[1] == GamePane.getRecsRow()-1)
+			else if(snake.Positions.get(0)[1] == GamePaneSetsGets.getRecsRow()-1)
 			{
 				direction = CurrentDirection.UP;
 				System.out.println("L");
@@ -233,9 +234,9 @@ public class SnakeBrain
 				}	
 			}
 		}
-		else if(snake.Positions.get(0)[1] == GamePane.getRecsRow()-1 && snake.getDirection() == CurrentDirection.DOWN)
+		else if(snake.Positions.get(0)[1] == GamePaneSetsGets.getRecsRow()-1 && snake.getDirection() == CurrentDirection.DOWN)
 		{
-			if(snake.Positions.get(0)[0] == GamePane.getRecsCol()-1)
+			if(snake.Positions.get(0)[0] == GamePaneSetsGets.getRecsCol()-1)
 			{
 				direction = CurrentDirection.LEFT;
 				System.out.println("Q");
@@ -274,7 +275,7 @@ public class SnakeBrain
 			}
 		else if(snake.Positions.get(0)[1] == 0 && snake.getDirection() == CurrentDirection.UP)
 		{
-			if(snake.Positions.get(0)[0] == GamePane.getRecsCol()-1)
+			if(snake.Positions.get(0)[0] == GamePaneSetsGets.getRecsCol()-1)
 			{
 				direction = CurrentDirection.LEFT;
 				System.out.println("W");
