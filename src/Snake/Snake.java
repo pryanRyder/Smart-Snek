@@ -19,12 +19,12 @@ public class Snake {
 	public int score;
 	public CurrentDirection m_CurrentDirection;
 	
-// Paul R. Stuff Here
+
 	public int[] size = new int[3];
 	public int[] start = new int[2];
 	public int x;
 	public int y;
-//
+
 	
 	public Snake()
 	{
