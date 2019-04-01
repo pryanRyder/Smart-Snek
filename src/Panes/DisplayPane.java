@@ -11,8 +11,8 @@ import javafx.scene.text.Text;
 /**
  * @author Danny
  * @version 1.0
- * @created 17-Feb-2019 5:39:58 PM
  */
+
 public class DisplayPane extends Pane {
 //<<<<<<< HEAD
 
@@ -22,8 +22,11 @@ public class DisplayPane extends Pane {
 	public void finalize() throws Throwable {
 		super.finalize();
 	}
-
-
+	/**
+	 * @param width double 
+	 * @param height double
+	 * creates a pane called display pane
+	 */
 	public DisplayPane(double width, double height)
 	{
 		setPrefSize(width * 0.75, height * 0.25);
@@ -39,9 +42,9 @@ public class DisplayPane extends Pane {
 		content.setLayoutY(getPrefHeight()*0.05);
 		content.setStyle("-fx-background-color: '#a5a5a5'");
 		getChildren().add(content);
-		
+
 		Pane information = new Pane();
-		
+
 		information.setPrefSize(content.getPrefWidth()*0.95, content.getPrefHeight()*0.95);
 		information.setLayoutX(content.getPrefWidth()*0.005);
 		information.setLayoutY(content.getPrefHeight()*0.025);

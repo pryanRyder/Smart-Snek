@@ -18,16 +18,22 @@ import javafx.scene.input.MouseEvent;
 /**
  * @author Danny
  * @version 1.0
- * @created 17-Feb-2019 5:39:58 PM
  */
 public class ControlPane extends Pane {
 	
 	boolean GAChecked = false;
+	
+	boolean[] typeOfAlgorithm = {false, false, false};
 
 
 	public void finalize() throws Throwable {
 		super.finalize();
 	}
+	/**
+	 * @param width double 
+	 * @param height double
+	 * creates a pane called Control pane
+	 */
 	public ControlPane(double width, double height)
 	{
 		Pane gamePane = new GamePane(width, height);
@@ -49,11 +55,17 @@ public class ControlPane extends Pane {
 		Text txtAgentPane = new Text("Agent");
 		Pane AgentPane = new Pane();
 		Text txtLearningRate = new Text("Learning Rate");
+		txtLearningRate.setVisible(false);
 		TextField tfLearningRate = new TextField();
+		tfLearningRate.setVisible(false);
 		Text txtDiscountFactor = new Text("Discount Factor");
+		txtDiscountFactor.setVisible(false);
 		TextField tfDiscountFactor = new TextField();
+		tfDiscountFactor.setVisible(false);
 		Text txtMaximumReward = new Text("Maximum Reward");
+		txtMaximumReward.setVisible(false);
 		TextField tfMaximumReward = new TextField();
+		tfMaximumReward.setVisible(false);
 		
 		Pane geneticAlgorithmPane = new Pane();
 		
@@ -199,7 +211,7 @@ public class ControlPane extends Pane {
 		btStartTraining.setLayoutX(trainingPane.getPrefWidth()*.02);
 		btStartTraining.setLayoutY(trainingPane.getPrefHeight()*.6);
 		trainingPane.getChildren().add(btStartTraining);
-		
+		btStartTraining.setDisable(true);
 		btStartTraining.setOnAction(e ->{
 			
 			((GamePane) gamePane).StartTraining();
@@ -248,20 +260,115 @@ public class ControlPane extends Pane {
 		AgentPane.setPrefWidth(content.getPrefWidth()*.95);
 		content.getChildren().add(AgentPane);
 		
-		Button btDeepReinforcement = new Button("Deep Reinforcement");
-		btDeepReinforcement.setLayoutX(AgentPane.getPrefWidth()*.02);
-		btDeepReinforcement.setLayoutY(AgentPane.getPrefHeight()*.1);
-		AgentPane.getChildren().add(btDeepReinforcement);
+		Button btStatic = new Button("Static AI");
+		btStatic.setLayoutX(AgentPane.getPrefWidth()*.02);
+		btStatic.setLayoutY(AgentPane.getPrefHeight()*.1);
+		btStatic.setStyle("-fx-background-color: 'white'; -fx-text-fill: '#6b0110'; -fx-border-width: 1; -fx-border-style: solid; -fx-border-color: '#6b0110';");
+		AgentPane.getChildren().add(btStatic);
 		
-		Button btDeep2 = new Button("Deep2");
-		btDeep2.setLayoutX(AgentPane.getPrefWidth()*.50);
-		btDeep2.setLayoutY(AgentPane.getPrefHeight()*.1);
-		AgentPane.getChildren().add(btDeep2);
+
 		
-		Button btDeep3 = new Button("Deep3");
-		btDeep3.setLayoutX(AgentPane.getPrefWidth()*.75);
-		btDeep3.setLayoutY(AgentPane.getPrefHeight()*.1);
-		AgentPane.getChildren().add(btDeep3);
+		Button btDEEPRL = new Button("DEEP RL");
+		btDEEPRL.setLayoutX(AgentPane.getPrefWidth()*.27);
+		btDEEPRL.setLayoutY(AgentPane.getPrefHeight()*.1);
+		btDEEPRL.setStyle("-fx-background-color: 'white'; -fx-text-fill: '#005400'; -fx-border-width: 1; -fx-border-style: solid; -fx-border-color: '#005400';");
+
+		
+		AgentPane.getChildren().add(btDEEPRL);
+		
+		Button btDEEPANN = new Button("DEEP ANN");
+		btDEEPANN.setLayoutX(AgentPane.getPrefWidth()*.54);
+		btDEEPANN.setLayoutY(AgentPane.getPrefHeight()*.1);
+		btDEEPANN.setStyle("-fx-background-color: 'white'; -fx-text-fill: '#270054'; -fx-border-width: 1; -fx-border-style: solid; -fx-border-color: '#270054';");
+
+		AgentPane.getChildren().add(btDEEPANN);
+		
+		btStatic.setOnAction(e ->
+		{
+			for(int i = 0;i < typeOfAlgorithm.length; i++)
+			{
+				if(i == 0)
+					typeOfAlgorithm[i] = true;
+				else
+					typeOfAlgorithm[i] = false;
+			}
+			
+			((GamePane) gamePane).setTypeOfAlgorithm(typeOfAlgorithm);
+			
+			btDEEPANN.setStyle("-fx-background-color: 'white'; -fx-text-fill: '#270054'; -fx-border-width: 1; -fx-border-style: solid; -fx-border-color: '#270054';");
+			btDEEPRL.setStyle("-fx-background-color: 'white'; -fx-text-fill: '#005400'; -fx-border-width: 1; -fx-border-style: solid; -fx-border-color: '#005400';");
+
+			btStatic.setStyle("-fx-background-color: '#6b0110'; -fx-text-fill: 'white'; -fx-border-width: 1; -fx-border-style: solid; -fx-border-color: 'white';");
+			
+			txtLearningRate.setVisible(false);
+			tfLearningRate.setVisible(false);
+			txtDiscountFactor.setVisible(false);
+			tfDiscountFactor.setVisible(false);
+			txtMaximumReward.setVisible(false);
+			tfMaximumReward.setVisible(false);
+			
+			btStartTraining.setDisable(false);
+			
+		});
+		
+		btDEEPRL.setOnAction(e ->
+		{
+			
+			for(int i = 0;i < typeOfAlgorithm.length; i++)
+			{
+				if(i == 1)
+					typeOfAlgorithm[i] = true;
+				else
+					typeOfAlgorithm[i] = false;
+			}
+			
+			((GamePane) gamePane).setTypeOfAlgorithm(typeOfAlgorithm);
+			
+			txtLearningRate.setVisible(true);
+			tfLearningRate.setVisible(true);
+			txtDiscountFactor.setVisible(true);
+			tfDiscountFactor.setVisible(true);
+			txtMaximumReward.setVisible(true);
+			tfMaximumReward.setVisible(true);
+			
+			
+			btDEEPANN.setStyle("-fx-background-color: 'white'; -fx-text-fill: '#270054'; -fx-border-width: 1; -fx-border-style: solid; -fx-border-color: '#270054';");
+			btStatic.setStyle("-fx-background-color: 'white'; -fx-text-fill: '#6b0110'; -fx-border-width: 1; -fx-border-style: solid; -fx-border-color: '#6b0110';");
+
+			btDEEPRL.setStyle("-fx-background-color: '#005400'; -fx-text-fill: 'white'; -fx-border-width: 1; -fx-border-style: solid; -fx-border-color: 'white';");
+			
+			btStartTraining.setDisable(false);
+
+		});
+		
+		btDEEPANN.setOnAction(e ->
+		{
+			
+			for(int i = 0;i < typeOfAlgorithm.length; i++)
+			{
+				if(i == 2)
+					typeOfAlgorithm[i] = true;
+				else
+					typeOfAlgorithm[i] = false;
+			}
+
+			((GamePane) gamePane).setTypeOfAlgorithm(typeOfAlgorithm);
+			
+			txtLearningRate.setVisible(false);
+			tfLearningRate.setVisible(false);
+			txtDiscountFactor.setVisible(false);
+			tfDiscountFactor.setVisible(false);
+			txtMaximumReward.setVisible(false);
+			tfMaximumReward.setVisible(false);
+			
+			btStatic.setStyle("-fx-background-color: 'white'; -fx-text-fill: '#6b0110'; -fx-border-width: 1; -fx-border-style: solid; -fx-border-color: '#6b0110';");
+			btDEEPRL.setStyle("-fx-background-color: 'white'; -fx-text-fill: '#005400'; -fx-border-width: 1; -fx-border-style: solid; -fx-border-color: '#005400';");
+
+			btDEEPANN.setStyle("-fx-background-color: '#270054'; -fx-text-fill: 'white'; -fx-border-width: 1; -fx-border-style: solid; -fx-border-color: 'white';");
+			
+			btStartTraining.setDisable(false);
+			
+		});
 		
 		txtAgentPane = new Text("Agent Controller");
 		txtAgentPane.setLayoutX(AgentPane.getPrefWidth()*.02);
