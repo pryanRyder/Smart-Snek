@@ -3,7 +3,12 @@ package Panes;
 import java.util.Collection;
 
 import Agent.SnakeBrain;
+import GamePaneHelper.DidSnakeHitWall;
+import GamePaneHelper.GamePaneKeyFrameComp;
+import GamePaneHelper.UpdateSnakeStrings;
+import GamePaneHelper.UserMoving;
 import PaneHelper.AddGridPaneContent;
+import PrintData.PrintSnake;
 import Snake.CurrentDirection;
 import Snake.Snake;
 import Snake.SnakeManager;
@@ -28,12 +33,28 @@ import javafx.scene.text.Text;
 import javafx.util.Duration;
 
 /**
- * @author Danny, Paul, Yara
+ * @author Danny, Paul, Yara, Sky
  * @version 1.0
  */
 public class GamePane extends Pane {
 
+	// protected variables are shared by GamePaneSetsGets
+	protected static boolean onlyOneDirection = true;
+	protected static Rectangle recs[][] = new Rectangle[10][3]; // [row][col] [15][25]
+	protected static Scene scene;
+	protected static SnakeManager m_SnakeManager;
+	protected static Snake snek = new Snake(recs);
+	protected static SnakeBrain brain = new SnakeBrain(snek);
+	protected static boolean startOfGame = true;
+	protected static Text stringScore = new Text(Integer.toString(snek.ateObjectiveItem(recs)));
+	protected static int iteration = 0;
+	protected static Text iterationString = new Text();
+	protected static Text highScoreString = new Text();
+	protected static int highscore = 0;
+	protected static GridPane gridpane = new GridPane();
+	protected static Timeline timeline = new Timeline();
 
+<<<<<<< HEAD
 	boolean[] typeOfAlgorithm = { false, false, false };
 
 	boolean onlyOneDirection = true;
@@ -82,23 +103,37 @@ public class GamePane extends Pane {
 	 */
 	public GamePane(double width, double height)
 	{
+=======
+	/**
+	 * @param width  double
+	 * @param height double creates a gridpane that will have the game running
+	 *               within it, also calls other functions from other classes that
+	 *               will run the game
+	 */
+	public GamePane(double width, double height) {
+
+>>>>>>> Sky
 		// this will add the gridpane
 		AddGridPaneContent.addGridPaneContent(this, gridpane, width, height, recs, stringScore, iterationString);
 
 	}
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> Sky
 	/**
-	 * this code creates buttons that'll make the user be able to play, pause, and stop the game
-	 *  keyboard inputs can be done by the W, A,S, and D keyboard inputs
-	 * makes sure that when snake grows it'ss update the snake length in the Snake class
-	 * display score and number of iterations
+	 * this code creates buttons that'll make the user be able to play, pause, and
+	 * stop the game keyboard inputs can be done by the W, A,S, and D keyboard
+	 * inputs makes sure that when snake grows it'ss update the snake length in the
+	 * Snake class display score and number of iterations
 	 */
-	public void StartTraining()
-	{
+	public void StartTraining() {
+
 		timeline = new Timeline();
 		timeline.setCycleCount(Timeline.INDEFINITE);
 
+<<<<<<< HEAD
 		iterationString.setText(0+"");
 		stringScore.setText(0+"");
 		iteration = 0;
@@ -287,10 +322,25 @@ public class GamePane extends Pane {
 		});
 
 
+=======
+		iterationString.setText(0 + "");
+		stringScore.setText(0 + "");
+		iteration = 0;
+
+		if (snek.Positions.size() == 1) {
+			recs[snek.objectiveItem[1]][snek.objectiveItem[0]].setFill(Color.RED);
+		}
+
+		KeyFrame keyframe = new KeyFrame(Duration.millis(100), action -> {
+			GamePaneKeyFrameComp.keyFrameComp(this);
+		});
+
+>>>>>>> Sky
 		timeline.getKeyFrames().add(keyframe);
 		timeline.play();
 	}
 
+<<<<<<< HEAD
 
 	public void Pause()
 	{
@@ -327,3 +377,18 @@ public class GamePane extends Pane {
 	}
 
 }//end GamePane
+=======
+	public void Pause() {
+		timeline.stop();
+	}
+
+	public void Play() {
+		timeline.play();
+	}
+
+	public void Stop() {
+		timeline.stop();
+
+	}
+}// end GamePane
+>>>>>>> Sky
