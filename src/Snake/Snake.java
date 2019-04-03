@@ -13,7 +13,7 @@ import javafx.scene.shape.Rectangle;
 /**
  * @author Danny
  * @version 1.0
- *
+ * 
  */
 
 
@@ -39,22 +39,22 @@ public class Snake {
 	{
 
 	}
-
+	
 	/**
 	 * @return interger score
 	 *  adds to the score which counts how many objectives the snake has eaten
 	 */
 	public int ateObjectiveItem(Rectangle[][] recs){
-
-
+		
+		
 		if(Positions.get(0)[0] == objectiveItem[0] && Positions.get(0)[1] == objectiveItem[1])
 		{
 			score++;
 
 			recs[this.Positions.get(0)[1]][this.Positions.get(0)[0]].setFill(Color.WHITE);
-
+			
 			justAte = true;
-
+			
 			randomObjectiveItem(GamePane.getRecsRow(), GamePane.getRecsCol(), recs);
 		}
 		return score;
@@ -104,7 +104,7 @@ public class Snake {
 	 * its either right, left, up, or down
 	 */
 	public void move(Rectangle[][] recs){
-
+		
 		if(m_CurrentDirection == CurrentDirection.RIGHT) {
 			updatePosition(1, 0, recs);//add 1 to x direction
 		}
@@ -117,10 +117,10 @@ public class Snake {
 		else if(m_CurrentDirection == CurrentDirection.DOWN) {
 			updatePosition(0, 1, recs);//subtract 1 to y direction
 		}
-
+		
 		justAte = false;
-
-
+		
+		
 		//For testing...
 		/*
 		int i=0;
@@ -129,78 +129,35 @@ public class Snake {
 		}
 		System.out.println("");
 		*/
-
+		
 	}
 
 	/**
 	 * generates a random objective item that is not within the snakes unit length
 	 */
-	public void randomObjectiveItem(int rowSize, int colSize, Rectangle[][] recs) {
-		Random spot = new Random();
+	public void randomObjectiveItem(int rowSize, int colSize, Rectangle[][] recs){
+			Random spot = new Random();
 
-		// FIXME
-		// don's spawn in snake
+			int col = spot.nextInt(colSize);
+			int row = spot.nextInt(rowSize);
 
-		int col = spot.nextInt(colSize);
-		int row = spot.nextInt(rowSize);
-		int originalCol = col;
-		int originalRow = row;
-
-
-		for (int i = 0; i < Positions.size(); i++) {
-
-			//FIXME this is a temp fix.
-			//This is a very poor way to spawn objectives.
-
-			while(Positions.get(i)[1] == row && Positions.get(i)[0] == col) {
-
-				col++;
-
-				if(col == GamePaneSetsGets.getRecsCol()) {
-
-					col = 0;
-					row++;
-
-					if(row == GamePaneSetsGets.getRecsRow()) {
-
-						row = 0;
-					}
+			for(int i = 0; i < Positions.size(); i++)
+			{
+				if(Positions.get(i)[1] == row && Positions.get(i)[0] == col)
+				{
+					col = spot.nextInt(colSize);
+					row = spot.nextInt(rowSize);
 				}
-
-				if(col == originalCol && row == originalRow) {
-					System.out.println("GAME OVER");
-					System.exit(0);
-				}
-
-				i = -1;
 			}
-
-
-			/*
-			if (Positions.get(i)[1] == row && Positions.get(i)[0] == col) {
-
-				col = spot.nextInt(colSize);
-				row = spot.nextInt(rowSize);
-			}
-			*/
-
-		}
-
-		objectiveItem[1] = row;
-		objectiveItem[0] = col;
-
-		if (justAte == true) {
-			recs[objectiveItem[1]][objectiveItem[0]].setFill(Color.RED);
-		}
 
 			objectiveItem[1] = row;
 			objectiveItem[0] = col;
-
-
+			
+			
 			if(justAte == true) {
 				recs[objectiveItem[1]][objectiveItem[0]].setFill(Color.RED);
 			}
-
+			
 	}
 
 	/**
@@ -210,48 +167,45 @@ public class Snake {
 	 */
 	public void updatePosition(int x, int y, Rectangle[][] recs)
 	{
-
+		
 		if(justAte == true) {
 			int[] block = new int[2];
 			block[0] = this.Positions.get(0)[0] + x;
 			block[1] = this.Positions.get(0)[1] + y;
-
+			
 			if(block[0] < 0 || block[0] >= GamePane.getRecsCol() || block[1] < 0 || block[1] >= GamePane.getRecsRow()) {
 				System.out.println("Out of bounds error!");
 				System.exit(-1);
 			}
-
+			
 			this.Positions.add(0, block);
-
-			//SnakeRandCalc.randCalc(this.Positions.get(this.Positions.size() - 1), this.Positions.get(0), justAte, this,
-			//		GamePaneSetsGets.getStart());
-
 			recs[this.Positions.get(0)[1]][this.Positions.get(0)[0]].setFill(Color.WHITE);
 		}
 		else if(justAte == false) {
-
-
+			
+			
 			recs[this.Positions.get(this.Positions.size()-1)[1]][this.Positions.get(this.Positions.size()-1)[0]].setFill(Color.WHITE);
-
-
+			
+			
 			int[] block = new int[2];
 			block[0] = this.Positions.get(0)[0] + x;
 			block[1] = this.Positions.get(0)[1] + y;
-
+			
 			if(block[0] < 0 || block[0] >= GamePane.getRecsCol() || block[1] < 0 || block[1] >= GamePane.getRecsRow()) {
 				System.out.println("Out of bounds error!");
 				System.exit(-1);
 			}
-
+			
 			this.Positions.add(0, block);
-			//SnakeRandCalc.randCalc(this.Positions.get(this.Positions.size() - 1), this.Positions.get(0), justAte, this,
-			//		GamePaneSetsGets.getStart());
-			this.Positions.remove(this.Positions.size() - 1);
-
+			this.Positions.remove(this.Positions.size()-1);
+			
+			
+			
+			
 			recs[this.Positions.get(0)[1]][this.Positions.get(0)[0]].setFill(Color.WHITE);
-
+			
 		}
-
+		
 		//Positions.get(0)[0] += x;
 		//Positions.get(0)[1] += y;
 	}
@@ -259,7 +213,7 @@ public class Snake {
 	public CurrentDirection getDirection() {
 		return m_CurrentDirection;
 	}
-
+	
 	public void setDirection(CurrentDirection x) {
 		m_CurrentDirection = x;
 	}
