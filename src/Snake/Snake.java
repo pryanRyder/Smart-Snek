@@ -131,14 +131,49 @@ public class Snake {
 
 		int col = spot.nextInt(colSize);
 		int row = spot.nextInt(rowSize);
-
+		int originalCol = col;
+		int originalRow = row;
+		
+		
 		for (int i = 0; i < Positions.size(); i++) {
+			
+			//FIXME this is a temp fix.
+			//This is a very poor way to spawn objectives.
+			
+			while(Positions.get(i)[1] == row && Positions.get(i)[0] == col) {
+				
+				col++;
+				
+				if(col == GamePaneSetsGets.getRecsCol()) {
+					
+					col = 0;
+					row++;
+					
+					if(row == GamePaneSetsGets.getRecsRow()) {
+						
+						row = 0;
+					}
+				}
+				
+				if(col == originalCol && row == originalRow) {
+					System.out.println("GAME OVER");
+					System.exit(0);
+				}
+				
+				i = -1;
+			}
+			
+			
+			/*
 			if (Positions.get(i)[1] == row && Positions.get(i)[0] == col) {
+				
 				col = spot.nextInt(colSize);
 				row = spot.nextInt(rowSize);
 			}
+			*/
+			
 		}
-
+		
 		objectiveItem[1] = row;
 		objectiveItem[0] = col;
 
@@ -167,8 +202,8 @@ public class Snake {
 
 			this.Positions.add(0, block);
 
-			SnakeRandCalc.randCalc(this.Positions.get(this.Positions.size() - 1), this.Positions.get(0), justAte, this,
-					GamePaneSetsGets.getStart());
+			//SnakeRandCalc.randCalc(this.Positions.get(this.Positions.size() - 1), this.Positions.get(0), justAte, this,
+			//		GamePaneSetsGets.getStart());
 
 			recs[this.Positions.get(0)[1]][this.Positions.get(0)[0]].setFill(Color.WHITE);
 
@@ -188,8 +223,8 @@ public class Snake {
 					.setFill(Color.DARKCYAN);
 
 			this.Positions.add(0, block);
-			SnakeRandCalc.randCalc(this.Positions.get(this.Positions.size() - 1), this.Positions.get(0), justAte, this,
-					GamePaneSetsGets.getStart());
+			//SnakeRandCalc.randCalc(this.Positions.get(this.Positions.size() - 1), this.Positions.get(0), justAte, this,
+			//		GamePaneSetsGets.getStart());
 			this.Positions.remove(this.Positions.size() - 1);
 
 			recs[this.Positions.get(0)[1]][this.Positions.get(0)[0]].setFill(Color.WHITE);

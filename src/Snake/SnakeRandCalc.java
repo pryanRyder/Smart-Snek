@@ -10,56 +10,48 @@ import PrintData.PrintSnake;
 public class SnakeRandCalc {
 
 	private static ArrayList<int[]> validSquares = new ArrayList<int[]>();
-
+	
 	public static void randCalc(int[] tail, int[] head, boolean justAte, Snake snake, boolean startOfGame) {
-
-		// If the game started
-		if (startOfGame == true) {
-
-			// Add all squares.
-			int i = 0;
-			for (i = 0; i < GamePaneSetsGets.getRecsRow(); i++) {
-
-				int j = 0;
-				for (j = 0; j < GamePaneSetsGets.getRecsCol(); j++) {
-
-					int[] validSquare = new int[2];
-					validSquare[0] = i;
-					validSquare[1] = j;
-					validSquares.add(validSquare);
+		
+		if(startOfGame == true) {
+			
+			//Make the entire grid except for [0,0] valid
+			int row=0;
+			for(row=0; row<GamePaneSetsGets.getRecsRow(); row++) {
+				
+				int col=0;
+				for(col=0; col<GamePaneSetsGets.getRecsCol(); col++) {
+					
+					int[] square = {row, col};
+					validSquares.add(square);
 				}
 			}
-			System.out.println("Num of valud squares: " + validSquares.size());
-
-			System.out.println("NEW GAME");
-
-			// PrintSnake.printSnake(snake);
-			// Remove [0, 0]
-			int[] startingSquare = { 0, 0 };
-			for (i = 0; i < validSquares.size(); i++) {
-
-				if (CompareIntArray.compareIntArray(snake.Positions.get(0), startingSquare)) {
-
+			
+			int i=0;
+			for(i=0; i<validSquares.size(); i++) {
+				
+				int[] start = {0, 0};
+				if(CompareIntArray.compareIntArray(validSquares.get(i), start)) {
+					
 					validSquares.remove(i);
-					System.out.println("Removed!");
 				}
-
 			}
-			System.out.println("Num of valud squares: " + validSquares.size());
-		} else if (startOfGame == false) {
-
-			System.out.println("CURRENT GAME");
 		}
-
-		if (justAte == true) {
-
-			// update valid squares
-
-		} else if (justAte == false) {
-
-			// update valid squares
+		else if(startOfGame == false) {
+			
+			//Update the head/tail
+			if(justAte == true) {
+				
+				//int i=0;
+				//for(i=0; i<validSquares.size(); )
+			}
+			else if(justAte == false) {
+				
+				
+			}
 		}
-
 	}
-
+	
+	
+	
 }
