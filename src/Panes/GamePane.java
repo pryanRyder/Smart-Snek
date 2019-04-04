@@ -174,25 +174,14 @@ public class GamePane extends Pane {
 				
 			    snek.move();
 
-			    for( int i = 0; i < snek.Positions.size(); i++) 
-			    {
-			    	if((snek.Positions.get(0)[0] > recs.length-1) 	||
-			    		(snek.Positions.get(0)[0] < 0) 				||
-			    		(snek.Positions.get(0)[1] > recs[0].length-1) ||
-			    		(snek.Positions.get(0)[1] < 0))
-			    	{
-			    		snek = new Snake();
-			    	}
-			    }
+			    
+			    CheckIfSnakeHitWall();
+			    
+
+				ClearGrid();
+
 				
-				for(int i = 0; i < recs.length; i++)
-				{
-					for(int j = 0; j < recs[i].length; j++)
-					{
-						recs[i][j].setFill(Color.WHITE);
-					}
-				}
-				
+				//display Objective Item
 			    recs[snek.objectiveItem[0]][snek.objectiveItem[1]].setFill(Color.RED);
 
 				
@@ -216,12 +205,10 @@ public class GamePane extends Pane {
 			    
 			    snek.ateObjectiveItem();
 			    
+			    
 			    snakeBrain.updateSnake(snek);
 			    snakeBrain.MakeDecision();
 			    snek.changeDirection(snakeBrain.getDecidedDecidedDirection());
-
-			    
-
 				
 			});
 	
@@ -230,5 +217,32 @@ public class GamePane extends Pane {
 			
 		getChildren().addAll(gridpane);
 
+	}
+	
+	
+	public void CheckIfSnakeHitWall()
+	{
+	    for( int i = 0; i < snek.Positions.size(); i++) 
+	    {
+	    	if((snek.Positions.get(0)[0] > recs.length-1) 	||
+	    		(snek.Positions.get(0)[0] < 0) 				||
+	    		(snek.Positions.get(0)[1] > recs[0].length-1) ||
+	    		(snek.Positions.get(0)[1] < 0))
+	    	{
+	    		snek = new Snake();
+	    		snakeBrain = new SnakeBrain(snek);
+	    	}
+	    }
+	}
+	
+	public void ClearGrid()
+	{
+		for(int i = 0; i < recs.length; i++)
+		{
+			for(int j = 0; j < recs[i].length; j++)
+			{
+				recs[i][j].setFill(Color.WHITE);
+			}
+		}
 	}
 }//end GamePane
