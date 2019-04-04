@@ -33,12 +33,21 @@ public class GamePane extends Pane {
 	
 	GridPane gridpane = new GridPane();
 	boolean onlyOneDirection = true;
-	Rectangle recs[][] = new Rectangle[25][15];
+	Rectangle recs[][] = new Rectangle[40][40];
 	Scene scene;
 	
 	public SnakeManager m_SnakeManager;
-	Snake snek = new Snake();
+	Snake snek = new Snake(recs);
     SnakeBrain snakeBrain = new SnakeBrain(snek);
+    
+	//The scale of the gridpane size to the gamepane size.
+	double scale = 0.9;
+	
+	//The scaler for the borders.
+	double borderScale = 0.2;
+	
+	//The scaler for the gaps.
+	double gapScale = 0.05;
 
 
 	
@@ -135,7 +144,7 @@ public class GamePane extends Pane {
 
 	}
 	
-	public void setUpGridPane()
+	/*public void setUpGridPane()
 	{
 		gridpane.setPadding(new Insets(5,5,5,5));
 		
@@ -156,6 +165,75 @@ public class GamePane extends Pane {
 	    gridpane.setVgap(2);
 	    gridpane.relocate(80.0, 60.0);
 	    gridpane.setBackground(new Background(new BackgroundFill(Color.BLACK, null, null)));
+	}*/
+	
+	
+	public void setUpGridPane()
+	{
+		//The size of the gaps.
+				double gapSize;
+				
+				//The thickness of the borders.
+				double topBorder, rightBorder, bottomBorder, leftBorder;
+				
+				//The side length of the boxes.
+				double boxSide;
+				
+				//The height and width of the gridpane
+				double gHeight, gWidth;
+				
+				//Figure out what the side length of the squares are.
+				// gamepane.getPrefHeight()*scale = 2*(borderScale*boxSide)+(# of rows)*boxSide +
+				//(# of rows -1)*(gapScale*boxSide)
+				
+				//The scale will change the height, and in return, will also change the width.
+				double numerator = getPrefHeight() * scale;
+				double denominator = 2*borderScale + recs.length + (recs.length-1)*gapScale;
+				boxSide = numerator / denominator;
+				
+				topBorder = rightBorder = bottomBorder = leftBorder = boxSide*borderScale;
+				gapSize = boxSide*gapScale;
+				
+				//Set the borders.
+				gridpane.setPadding(new Insets(topBorder, rightBorder, bottomBorder, leftBorder));
+				
+				int row=0;
+				for(row=0; row < recs.length; row++) {
+					
+					int col=0;
+					for(col=0; col < recs[row].length; col++) {
+						
+						Rectangle rec = new Rectangle();
+						rec.setHeight(boxSide);
+						rec.setWidth(boxSide);
+						rec.setFill(Color.DARKCYAN);
+						
+						recs[row][col] = rec;
+						
+						gridpane.add(recs[row][col], col, row);
+					}
+				}
+				
+			    gridpane.setHgap(gapSize);
+			    gridpane.setVgap(gapSize);
+			    
+			    //Test to see if gridpane is out of proportions.
+			    gWidth = 2*(borderScale*boxSide) + recs[0].length*boxSide + 
+			    		(recs[0].length - 1)*gapScale*boxSide;
+			    
+			    gHeight = 2*(borderScale*boxSide) + recs.length*boxSide + 
+			    		(recs.length - 1)*gapScale*boxSide;
+			   
+			    double xPos = (getPrefWidth()-gWidth)/2;
+			    double yPos = (getPrefHeight()-gHeight)/2;
+			    
+			    gridpane.relocate(xPos, yPos);
+			    
+			    //Test to see if gridpane is out of proportions. 
+			    /*if(gWidth+xPos > getPrefWidth() || gHeight+yPos > getPrefHeight()) {
+			    	DimensionError.ShowError();
+			    }*/
+			   
 	}
 	
 	public void CheckIfSnakeHitSelf()
@@ -169,7 +247,7 @@ public class GamePane extends Pane {
 	
 	public void resetSnake()
 	{
-		snek = new Snake();
+		snek = new Snake(recs);
     	snakeBrain = new SnakeBrain(snek);
 	}
 	
