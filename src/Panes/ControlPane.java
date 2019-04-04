@@ -87,7 +87,7 @@ public class ControlPane extends Pane {
 
 		gridSizePane.getChildren().add(tfWidth);
 		
-		Text txtHeight = new Text("Mutation Rate");
+		Text txtHeight = new Text("Height Size");
 		txtHeight.setStyle("-fx-font-size: 15");
 		txtHeight.setLayoutX(gridSizePane.getPrefWidth()*0.02);
 		txtHeight.setLayoutY(gridSizePane.getPrefHeight()*0.70);
@@ -108,7 +108,7 @@ public class ControlPane extends Pane {
 		
 		btChange.setOnAction(e ->
 		{
-			((GamePane) gamePane).ChangeGridSize(Integer.parseInt(tfWidth.getText()), Integer.parseInt(tfHeight.getText()));
+			//((GamePane) gamePane).ChangeGridSize(Integer.parseInt(tfWidth.getText()), Integer.parseInt(tfHeight.getText()));
 		});
 		
 		
@@ -139,23 +139,71 @@ public class ControlPane extends Pane {
 		btStop.setLayoutX(trainingPane.getPrefWidth()*.4);
 		btStop.setLayoutY(trainingPane.getPrefHeight()*.6);
 		trainingPane.getChildren().add(btStop);
+		btStop.setDisable(true);
+		
+		btStop.setOnAction(e->
+		{
+			((GamePane) gamePane).Stop();
+			btPlay.setDisable(true);
+			btPause.setDisable(true);
+			btRestart.setDisable(true);
+			btStop.setDisable(true);
+			btStartTraining.setDisable(false);
+
+		});
 		
 		btStartTraining.setLayoutX(trainingPane.getPrefWidth()*.02);
 		btStartTraining.setLayoutY(trainingPane.getPrefHeight()*.6);
 		trainingPane.getChildren().add(btStartTraining);
 		
+		btStartTraining.setOnAction(e->
+		{
+			((GamePane) gamePane).resetSnake();
+			((GamePane) gamePane).Play();
+			
+			btStartTraining.setDisable(true);
+			btPause.setDisable(false);
+			btRestart.setDisable(false);
+			btStop.setDisable(false);
+
+		});
+		
 		btPlay.setLayoutX(trainingPane.getPrefWidth()*.02);
 		btPlay.setLayoutY(trainingPane.getPrefHeight()*.3);
 		trainingPane.getChildren().add(btPlay);
+		btPlay.setDisable(true);
+		
+		btPlay.setOnAction(e->
+		{
+			((GamePane) gamePane).Play();
+			btPlay.setDisable(true);
+			btPause.setDisable(false);
+		});
 		
 		btPause.setLayoutX(trainingPane.getPrefWidth()*.2);
 		btPause.setLayoutY(trainingPane.getPrefHeight()*.3);
 		trainingPane.getChildren().add(btPause);
+		btPause.setDisable(true);
+		
+		btPause.setOnAction(e->
+		{
+			((GamePane) gamePane).Stop();
+			btPause.setDisable(true);
+			btPlay.setDisable(false);
+		});
 		
 		btRestart.setLayoutX(trainingPane.getPrefWidth()*.4);
 		btRestart.setLayoutY(trainingPane.getPrefHeight()*.3);
 		trainingPane.getChildren().add(btRestart);
+		btRestart.setDisable(true);
 
+		btRestart.setOnAction(e->
+		{
+			btPlay.setDisable(true);
+			btPause.setDisable(false);
+			((GamePane) gamePane).resetSnake();
+			((GamePane) gamePane).Play();
+		});
 		
 		/*
 		txtAgentPane.setLayoutX(content.getPrefWidth()*.04);

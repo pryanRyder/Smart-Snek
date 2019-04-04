@@ -33,8 +33,10 @@ public class GamePane extends Pane {
 	
 	GridPane gridpane = new GridPane();
 	boolean onlyOneDirection = true;
-	Rectangle recs[][] = new Rectangle[40][40];
+	Rectangle recs[][] = new Rectangle[25][15];
 	Scene scene;
+	
+    Timeline timeline = new Timeline();
 	
 	public SnakeManager m_SnakeManager;
 	Snake snek = new Snake(recs);
@@ -91,7 +93,6 @@ public class GamePane extends Pane {
 	    //---------------------------- GAME LOOP ------------------------------- //
 
 	    
-	    Timeline timeline = new Timeline();
 		timeline.setCycleCount(Timeline.INDEFINITE);
 
 		KeyFrame keyframe = new KeyFrame(Duration.millis(75), action -> 
@@ -138,7 +139,7 @@ public class GamePane extends Pane {
 		});
 
 		timeline.getKeyFrames().add(keyframe);
-		timeline.play();
+		//timeline.play();
 		
 	getChildren().addAll(gridpane);
 
@@ -206,7 +207,7 @@ public class GamePane extends Pane {
 						Rectangle rec = new Rectangle();
 						rec.setHeight(boxSide);
 						rec.setWidth(boxSide);
-						rec.setFill(Color.DARKCYAN);
+						rec.setFill(Color.WHITE);
 						
 						recs[row][col] = rec;
 						
@@ -357,9 +358,36 @@ public class GamePane extends Pane {
 		});
 	}
 	
+	public void Pause() {
+		timeline.stop();
+	}
+
+	public void Play() {
+		timeline.play();
+	}
+
+	public void Stop() {
+		timeline.stop();
+
+}
+	/*
 	public void ChangeGridSize(int width, int height)
 	{
-		recs = new Rectangle[40][40];
+		//getChildren().remove(gridpane);
+		recs = new Rectangle[width][height];
 		setUpGridPane();
+		
+		snek.randomObjectiveItem();
+	    
+	    // Display random Objective Item
+	    recs[snek.objectiveItem[0]][snek.objectiveItem[1]].setFill(Color.RED);
+	    
+	    // Set Each Tile In Grid Pane to White
+	    for(int i = 0; i < snek.Positions.size(); i++)
+	    {
+	    	recs[snek.Positions.get(i)[0]][snek.Positions.get(i)[1]].setFill(Color.WHITE);
+	    }
+		//getChildren().add(gridpane);
 	}
+	*/
 }//end GamePane
