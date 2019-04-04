@@ -5,13 +5,9 @@ import javafx.scene.layout.Pane;
 
 public class MasterPane extends Pane
 {
-	/**
-	 * @param width double
-	 * @param height double
-	 * creates a pane that holds all other panes in it
-	 */
 	public MasterPane(double width, double height)
 	{
+<<<<<<< HEAD
 
 		
 		Pane displayPane = new DisplayPane(width, height);
@@ -22,6 +18,18 @@ public class MasterPane extends Pane
 		getChildren().add(controlPane);
 
 
+=======
+		Pane controlPane = new ControlPane(width, height);
+		Pane gamePane = new GamePane(width, height);
+		//Pane helpTabPane = new HelpTabPane(width, height);
+		Pane displayPane = new DisplayPane(width, height);
+		
+		
+		getChildren().add(controlPane);
+		getChildren().add(gamePane);
+		//getChildren().add(helpTabPane);
+		getChildren().add(displayPane);
+>>>>>>> Danny
 	}
 
 }

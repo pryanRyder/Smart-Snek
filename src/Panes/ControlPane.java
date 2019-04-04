@@ -1,14 +1,9 @@
 package Panes;
 
-import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextField;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
@@ -18,27 +13,18 @@ import javafx.scene.input.MouseEvent;
 /**
  * @author Danny
  * @version 1.0
+ * @created 17-Feb-2019 5:39:58 PM
  */
 public class ControlPane extends Pane {
 	
 	boolean GAChecked = false;
-	
-	boolean[] typeOfAlgorithm = {false, false, false};
 
 
 	public void finalize() throws Throwable {
 		super.finalize();
 	}
-	/**
-	 * @param width double 
-	 * @param height double
-	 * creates a pane called Control pane
-	 */
 	public ControlPane(double width, double height)
 	{
-		Pane gamePane = new GamePane(width, height);
-		getChildren().add(gamePane);
-		
 		setPrefSize(width * 0.25, height);
 
 		//The top left corner of this pane is at (0, 0)
@@ -55,17 +41,11 @@ public class ControlPane extends Pane {
 		Text txtAgentPane = new Text("Agent");
 		Pane AgentPane = new Pane();
 		Text txtLearningRate = new Text("Learning Rate");
-		txtLearningRate.setVisible(false);
 		TextField tfLearningRate = new TextField();
-		tfLearningRate.setVisible(false);
 		Text txtDiscountFactor = new Text("Discount Factor");
-		txtDiscountFactor.setVisible(false);
 		TextField tfDiscountFactor = new TextField();
-		tfDiscountFactor.setVisible(false);
 		Text txtMaximumReward = new Text("Maximum Reward");
-		txtMaximumReward.setVisible(false);
 		TextField tfMaximumReward = new TextField();
-		tfMaximumReward.setVisible(false);
 		
 		Pane geneticAlgorithmPane = new Pane();
 		
@@ -191,67 +171,34 @@ public class ControlPane extends Pane {
 		btStop.setLayoutY(trainingPane.getPrefHeight()*.6);
 		trainingPane.getChildren().add(btStop);
 		
-		btStartTraining.setDisable(false);
-		btPlay.setDisable(true);
-		btPause.setDisable(true);
-		btRestart.setDisable(true);
-		btStop.setDisable(true);
-		
-		btStop.setOnAction(e ->{
-			
-			((GamePane) gamePane).Stop();
-			btStartTraining.setDisable(false);
-			btPlay.setDisable(true);
-			btPause.setDisable(true);
-			btRestart.setDisable(true);
-			btStop.setDisable(true);
-			
-		});
-		
 		btStartTraining.setLayoutX(trainingPane.getPrefWidth()*.02);
 		btStartTraining.setLayoutY(trainingPane.getPrefHeight()*.6);
 		trainingPane.getChildren().add(btStartTraining);
-		btStartTraining.setDisable(true);
-		btStartTraining.setOnAction(e ->{
-			
-			((GamePane) gamePane).StartTraining();
-			btStartTraining.setDisable(true);
-			btPlay.setDisable(false);
-			btPause.setDisable(false);
-			btRestart.setDisable(false);
-			btStop.setDisable(false);
-			
-		});
 		
 		btPlay.setLayoutX(trainingPane.getPrefWidth()*.02);
 		btPlay.setLayoutY(trainingPane.getPrefHeight()*.3);
 		trainingPane.getChildren().add(btPlay);
 		
-		btPlay.setOnAction(e ->{
-			
-			((GamePane) gamePane).Play();
-			btPlay.setDisable(true);
-			btPause.setDisable(false);
-			
-		});
-		
 		btPause.setLayoutX(trainingPane.getPrefWidth()*.2);
 		btPause.setLayoutY(trainingPane.getPrefHeight()*.3);
 		trainingPane.getChildren().add(btPause);
 		
-		btPause.setOnAction(e ->{
-			
-			((GamePane) gamePane).Pause();
-			btPause.setDisable(true);
-			btPlay.setDisable(false);
-			
-		});
-		
 		btRestart.setLayoutX(trainingPane.getPrefWidth()*.4);
 		btRestart.setLayoutY(trainingPane.getPrefHeight()*.3);
 		trainingPane.getChildren().add(btRestart);
-		
 
+		
+		/*
+		txtAgentPane.setLayoutX(content.getPrefWidth()*.04);
+		txtAgentPane.setLayoutY(content.getPrefHeight()*.12);
+		txtAgentPane.setStyle("-fx-font-size: 18;");
+		content.getChildren().add(txtAgentPane);
+*/
+
+		
+		btUpload.setLayoutX(content.getPrefWidth()*.02);
+		btUpload.setLayoutY(content.getPrefHeight()*.15);
+		content.getChildren().add(btUpload);
 		
 		AgentPane.setStyle("-fx-background-color: '#e0e0e0'");
 		AgentPane.setLayoutX(getPrefWidth()*0.02);
@@ -260,115 +207,20 @@ public class ControlPane extends Pane {
 		AgentPane.setPrefWidth(content.getPrefWidth()*.95);
 		content.getChildren().add(AgentPane);
 		
-		Button btStatic = new Button("Static AI");
-		btStatic.setLayoutX(AgentPane.getPrefWidth()*.02);
-		btStatic.setLayoutY(AgentPane.getPrefHeight()*.1);
-		btStatic.setStyle("-fx-background-color: 'white'; -fx-text-fill: '#6b0110'; -fx-border-width: 1; -fx-border-style: solid; -fx-border-color: '#6b0110';");
-		AgentPane.getChildren().add(btStatic);
+		Button btDeepReinforcement = new Button("Deep Reinforcement");
+		btDeepReinforcement.setLayoutX(AgentPane.getPrefWidth()*.02);
+		btDeepReinforcement.setLayoutY(AgentPane.getPrefHeight()*.1);
+		AgentPane.getChildren().add(btDeepReinforcement);
 		
-
+		Button btDeep2 = new Button("Deep2");
+		btDeep2.setLayoutX(AgentPane.getPrefWidth()*.50);
+		btDeep2.setLayoutY(AgentPane.getPrefHeight()*.1);
+		AgentPane.getChildren().add(btDeep2);
 		
-		Button btDEEPRL = new Button("DEEP RL");
-		btDEEPRL.setLayoutX(AgentPane.getPrefWidth()*.27);
-		btDEEPRL.setLayoutY(AgentPane.getPrefHeight()*.1);
-		btDEEPRL.setStyle("-fx-background-color: 'white'; -fx-text-fill: '#005400'; -fx-border-width: 1; -fx-border-style: solid; -fx-border-color: '#005400';");
-
-		
-		AgentPane.getChildren().add(btDEEPRL);
-		
-		Button btDEEPANN = new Button("DEEP ANN");
-		btDEEPANN.setLayoutX(AgentPane.getPrefWidth()*.54);
-		btDEEPANN.setLayoutY(AgentPane.getPrefHeight()*.1);
-		btDEEPANN.setStyle("-fx-background-color: 'white'; -fx-text-fill: '#270054'; -fx-border-width: 1; -fx-border-style: solid; -fx-border-color: '#270054';");
-
-		AgentPane.getChildren().add(btDEEPANN);
-		
-		btStatic.setOnAction(e ->
-		{
-			for(int i = 0;i < typeOfAlgorithm.length; i++)
-			{
-				if(i == 0)
-					typeOfAlgorithm[i] = true;
-				else
-					typeOfAlgorithm[i] = false;
-			}
-			
-			((GamePane) gamePane).setTypeOfAlgorithm(typeOfAlgorithm);
-			
-			btDEEPANN.setStyle("-fx-background-color: 'white'; -fx-text-fill: '#270054'; -fx-border-width: 1; -fx-border-style: solid; -fx-border-color: '#270054';");
-			btDEEPRL.setStyle("-fx-background-color: 'white'; -fx-text-fill: '#005400'; -fx-border-width: 1; -fx-border-style: solid; -fx-border-color: '#005400';");
-
-			btStatic.setStyle("-fx-background-color: '#6b0110'; -fx-text-fill: 'white'; -fx-border-width: 1; -fx-border-style: solid; -fx-border-color: 'white';");
-			
-			txtLearningRate.setVisible(false);
-			tfLearningRate.setVisible(false);
-			txtDiscountFactor.setVisible(false);
-			tfDiscountFactor.setVisible(false);
-			txtMaximumReward.setVisible(false);
-			tfMaximumReward.setVisible(false);
-			
-			btStartTraining.setDisable(false);
-			
-		});
-		
-		btDEEPRL.setOnAction(e ->
-		{
-			
-			for(int i = 0;i < typeOfAlgorithm.length; i++)
-			{
-				if(i == 1)
-					typeOfAlgorithm[i] = true;
-				else
-					typeOfAlgorithm[i] = false;
-			}
-			
-			((GamePane) gamePane).setTypeOfAlgorithm(typeOfAlgorithm);
-			
-			txtLearningRate.setVisible(true);
-			tfLearningRate.setVisible(true);
-			txtDiscountFactor.setVisible(true);
-			tfDiscountFactor.setVisible(true);
-			txtMaximumReward.setVisible(true);
-			tfMaximumReward.setVisible(true);
-			
-			
-			btDEEPANN.setStyle("-fx-background-color: 'white'; -fx-text-fill: '#270054'; -fx-border-width: 1; -fx-border-style: solid; -fx-border-color: '#270054';");
-			btStatic.setStyle("-fx-background-color: 'white'; -fx-text-fill: '#6b0110'; -fx-border-width: 1; -fx-border-style: solid; -fx-border-color: '#6b0110';");
-
-			btDEEPRL.setStyle("-fx-background-color: '#005400'; -fx-text-fill: 'white'; -fx-border-width: 1; -fx-border-style: solid; -fx-border-color: 'white';");
-			
-			btStartTraining.setDisable(false);
-
-		});
-		
-		btDEEPANN.setOnAction(e ->
-		{
-			
-			for(int i = 0;i < typeOfAlgorithm.length; i++)
-			{
-				if(i == 2)
-					typeOfAlgorithm[i] = true;
-				else
-					typeOfAlgorithm[i] = false;
-			}
-
-			((GamePane) gamePane).setTypeOfAlgorithm(typeOfAlgorithm);
-			
-			txtLearningRate.setVisible(false);
-			tfLearningRate.setVisible(false);
-			txtDiscountFactor.setVisible(false);
-			tfDiscountFactor.setVisible(false);
-			txtMaximumReward.setVisible(false);
-			tfMaximumReward.setVisible(false);
-			
-			btStatic.setStyle("-fx-background-color: 'white'; -fx-text-fill: '#6b0110'; -fx-border-width: 1; -fx-border-style: solid; -fx-border-color: '#6b0110';");
-			btDEEPRL.setStyle("-fx-background-color: 'white'; -fx-text-fill: '#005400'; -fx-border-width: 1; -fx-border-style: solid; -fx-border-color: '#005400';");
-
-			btDEEPANN.setStyle("-fx-background-color: '#270054'; -fx-text-fill: 'white'; -fx-border-width: 1; -fx-border-style: solid; -fx-border-color: 'white';");
-			
-			btStartTraining.setDisable(false);
-			
-		});
+		Button btDeep3 = new Button("Deep3");
+		btDeep3.setLayoutX(AgentPane.getPrefWidth()*.75);
+		btDeep3.setLayoutY(AgentPane.getPrefHeight()*.1);
+		AgentPane.getChildren().add(btDeep3);
 		
 		txtAgentPane = new Text("Agent Controller");
 		txtAgentPane.setLayoutX(AgentPane.getPrefWidth()*.02);
@@ -409,10 +261,6 @@ public class ControlPane extends Pane {
 		btCreateNew.setLayoutX(AgentPane.getPrefWidth()*.02);
 		btCreateNew.setLayoutY(AgentPane.getPrefHeight()*.80);
 		AgentPane.getChildren().add(btCreateNew);
-		
-		btUpload.setLayoutX(AgentPane.getPrefWidth()*.02);
-		btUpload.setLayoutY(AgentPane.getPrefHeight()*.90);
-		AgentPane.getChildren().add(btUpload);
 
 		
 		getChildren().add(content);
@@ -428,7 +276,6 @@ public class ControlPane extends Pane {
 		*/
 		
 		Pane TitlePane = new Pane();
-		
 		TitlePane.setStyle("-fx-background-color: '#e0e0e0'");
 		TitlePane.setLayoutX(getPrefWidth()*0.02);
 		TitlePane.setLayoutY(getPrefHeight()*0.02);
@@ -441,30 +288,6 @@ public class ControlPane extends Pane {
 		Title.setStyle("-fx-font-size: 20;"); // NEEDS TO BE CHANGED BASED ON SIZE
 		Title.setLayoutX(content.getPrefWidth()*0.04);
 		Title.setLayoutY(content.getPrefHeight()*0.04);
-		
-		Image questionMark = new Image("questionMark.jpg");
-		ImageView questionMarkPicture = new ImageView(questionMark);
-		questionMarkPicture.setScaleX(.025);
-		questionMarkPicture.setScaleY(.025);
-		questionMarkPicture.setLayoutX(-200);
-		questionMarkPicture.setLayoutY(-460);
-		TitlePane.getChildren().add(questionMarkPicture);
-		
-		questionMarkPicture.setOnMouseClicked( new EventHandler<MouseEvent>()
-		{
-			@Override
-			public void handle(MouseEvent event) 
-			{
-				final String aboutText = "Hello this is the snek game, to move your snek use your arrow keys. ";
-
-				Alert popup = new Alert(Alert.AlertType.INFORMATION, aboutText, ButtonType.OK);
-				popup.setHeaderText("About This Game");
-				popup.setTitle("About");
-				popup.showAndWait();
-			}
-		});
-		
-		
 		//Title.setLayoutX(value);
 		//Title.setLayoutY();
 

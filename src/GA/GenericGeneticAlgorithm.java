@@ -7,6 +7,7 @@ import Agent.Agent;
 /**
  * @author Danny
  * @version 1.0
+ * @created 17-Feb-2019 5:39:59 PM
  */
 public abstract class GenericGeneticAlgorithm {
 
@@ -16,9 +17,6 @@ public abstract class GenericGeneticAlgorithm {
 	private int populationSize;
 	private Random rand;
 
-	/**
-	 * creates a new instance of GenericGeneticAlgorithm 
-	 */
 	public GenericGeneticAlgorithm(){
 
 	}
@@ -28,29 +26,34 @@ public abstract class GenericGeneticAlgorithm {
 	}
 	/**
 	 * 
-	 * @param populationSize integer
-	 * @param MutationRate   double
+	 * @param populationSize
+	 * @param MutationRate
 	 */
 	public void GenericGeneticAlgorithm(int populationSize, double MutationRate){
 
 	}
 
-	
+	/**
+	 * 
+	 * @param parent1
+	 * @param parent2
+	 */
 	public String Crossover(String parent1, String parent2){
 		return "";
 	}
-
 
 	public void Evolve(){
 
 	}
 
-
 	public void generatePopulation(){
 
 	}
 
-	
+	/**
+	 * 
+	 * @param chromosome
+	 */
 	public Agent getFitness(String chromosome){
 		return null;
 	}
@@ -71,7 +74,10 @@ public abstract class GenericGeneticAlgorithm {
 		return null;
 	}
 
-	
+	/**
+	 * 
+	 * @param chromosome
+	 */
 	public void Mutate(String chromosome){
 
 	}
@@ -80,12 +86,18 @@ public abstract class GenericGeneticAlgorithm {
 		return "";
 	}
 
-	
+	/**
+	 * 
+	 * @param mutationRate
+	 */
 	public void setMutationRate(double mutationRate){
 
 	}
 
-	
+	/**
+	 * 
+	 * @param population
+	 */
 	public void setPopulation(String[] population){
 
 	}
