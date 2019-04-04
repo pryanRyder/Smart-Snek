@@ -25,6 +25,10 @@ public class ControlPane extends Pane {
 	}
 	public ControlPane(double width, double height)
 	{
+		
+		Pane gamePane = new GamePane(width, height);
+		getChildren().add(gamePane);
+
 		setPrefSize(width * 0.25, height);
 
 		//The top left corner of this pane is at (0, 0)
@@ -47,101 +51,66 @@ public class ControlPane extends Pane {
 		Text txtMaximumReward = new Text("Maximum Reward");
 		TextField tfMaximumReward = new TextField();
 		
-		Pane geneticAlgorithmPane = new Pane();
+		Pane gridSizePane = new Pane();
 		
 
 		
-		geneticAlgorithmPane.setStyle("-fx-background-color: '#e0e0e0'");
-		geneticAlgorithmPane.setLayoutX(getPrefWidth()*0.02);
-		geneticAlgorithmPane.setLayoutY(getPrefHeight()*0.6);
-		geneticAlgorithmPane.setPrefHeight(content.getPrefHeight()*.195);
-		geneticAlgorithmPane.setPrefWidth(content.getPrefWidth()*.95);
-		content.getChildren().add(geneticAlgorithmPane);
-		
-		Rectangle gaCheckBox = new Rectangle(25,25);
-		gaCheckBox.setFill(Color.WHITE);
-		gaCheckBox.setStroke(Color.BLACK);
-		gaCheckBox.setLayoutX(geneticAlgorithmPane.getPrefWidth()*0.6);
-		gaCheckBox.setLayoutY(geneticAlgorithmPane.getPrefHeight()*0.05);
-		geneticAlgorithmPane.getChildren().add(gaCheckBox);
+		gridSizePane.setStyle("-fx-background-color: '#e0e0e0'");
+		gridSizePane.setLayoutX(getPrefWidth()*0.02);
+		gridSizePane.setLayoutY(getPrefHeight()*0.6);
+		gridSizePane.setPrefHeight(content.getPrefHeight()*.195);
+		gridSizePane.setPrefWidth(content.getPrefWidth()*.95);
+		content.getChildren().add(gridSizePane);
 		
 		
-		Text txtGeneticAlgorithm = new Text("Genetic Algorithm");
-		txtGeneticAlgorithm.setStyle("-fx-font-size: 18");
-		txtGeneticAlgorithm.setLayoutX(geneticAlgorithmPane.getPrefWidth()*0.02);
-		txtGeneticAlgorithm.setLayoutY(geneticAlgorithmPane.getPrefHeight()*0.15);
-		txtGeneticAlgorithm.setDisable(true);
-		geneticAlgorithmPane.getChildren().add(txtGeneticAlgorithm);
-		txtGeneticAlgorithm.setFill(Color.DARKGREY);
+		Text txtgridSize = new Text("Grid Size");
+		txtgridSize.setStyle("-fx-font-size: 18");
+		txtgridSize.setLayoutX(gridSizePane.getPrefWidth()*0.02);
+		txtgridSize.setLayoutY(gridSizePane.getPrefHeight()*0.15);
+		txtgridSize.setDisable(true);
+		gridSizePane.getChildren().add(txtgridSize);
 
 		
 		
-		Text txtPopulationSize = new Text("Population Size");
-		txtPopulationSize.setStyle("-fx-font-size: 15");
-		txtPopulationSize.setLayoutX(geneticAlgorithmPane.getPrefWidth()*0.02);
-		txtPopulationSize.setLayoutY(geneticAlgorithmPane.getPrefHeight()*0.35);
-		txtPopulationSize.setFill(Color.DARKGREY);
+		Text txtWidth = new Text("Width Size");
+		txtWidth.setStyle("-fx-font-size: 15");
+		txtWidth.setLayoutX(gridSizePane.getPrefWidth()*0.02);
+		txtWidth.setLayoutY(gridSizePane.getPrefHeight()*0.35);
 
-		geneticAlgorithmPane.getChildren().add(txtPopulationSize);
+		gridSizePane.getChildren().add(txtWidth);
 		
-		TextField tfPopulationSize = new TextField();
-		tfPopulationSize.setStyle("-fx-font-size: 15");
-		tfPopulationSize.setLayoutX(geneticAlgorithmPane.getPrefWidth()*0.02);
-		tfPopulationSize.setLayoutY(geneticAlgorithmPane.getPrefHeight()*0.40);
-		tfPopulationSize.setPrefWidth(geneticAlgorithmPane.getPrefWidth()*0.2);
-		tfPopulationSize.setDisable(true);
+		TextField tfWidth = new TextField();
+		tfWidth.setStyle("-fx-font-size: 15");
+		tfWidth.setLayoutX(gridSizePane.getPrefWidth()*0.02);
+		tfWidth.setLayoutY(gridSizePane.getPrefHeight()*0.40);
+		tfWidth.setPrefWidth(gridSizePane.getPrefWidth()*0.2);
 
-		geneticAlgorithmPane.getChildren().add(tfPopulationSize);
+		gridSizePane.getChildren().add(tfWidth);
 		
-		Text txtMutationRate = new Text("Mutation Rate");
-		txtMutationRate.setStyle("-fx-font-size: 15");
-		txtMutationRate.setLayoutX(geneticAlgorithmPane.getPrefWidth()*0.02);
-		txtMutationRate.setLayoutY(geneticAlgorithmPane.getPrefHeight()*0.70);
-		txtMutationRate.setFill(Color.DARKGREY);
-
-
-		geneticAlgorithmPane.getChildren().add(txtMutationRate);
+		Text txtHeight = new Text("Mutation Rate");
+		txtHeight.setStyle("-fx-font-size: 15");
+		txtHeight.setLayoutX(gridSizePane.getPrefWidth()*0.02);
+		txtHeight.setLayoutY(gridSizePane.getPrefHeight()*0.70);
+		gridSizePane.getChildren().add(txtHeight);
 		
-		TextField tfMutationRate = new TextField();
-		tfMutationRate.setStyle("-fx-font-size: 15");
-		tfMutationRate.setLayoutX(geneticAlgorithmPane.getPrefWidth()*0.02);
-		tfMutationRate.setLayoutY(geneticAlgorithmPane.getPrefHeight()*0.75);
-		tfMutationRate.setPrefWidth(geneticAlgorithmPane.getPrefWidth()*0.2);
-		tfMutationRate.setDisable(true);
-
+		TextField tfHeight = new TextField();
+		tfHeight.setStyle("-fx-font-size: 15");
+		tfHeight.setLayoutX(gridSizePane.getPrefWidth()*0.02);
+		tfHeight.setLayoutY(gridSizePane.getPrefHeight()*0.75);
+		tfHeight.setPrefWidth(gridSizePane.getPrefWidth()*0.2);
+		gridSizePane.getChildren().add(tfHeight);
 		
-		gaCheckBox.setOnMouseClicked(new EventHandler<MouseEvent>() {
-
-			@Override
-			public void handle(MouseEvent event) {
-				// TODO Auto-generated method stub
-				
-				GAChecked = !GAChecked;
-
-				if(GAChecked)
-				{
-					gaCheckBox.setFill(Color.BLACK);
-					gaCheckBox.setStroke(Color.WHITE);
-					txtMutationRate.setFill(Color.BLACK);
-					tfMutationRate.setDisable(false);
-					txtPopulationSize.setFill(Color.BLACK);
-					tfPopulationSize.setDisable(false);
-					txtGeneticAlgorithm.setFill(Color.BLACK);
-				}
-				else
-				{
-					gaCheckBox.setFill(Color.WHITE);
-					gaCheckBox.setStroke(Color.BLACK);
-					txtMutationRate.setFill(Color.DARKGREY);
-					tfMutationRate.setDisable(true);
-					txtPopulationSize.setFill(Color.DARKGREY);
-					tfPopulationSize.setDisable(true);
-					txtGeneticAlgorithm.setFill(Color.DARKGREY);
-				}
-			}
-			
+		Button btChange = new Button("Change");
+		btChange.setStyle("-fx-font-size: 15");
+		btChange.setLayoutX(gridSizePane.getPrefWidth()*0.7);
+		btChange.setLayoutY(gridSizePane.getPrefHeight()*0.80);
+		gridSizePane.getChildren().add(btChange);
+		
+		btChange.setOnAction(e ->
+		{
+			((GamePane) gamePane).ChangeGridSize(Integer.parseInt(tfWidth.getText()), Integer.parseInt(tfHeight.getText()));
 		});
-		geneticAlgorithmPane.getChildren().add(tfMutationRate);
+		
 		
 		Button btCreateNew = new Button("Create New");
 		Button btUpload = new Button("Upload");

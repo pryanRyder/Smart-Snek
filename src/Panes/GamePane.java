@@ -356,4 +356,10 @@ public class GamePane extends Pane {
 			}
 		});
 	}
+	
+	public void ChangeGridSize(int width, int height)
+	{
+		recs = new Rectangle[40][40];
+		setUpGridPane();
+	}
 }//end GamePane
