@@ -1,5 +1,7 @@
 package Panes;
 
+import Agent.SnakeBrain;
+import Snake.Snake;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
@@ -212,10 +214,14 @@ public class ControlPane extends Pane {
 		btDeepReinforcement.setLayoutY(AgentPane.getPrefHeight()*.1);
 		AgentPane.getChildren().add(btDeepReinforcement);
 		
+		
 		Button btDeep2 = new Button("Deep2");
 		btDeep2.setLayoutX(AgentPane.getPrefWidth()*.50);
 		btDeep2.setLayoutY(AgentPane.getPrefHeight()*.1);
 		AgentPane.getChildren().add(btDeep2);
+		
+		
+		
 		
 		Button btDeep3 = new Button("Deep3");
 		btDeep3.setLayoutX(AgentPane.getPrefWidth()*.75);

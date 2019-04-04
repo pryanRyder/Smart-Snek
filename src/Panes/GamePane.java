@@ -29,6 +29,7 @@ import javafx.util.Duration;
  * @version 1.0
  * @created 17-Feb-2019 5:39:59 PM
  */
+
 public class GamePane extends Pane {
 
 	boolean onlyOneDirection = true;
@@ -39,7 +40,7 @@ public class GamePane extends Pane {
 	public SnakeManager m_SnakeManager;
 	Snake snek = new Snake();
     SnakeBrain snakeBrain = new SnakeBrain(snek);
-
+   
 
 
 	public void finalize() throws Throwable {
@@ -47,7 +48,7 @@ public class GamePane extends Pane {
 	}
 
 
-	public GamePane(double width, double height)
+	public GamePane( double width, double height)
 	{
 		this.scene = scene;
 		Text Title = new Text("I am the Game Pane");
