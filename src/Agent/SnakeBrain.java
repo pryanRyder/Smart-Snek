@@ -2,38 +2,8 @@ package Agent;
 
 import java.util.Random;
 
-import Panes.GamePane;
 import Snake.CurrentDirection;
 import Snake.Snake;
-
-/*
- * 
- * 
- * Danny, I noticed that the snake goes off screen when it is going directly away from the objective.
- * 
- * And I found that the objective can spawn in the snake.
- * 
- * I put a letter every time you assign a direction to help you find out which assignment is wrong.
- * 
- * 
- * 
- * EX:
- * -----------------------------|
- * |							|
- * |			----|			|			<- This will crash.
- * |				|			|
- * |	[]			|---------> |
- * |							|
- * |							|
- * |----------------------------|
- * 
- * 
- * Watch the snake a few times and you will see what I mean.
- * 
- * 
- */
-
-
 
 public class SnakeBrain
 {
@@ -115,17 +85,45 @@ public class SnakeBrain
 						snakeBodyIsCloser = true;
 				}
 				if(!snakeBodyIsCloser)
-					direction = CurrentDirection.RIGHT; //Original: RIGHT
-				}
+					direction = CurrentDirection.RIGHT;			}
 		}		
+
+			
+		/*
+		for(int i = 3; i < snake.Positions.size(); i++)
+		{
+			if(snake.Positions.get(i)[0] > 0 && (snake.Positions.get(0)[0] == snake.Positions.get(i)[0]-1 && snake.getDirection() == CurrentDirection.RIGHT))
+			{
+				int maybe = (Math.random() <= 0.5) ? 1 : 2;
+				switch(maybe)
+				{
+					case 1: direction = CurrentDirection.UP;
+						break;
+					case 2: direction = CurrentDirection.DOWN;
+						break;
+				}
+			}
+			
+			else if(snake.Positions.get(i)[0] > 0 && (snake.Positions.get(0)[0] == snake.Positions.get(i)[0]+1 && snake.getDirection() == CurrentDirection.LEFT))
+			{
+				int maybe = (Math.random() <= 0.5) ? 1 : 2;
+				switch(maybe)
+				{
+					case 1: direction = CurrentDirection.UP;
+						break;
+					case 2: direction = CurrentDirection.DOWN;
+						break;
+				}
+			}
+		}*/
 		
-		else if(snake.Positions.get(0)[0] == GamePane.getRecsCol()-1 && snake.getDirection() == CurrentDirection.RIGHT)
+		else if(snake.Positions.get(0)[0] == 24 && snake.getDirection() == CurrentDirection.RIGHT)
 		{
 			if(snake.Positions.get(0)[1] == 0)
 			{
 				direction = CurrentDirection.DOWN;
 			}
-			else if(snake.Positions.get(0)[1] == GamePane.getRecsRow()-1)
+			else if(snake.Positions.get(0)[1] == 14)
 			{
 				direction = CurrentDirection.UP;
 			}
@@ -140,6 +138,7 @@ public class SnakeBrain
 				{
 					direction = CurrentDirection.UP;
 				}
+				
 				else
 				{
 					int maybe = (Math.random() <= 0.5) ? 1 : 2;
@@ -160,7 +159,7 @@ public class SnakeBrain
 			{
 				direction = CurrentDirection.DOWN;
 			}
-			else if(snake.Positions.get(0)[1] == GamePane.getRecsRow()-1)
+			else if(snake.Positions.get(0)[1] == 14)
 			{
 				direction = CurrentDirection.UP;
 			}
@@ -187,9 +186,9 @@ public class SnakeBrain
 				}	
 			}
 		}
-		else if(snake.Positions.get(0)[1] == GamePane.getRecsRow()-1 && snake.getDirection() == CurrentDirection.DOWN)
+		else if(snake.Positions.get(0)[1] == 14 && snake.getDirection() == CurrentDirection.DOWN)
 		{
-			if(snake.Positions.get(0)[0] == GamePane.getRecsCol()-1)
+			if(snake.Positions.get(0)[0] == 24)
 			{
 				direction = CurrentDirection.LEFT;
 			}
@@ -222,7 +221,7 @@ public class SnakeBrain
 			}
 		else if(snake.Positions.get(0)[1] == 0 && snake.getDirection() == CurrentDirection.UP)
 		{
-			if(snake.Positions.get(0)[0] == GamePane.getRecsCol()-1)
+			if(snake.Positions.get(0)[0] == 24)
 			{
 				direction = CurrentDirection.LEFT;
 			}
@@ -253,53 +252,8 @@ public class SnakeBrain
 				}	
 			}
 		}
+		
 			
-			if(DecidedDirection == CurrentDirection.UP && direction == CurrentDirection.DOWN)
-			{
-				int maybe = (Math.random() <= 0.5) ? 1 : 2;
-				switch(maybe)
-				{
-					case 1: direction = CurrentDirection.LEFT;
-					System.out.println("AC");
-						break;
-					case 2: direction = CurrentDirection.RIGHT;
-					System.out.println("AD");
-						break;
-				}
-			}
-			else if(DecidedDirection == CurrentDirection.DOWN && direction == CurrentDirection.UP)
-			{
-				int maybe = (Math.random() <= 0.5) ? 1 : 2;
-				switch(maybe)
-				{
-					case 1: direction = CurrentDirection.LEFT;
-						break;
-					case 2: direction = CurrentDirection.RIGHT;
-						break;
-				}
-			}
-			else if(DecidedDirection == CurrentDirection.LEFT && direction == CurrentDirection.RIGHT)
-			{
-				int maybe = (Math.random() <= 0.5) ? 1 : 2;
-				switch(maybe)
-				{
-					case 1: direction = CurrentDirection.DOWN;
-						break;
-					case 2: direction = CurrentDirection.UP;
-						break;
-				}
-			}
-			else if(DecidedDirection == CurrentDirection.RIGHT && direction == CurrentDirection.LEFT)
-			{
-				int maybe = (Math.random() <= 0.5) ? 1 : 2;
-				switch(maybe)
-				{
-					case 1: direction = CurrentDirection.DOWN;
-						break;
-					case 2: direction = CurrentDirection.UP;
-						break;
-				}
-			}
 			DecidedDirection = direction;
 	}
 	
