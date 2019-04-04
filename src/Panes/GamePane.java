@@ -49,9 +49,6 @@ public class GamePane extends Pane {
 	
 	public GamePane(double width, double height)
 	{
-		this.scene = scene;
-		Text Title = new Text("I am the Game Pane");
-		getChildren().add(Title);
 		setPrefSize(width * 0.75, height * 0.75);
 		
 		//The top left corner of this pane is at (width * 0.25, 0)
@@ -81,19 +78,19 @@ public class GamePane extends Pane {
 				}
 			}
 			
-			
-			
 		    gridpane.setHgap(2);
 		    gridpane.setVgap(2);
 		    gridpane.relocate(80.0, 60.0);
 		    gridpane.setBackground(new Background(new BackgroundFill(Color.BLACK, null, null)));
 		   
 		    
-		    
+		    // generate random Objective Item
 		    snek.randomObjectiveItem();
 		    
+		    // Display random Objective Item
 		    recs[snek.objectiveItem[0]][snek.objectiveItem[1]].setFill(Color.RED);
 		    
+		    // Set Each Tile In Grid Pane to White
 		    for(int i = 0; i < snek.Positions.size(); i++)
 		    {
 		    	recs[snek.Positions.get(i)[0]][snek.Positions.get(i)[1]].setFill(Color.WHITE);
@@ -105,6 +102,7 @@ public class GamePane extends Pane {
 	
 			KeyFrame keyframe = new KeyFrame(Duration.millis(75), action -> 
 			{
+				// Boolean Value that Determines whether you can go back on top of yourself
 				onlyOneDirection = true;
 				
 			    //---------------------------- GAME IMPLEMENTATION -------------------------------
