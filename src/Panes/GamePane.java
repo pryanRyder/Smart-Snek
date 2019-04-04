@@ -31,19 +31,31 @@ import javafx.util.Duration;
  */
 public class GamePane extends Pane {
 
+	GridPane gridpane = new GridPane();
 	boolean onlyOneDirection = true;
 	Rectangle recs[][] = new Rectangle[25][15];
 	Scene scene;
-	
-	// Iteration, Score, and HighScore Initializers 
+
+    Timeline timeline = new Timeline();
+
+	// Iteration, Score, and HighScore Initializers
 	String iterationString = new String();
 	int Iteration = 0;
-	
+
 
 
 	public SnakeManager m_SnakeManager;
-	Snake snek = new Snake();
+	Snake snek = new Snake(recs);
     SnakeBrain snakeBrain = new SnakeBrain(snek);
+
+	//The scale of the gridpane size to the gamepane size.
+	double scale = 0.9;
+
+	//The scaler for the borders.
+	double borderScale = 0.2;
+
+	//The scaler for the gaps.
+	double gapScale = 0.05;
 
 
 
@@ -54,191 +66,334 @@ public class GamePane extends Pane {
 
 	public GamePane(double width, double height)
 	{
-		this.scene = scene;
-		Text Title = new Text("I am the Game Pane");
-		getChildren().add(Title);
+
+	    //---------------------------- Set Up ------------------------------- //
+
+		//dealing with sizing
 		setPrefSize(width * 0.75, height * 0.75);
 
 		//The top left corner of this pane is at (width * 0.25, 0)
 		setLayoutX(width * 0.25);
-		setLayoutY(0);
 		setStyle("-fx-background-color: '#6d6d6d';");
 
+		//Create Display Pane
 		Pane displayPane = new DisplayPane(width, height);
 		getChildren().add(displayPane);
 
+		//Sets up Grid Pane
+		setUpGridPane();
 
-		GridPane gridpane = new GridPane();
+	    // generate random Objective Item
+	    snek.randomObjectiveItem();
 
-				gridpane.setPadding(new Insets(5,5,5,5));
+	    // Display random Objective Item
+	    recs[snek.objectiveItem[0]][snek.objectiveItem[1]].setFill(Color.RED);
 
-
-			for(int x = 0; x < recs.length; x++) {
-				for(int y = 0; y < recs[x].length; y++) {
-
-					Rectangle rec = new Rectangle();
-					rec.setHeight(28);
-					rec.setWidth(28);
-					rec.setFill(Color.DARKCYAN);
-					recs[x][y] = rec;
-
-					gridpane.add(recs[x][y], x, y);
-				}
-			}
+	    // Set Each Tile In Grid Pane to White
+	    for(int i = 0; i < snek.Positions.size(); i++)
+	    {
+	    	recs[snek.Positions.get(i)[0]][snek.Positions.get(i)[1]].setFill(Color.WHITE);
+	    }
 
 
-
-		    gridpane.setHgap(2);
-		    gridpane.setVgap(2);
-		    gridpane.relocate(80.0, 60.0);
-		    gridpane.setBackground(new Background(new BackgroundFill(Color.AQUAMARINE, null, null)));
+	    //---------------------------- GAME LOOP ------------------------------- //
 
 
+		timeline.setCycleCount(Timeline.INDEFINITE);
 
-		    snek.randomObjectiveItem();
-		   // snek.Sneek();
+		KeyFrame keyframe = new KeyFrame(Duration.millis(75), action ->
+		{
+			// Boolean Value that Determines whether you can go back on top of yourself
+			onlyOneDirection = true;
 
+		    //---------------------------- GAME IMPLEMENTATION ------------------------------- //
+
+
+			//moves the snake based off of key presses
+			keyPressHandler();
+
+			//moves the snakes position
+		    snek.move();
+
+		    //Checks if snake hits wall and resets the snake if dead
+		    CheckIfSnakeHitWall();
+
+		    //Clears the Grid
+			ClearGrid();
+
+			//Displays Objective Item
 		    recs[snek.objectiveItem[0]][snek.objectiveItem[1]].setFill(Color.RED);
-		    //recs[snek.x][snek.y].setFill(Color.DARKMAGENTA);
 
-		    for(int i = 0; i < snek.Positions.size(); i++)
-		    {
-		    	recs[snek.Positions.get(i)[0]][snek.Positions.get(i)[1]].setFill(Color.DARKMAGENTA);
-		    }
+		    //Moves the Snakes Position in GridPane
+			moveSnakeDisplay();
 
+			//Checks if the Snake ran into itself and resets if true
+			CheckIfSnakeHitSelf();
 
-		    Timeline timeline = new Timeline();
-			timeline.setCycleCount(Timeline.INDEFINITE);
+			//adds to score if snake eats objective item
+		    snek.ateObjectiveItem();
 
-			KeyFrame keyframe = new KeyFrame(Duration.millis(20), action ->
-			{
-				onlyOneDirection = true;
+		    //---------------------------- AI Integration ------------------------------- //
 
-				getScene().setOnKeyPressed(e ->
-				{	if(onlyOneDirection)
-					{
-						if(e.getCode() == KeyCode.A && snek.m_CurrentDirection != CurrentDirection.RIGHT)
-						{
-							snek.changeDirection(CurrentDirection.LEFT);
-							System.out.println("LEFT");
-							onlyOneDirection = false;
-						}
-						else if(e.getCode() == KeyCode.D && snek.m_CurrentDirection != CurrentDirection.LEFT)
-						{
-							snek.changeDirection(CurrentDirection.RIGHT);
-							System.out.println("RIGHT");
-							onlyOneDirection = false;
+		    //updates brain with the environment
+		    snakeBrain.updateSnake(snek);
+		    //brain makes decision based off of the environment
+		    snakeBrain.MakeDecision();
+		    //brain decides on a direction and changes the path of the snake
+		    snek.changeDirection(snakeBrain.getDecidedDecidedDirection());
 
-						}
-						else if(e.getCode() == KeyCode.S && snek.m_CurrentDirection != CurrentDirection.UP)
-						{
-							snek.changeDirection(CurrentDirection.DOWN);
-							System.out.println("DOWN");
-							onlyOneDirection = false;
+		});
 
-						}
-						else if(e.getCode() == KeyCode.W && snek.m_CurrentDirection != CurrentDirection.DOWN)
-						{
-							snek.changeDirection(CurrentDirection.UP);
-							System.out.println("UP");
-							onlyOneDirection = false;
+		timeline.getKeyFrames().add(keyframe);
+		//timeline.play();
 
-						}
-
-						else if(e.getCode() == KeyCode.LEFT && snek.m_CurrentDirection != CurrentDirection.RIGHT)
-						{
-							snek.changeDirection(CurrentDirection.LEFT);
-							System.out.println("LEFT");
-							onlyOneDirection = false;
-
-
-						}
-						else if(e.getCode() == KeyCode.RIGHT && snek.m_CurrentDirection != CurrentDirection.LEFT)
-						{
-							snek.changeDirection(CurrentDirection.RIGHT);
-							System.out.println("RIGHT");
-							onlyOneDirection = false;
-
-						}
-						else if(e.getCode() == KeyCode.DOWN && snek.m_CurrentDirection != CurrentDirection.UP)
-						{
-							snek.changeDirection(CurrentDirection.DOWN);
-							System.out.println("DOWN");
-							onlyOneDirection = false;
-
-						}
-						else if(e.getCode() == KeyCode.UP && snek.m_CurrentDirection != CurrentDirection.DOWN)
-						{
-							snek.changeDirection(CurrentDirection.UP);
-							System.out.println("UP");
-							onlyOneDirection = false;
-
-						}
-					}
-				});
-
-			    snek.move();
-
-			    for( int i = 0; i < snek.Positions.size(); i++)
-			    {
-			    	if((snek.Positions.get(0)[0] > recs.length-1) 	||
-			    		(snek.Positions.get(0)[0] < 0) 				||
-			    		(snek.Positions.get(0)[1] > recs[0].length-1) ||
-			    		(snek.Positions.get(0)[1] < 0))
-			    	{
-			    		snek = new Snake();
-			    	}
-			    }
-
-				for(int i = 0; i < recs.length; i++)
-				{
-					for(int j = 0; j < recs[i].length; j++)
-					{
-						recs[i][j].setFill(Color.DARKCYAN);
-					}
-				}
-
-			    recs[snek.objectiveItem[0]][snek.objectiveItem[1]].setFill(Color.RED);
-
-
-			    for(int i = 0; i < snek.Positions.size(); i++) //moves the display of the snake
-			    {
-			    	try
-			    	{
-			    		recs[snek.Positions.get(i)[0]][snek.Positions.get(i)[1]].setFill(Color.WHITE);
-			    	}
-			    	catch(ArrayIndexOutOfBoundsException e)
-			    	{
-			    		//:P
-			    	}
-			    }
-
-
-			    if(snek.checkIfDead())
-			    {
-			    	snek = new Snake();
-			    	
-			    	Iteration = Iteration + 1;
-			    	iterationString = Integer.toString(Iteration);
-			    	DisplayPane.getIteration(iterationString);
-			    }
-			    
-			    
-
-			    snek.ateObjectiveItem();
-			    snakeBrain.updateSnake(snek);
-			    snakeBrain.MakeDecision();
-			    snek.changeDirection(snakeBrain.getDecidedDecidedDirection());
-
-
-
-
-			});
-
-			timeline.getKeyFrames().add(keyframe);
-			timeline.play();
-			
-		getChildren().addAll(gridpane);
+	getChildren().addAll(gridpane);
 
 	}
+
+	/*public void setUpGridPane()
+	{
+		gridpane.setPadding(new Insets(5,5,5,5));
+
+		for(int x = 0; x < recs.length; x++) {
+			for(int y = 0; y < recs[x].length; y++) {
+
+				Rectangle rec = new Rectangle();
+				rec.setHeight(28);
+				rec.setWidth(28);
+				rec.setFill(Color.BLACK);
+				recs[x][y] = rec;
+
+				gridpane.add(recs[x][y], x, y);
+			}
+		}
+
+	    gridpane.setHgap(2);
+	    gridpane.setVgap(2);
+	    gridpane.relocate(80.0, 60.0);
+	    gridpane.setBackground(new Background(new BackgroundFill(Color.BLACK, null, null)));
+	}*/
+
+
+	public void setUpGridPane()
+	{
+		//The size of the gaps.
+				double gapSize;
+
+				//The thickness of the borders.
+				double topBorder, rightBorder, bottomBorder, leftBorder;
+
+				//The side length of the boxes.
+				double boxSide;
+
+				//The height and width of the gridpane
+				double gHeight, gWidth;
+
+				//Figure out what the side length of the squares are.
+				// gamepane.getPrefHeight()*scale = 2*(borderScale*boxSide)+(# of rows)*boxSide +
+				//(# of rows -1)*(gapScale*boxSide)
+
+				//The scale will change the height, and in return, will also change the width.
+				double numerator = getPrefHeight() * scale;
+				double denominator = 2*borderScale + recs.length + (recs.length-1)*gapScale;
+				boxSide = numerator / denominator;
+
+				topBorder = rightBorder = bottomBorder = leftBorder = boxSide*borderScale;
+				gapSize = boxSide*gapScale;
+
+				//Set the borders.
+				gridpane.setPadding(new Insets(topBorder, rightBorder, bottomBorder, leftBorder));
+
+				int row=0;
+				for(row=0; row < recs.length; row++) {
+
+					int col=0;
+					for(col=0; col < recs[row].length; col++) {
+
+						Rectangle rec = new Rectangle();
+						rec.setHeight(boxSide);
+						rec.setWidth(boxSide);
+						rec.setFill(Color.WHITE);
+
+						recs[row][col] = rec;
+
+						gridpane.add(recs[row][col], col, row);
+					}
+				}
+
+			    gridpane.setHgap(gapSize);
+			    gridpane.setVgap(gapSize);
+
+			    //Test to see if gridpane is out of proportions.
+			    gWidth = 2*(borderScale*boxSide) + recs[0].length*boxSide +
+			    		(recs[0].length - 1)*gapScale*boxSide;
+
+			    gHeight = 2*(borderScale*boxSide) + recs.length*boxSide +
+			    		(recs.length - 1)*gapScale*boxSide;
+
+			    double xPos = (getPrefWidth()-gWidth)/2;
+			    double yPos = (getPrefHeight()-gHeight)/2;
+
+			    gridpane.relocate(xPos, yPos);
+
+			    //Test to see if gridpane is out of proportions.
+			    /*if(gWidth+xPos > getPrefWidth() || gHeight+yPos > getPrefHeight()) {
+			    	DimensionError.ShowError();
+			    }*/
+
+	}
+
+	public void CheckIfSnakeHitSelf()
+	{
+
+	    if( snek.checkIfDead())
+	    {
+	    	resetSnake();
+	    }
+	}
+
+	public void resetSnake()
+	{
+		snek = new Snake(recs);
+    	snakeBrain = new SnakeBrain(snek);
+	}
+
+	public void CheckIfSnakeHitWall()
+	{
+	    for( int i = 0; i < snek.Positions.size(); i++)
+	    {
+	    	if((snek.Positions.get(0)[0] > recs.length-1) 	||
+	    		(snek.Positions.get(0)[0] < 0) 				||
+	    		(snek.Positions.get(0)[1] > recs[0].length-1) ||
+	    		(snek.Positions.get(0)[1] < 0))
+	    	{
+		    	resetSnake();
+	    	}
+	    }
+	}
+
+	public void ClearGrid()
+	{
+		for(int i = 0; i < recs.length; i++)
+		{
+			for(int j = 0; j < recs[i].length; j++)
+			{
+				recs[i][j].setFill(Color.WHITE);
+			}
+		}
+	}
+
+	public void moveSnakeDisplay()
+	{
+	    for(int i = 0; i < snek.Positions.size(); i++) //moves the display of the snake
+	    {
+	    	try
+	    	{
+	    		recs[snek.Positions.get(i)[0]][snek.Positions.get(i)[1]].setFill(Color.BLACK);
+	    	}
+	    	catch(ArrayIndexOutOfBoundsException e)
+	    	{
+	    		//:P
+	    	}
+	    }
+	}
+
+	public void keyPressHandler()
+	{
+		getScene().setOnKeyPressed(e ->
+		{	if(onlyOneDirection)
+			{
+				if(e.getCode() == KeyCode.A && snek.m_CurrentDirection != CurrentDirection.RIGHT)
+				{
+					snek.changeDirection(CurrentDirection.LEFT);
+					System.out.println("LEFT");
+					onlyOneDirection = false;
+				}
+				else if(e.getCode() == KeyCode.D && snek.m_CurrentDirection != CurrentDirection.LEFT)
+				{
+					snek.changeDirection(CurrentDirection.RIGHT);
+					System.out.println("RIGHT");
+					onlyOneDirection = false;
+
+				}
+				else if(e.getCode() == KeyCode.S && snek.m_CurrentDirection != CurrentDirection.UP)
+				{
+					snek.changeDirection(CurrentDirection.DOWN);
+					System.out.println("DOWN");
+					onlyOneDirection = false;
+
+				}
+				else if(e.getCode() == KeyCode.W && snek.m_CurrentDirection != CurrentDirection.DOWN)
+				{
+					snek.changeDirection(CurrentDirection.UP);
+					System.out.println("UP");
+					onlyOneDirection = false;
+
+				}
+
+				else if(e.getCode() == KeyCode.LEFT && snek.m_CurrentDirection != CurrentDirection.RIGHT)
+				{
+					snek.changeDirection(CurrentDirection.LEFT);
+					System.out.println("LEFT");
+					onlyOneDirection = false;
+
+
+				}
+				else if(e.getCode() == KeyCode.RIGHT && snek.m_CurrentDirection != CurrentDirection.LEFT)
+				{
+					snek.changeDirection(CurrentDirection.RIGHT);
+					System.out.println("RIGHT");
+					onlyOneDirection = false;
+
+				}
+				else if(e.getCode() == KeyCode.DOWN && snek.m_CurrentDirection != CurrentDirection.UP)
+				{
+					snek.changeDirection(CurrentDirection.DOWN);
+					System.out.println("DOWN");
+					onlyOneDirection = false;
+
+				}
+				else if(e.getCode() == KeyCode.UP && snek.m_CurrentDirection != CurrentDirection.DOWN)
+				{
+					snek.changeDirection(CurrentDirection.UP);
+					System.out.println("UP");
+					onlyOneDirection = false;
+
+				}
+			}
+		});
+	}
+
+	public void Pause() {
+		timeline.stop();
+	}
+
+	public void Play() {
+		timeline.play();
+	}
+
+	public void Stop() {
+		timeline.stop();
+
+}
+	/*
+	public void ChangeGridSize(int width, int height)
+	{
+		//getChildren().remove(gridpane);
+		recs = new Rectangle[width][height];
+		setUpGridPane();
+
+		snek.randomObjectiveItem();
+
+	    // Display random Objective Item
+	    recs[snek.objectiveItem[0]][snek.objectiveItem[1]].setFill(Color.RED);
+
+	    // Set Each Tile In Grid Pane to White
+	    for(int i = 0; i < snek.Positions.size(); i++)
+	    {
+	    	recs[snek.Positions.get(i)[0]][snek.Positions.get(i)[1]].setFill(Color.WHITE);
+	    }
+		//getChildren().add(gridpane);
+	}
+	*/
 }//end GamePane

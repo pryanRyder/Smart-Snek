@@ -117,7 +117,7 @@ public class SnakeBrain
 			}
 		}*/
 		
-		else if(snake.Positions.get(0)[0] == 24 && snake.getDirection() == CurrentDirection.RIGHT)
+		else if(snake.Positions.get(0)[0] == snake.recs[0].length-1 && snake.getDirection() == CurrentDirection.RIGHT)
 		{
 			if(snake.Positions.get(0)[1] == 0)
 			{
@@ -186,9 +186,9 @@ public class SnakeBrain
 				}	
 			}
 		}
-		else if(snake.Positions.get(0)[1] == 14 && snake.getDirection() == CurrentDirection.DOWN)
+		else if(snake.Positions.get(0)[1] == snake.recs.length-1 && snake.getDirection() == CurrentDirection.DOWN)
 		{
-			if(snake.Positions.get(0)[0] == 24)
+			if(snake.Positions.get(0)[0] == snake.recs[0].length-1)
 			{
 				direction = CurrentDirection.LEFT;
 			}
@@ -221,7 +221,7 @@ public class SnakeBrain
 			}
 		else if(snake.Positions.get(0)[1] == 0 && snake.getDirection() == CurrentDirection.UP)
 		{
-			if(snake.Positions.get(0)[0] == 24)
+			if(snake.Positions.get(0)[0] == snake.recs[0].length)
 			{
 				direction = CurrentDirection.LEFT;
 			}
