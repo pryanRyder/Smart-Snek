@@ -11,10 +11,9 @@ import javafx.scene.shape.Rectangle;
  * @created 17-Feb-2019 5:39:59 PM
  */
 public class Snake {
-	
-	
-	public Rectangle[][] recs;
 
+
+	public Rectangle[][] recs;
 	public int[] objectiveItem = new int[2];
 	public ArrayList<int[]> Positions = new ArrayList<int[]>();
 	public int score;
@@ -28,9 +27,8 @@ public class Snake {
 //
 
 	public Snake() {
-	
-	public Snake(Rectangle[][] recs)
 
+	public Snake(Rectangle[][] recs)
 	{
 		this.recs = recs;
 		int[] x = {0,0};
@@ -56,7 +54,7 @@ public class Snake {
 			Positions.add(tempPosition);
 		}
 	}
-	
+
 	public CurrentDirection getDirection()
 	{
 		return m_CurrentDirection;
@@ -113,16 +111,12 @@ public class Snake {
 
 	public void randomObjectiveItem()
 	{
-		
+
 			Random spot = new Random();
 
-			int row = spot.nextInt(25);
-			int col = spot.nextInt(15);
-
-			
 			int row = spot.nextInt(recs.length);
 			int col = spot.nextInt(recs[0].length);
-			
+
 			for(int i = 0; i < Positions.size(); i++)
 			{
 				if(Positions.get(i)[0] == row && Positions.get(i)[1] == col)

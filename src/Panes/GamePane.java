@@ -38,15 +38,18 @@ public class GamePane extends Pane {
 
     Timeline timeline = new Timeline();
 
-	// Iteration, Score, and HighScore Initializers
-	String iterationString = new String();
-	int Iteration = 0;
-
-
-
 	public SnakeManager m_SnakeManager;
 	Snake snek = new Snake(recs);
     SnakeBrain snakeBrain = new SnakeBrain(snek);
+
+	//The scale of the gridpane size to the gamepane size.
+	double scale = 0.9;
+
+	//The scaler for the borders.
+	double borderScale = 0.2;
+
+	//The scaler for the gaps.
+	double gapScale = 0.05;
 
 	//The scale of the gridpane size to the gamepane size.
 	double scale = 0.9;
