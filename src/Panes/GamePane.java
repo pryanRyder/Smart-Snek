@@ -49,10 +49,20 @@ public class GamePane extends Pane {
 
 	//The scaler for the gaps.
 	double gapScale = 0.05;
-	
+
 	//Color of the Snake
 	 Color colorOfSnake = Color.BLACK;
 	 Timeline timeline = new Timeline();
+
+
+	//The scale of the gridpane size to the gamepane size.
+	double scale = 0.9;
+
+	//The scaler for the borders.
+	double borderScale = 0.2;
+
+	//The scaler for the gaps.
+	double gapScale = 0.05;
 
 
 
@@ -170,11 +180,6 @@ public class GamePane extends Pane {
 	    gridpane.relocate(80.0, 60.0);
 	    gridpane.setBackground(new Background(new BackgroundFill(Color.BLACK, null, null)));
 	}*/
-
-
-	public GamePane() {
-		// TODO Auto-generated constructor stub
-	}
 
 
 	public void setUpGridPane()
@@ -365,7 +370,6 @@ public class GamePane extends Pane {
 			}
 		});
 	}
-
 	public void ChangeGridSize(int width, int height)
 	{
 		recs = new Rectangle[40][40];
@@ -375,18 +379,18 @@ public class GamePane extends Pane {
 		this.colorOfSnake=colorOfSnake;
 	}
 	public Color getColor (Color colorOfSnake) {
-		
+
 		return colorOfSnake;
 	}
-	
+
 	public void Play()
 	{
 		timeline.play();
 	}
-	
+
 	public void Stop()
 	{
 		timeline.stop();
 	}
-	
+
 }//end GamePane
