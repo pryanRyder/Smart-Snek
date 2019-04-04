@@ -2,13 +2,6 @@ package Panes;
 
 import java.util.Collection;
 
-import Agent.SnakeBrain;
-import GamePaneHelper.DidSnakeHitWall;
-import GamePaneHelper.GamePaneKeyFrameComp;
-import GamePaneHelper.UpdateSnakeStrings;
-import GamePaneHelper.UserMoving;
-import PaneHelper.AddGridPaneContent;
-import PrintData.PrintSnake;
 import Snake.CurrentDirection;
 import Snake.Snake;
 import Snake.SnakeManager;
@@ -18,7 +11,6 @@ import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.TextField;
-import javafx.scene.control.TextInputControl;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
@@ -28,82 +20,206 @@ import javafx.scene.layout.RowConstraints;
 import javafx.scene.layout.TilePane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
-import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
 
 /**
- * @author Danny, Paul, Yara, Sky
+ * @author Danny, Paul, Yara
  * @version 1.0
+ * @created 17-Feb-2019 5:39:59 PM
  */
 public class GamePane extends Pane {
+	
+	boolean onlyOneDirection = true;
+	Rectangle recs[][] = new Rectangle[25][15];
+	Scene scene;
 
-	// protected variables are shared by GamePaneSetsGets
-	protected static boolean onlyOneDirection = true;
-	protected static Rectangle recs[][] = new Rectangle[10][3]; // [row][col] [15][25]
-	protected static Scene scene;
-	protected static SnakeManager m_SnakeManager;
-	protected static Snake snek = new Snake(recs);
-	protected static SnakeBrain brain = new SnakeBrain(snek);
-	protected static boolean startOfGame = true;
-	protected static Text stringScore = new Text(Integer.toString(snek.ateObjectiveItem(recs)));
-	protected static int iteration = 0;
-	protected static Text iterationString = new Text();
-	protected static Text highScoreString = new Text();
-	protected static int highscore = 0;
-	protected static GridPane gridpane = new GridPane();
-	protected static Timeline timeline = new Timeline();
+	
+	public SnakeManager m_SnakeManager;
+	Snake snek = new Snake();
 
-	/**
-	 * @param width  double
-	 * @param height double creates a gridpane that will have the game running
-	 *               within it, also calls other functions from other classes that
-	 *               will run the game
-	 */
-	public GamePane(double width, double height) {
-
-		// this will add the gridpane
-		AddGridPaneContent.addGridPaneContent(this, gridpane, width, height, recs, stringScore, iterationString);
-
+	
+	public void finalize() throws Throwable {
+		super.finalize();
 	}
 
-	/**
-	 * this code creates buttons that'll make the user be able to play, pause, and
-	 * stop the game keyboard inputs can be done by the W, A,S, and D keyboard
-	 * inputs makes sure that when snake grows it'ss update the snake length in the
-	 * Snake class display score and number of iterations
-	 */
-	public void StartTraining() {
+	
+	public GamePane(double width, double height)
+	{
+		this.scene = scene;
+		Text Title = new Text("I am the Game Pane");
+		getChildren().add(Title);
+		setPrefSize(width * 0.75, height * 0.75);
+		
+		//The top left corner of this pane is at (width * 0.25, 0)
+		setLayoutX(width * 0.25);
+		setLayoutY(0);
+		setStyle("-fx-background-color: '#6d6d6d';");
+		
+		
+		GridPane gridpane = new GridPane();
+		
+				gridpane.setPadding(new Insets(5,5,5,5));
 
-		timeline = new Timeline();
-		timeline.setCycleCount(Timeline.INDEFINITE);
+				
+			for(int x = 0; x < recs.length; x++) {
+				for(int y = 0; y < recs[x].length; y++) {
+		
+					Rectangle rec = new Rectangle();
+					rec.setHeight(28);
+					rec.setWidth(28);
+					rec.setFill(Color.DARKCYAN);
+					recs[x][y] = rec;
+					
+					gridpane.add(recs[x][y], x, y);
+				}
+			}
+			
+			
+			
+		    gridpane.setHgap(2);
+		    gridpane.setVgap(2);
+		    gridpane.relocate(80.0, 60.0);
+		    gridpane.setBackground(new Background(new BackgroundFill(Color.AQUAMARINE, null, null)));
+		   
+		    
+		    
+		    snek.randomObjectiveItem();
+		   // snek.Sneek();
+		    
+		    recs[snek.objectiveItem[0]][snek.objectiveItem[1]].setFill(Color.RED);
+		    //recs[snek.x][snek.y].setFill(Color.DARKMAGENTA);
+		    
+		    for(int i = 0; i < snek.Positions.size(); i++)
+		    {
+		    	recs[snek.Positions.get(i)[0]][snek.Positions.get(i)[1]].setFill(Color.DARKMAGENTA);
+		    }
+		    
+		    
+		    Timeline timeline = new Timeline();
+			timeline.setCycleCount(Timeline.INDEFINITE);
+	
+			KeyFrame keyframe = new KeyFrame(Duration.millis(75), action -> 
+			{
+				onlyOneDirection = true;
+				
+				getScene().setOnKeyPressed(e ->
+				{	if(onlyOneDirection)
+					{
+						if(e.getCode() == KeyCode.A && snek.m_CurrentDirection != CurrentDirection.RIGHT)
+						{
+							snek.changeDirection(CurrentDirection.LEFT);
+							System.out.println("LEFT");
+							onlyOneDirection = false;
+						}
+						else if(e.getCode() == KeyCode.D && snek.m_CurrentDirection != CurrentDirection.LEFT)
+						{
+							snek.changeDirection(CurrentDirection.RIGHT);
+							System.out.println("RIGHT");
+							onlyOneDirection = false;
 
-		iterationString.setText(0 + "");
-		stringScore.setText(0 + "");
-		iteration = 0;
+						}
+						else if(e.getCode() == KeyCode.S && snek.m_CurrentDirection != CurrentDirection.UP)
+						{
+							snek.changeDirection(CurrentDirection.DOWN);
+							System.out.println("DOWN");
+							onlyOneDirection = false;
+			
+						}
+						else if(e.getCode() == KeyCode.W && snek.m_CurrentDirection != CurrentDirection.DOWN)
+						{
+							snek.changeDirection(CurrentDirection.UP);
+							System.out.println("UP");
+							onlyOneDirection = false;
+			
+						}
+						
+						else if(e.getCode() == KeyCode.LEFT && snek.m_CurrentDirection != CurrentDirection.RIGHT)
+						{
+							snek.changeDirection(CurrentDirection.LEFT);
+							System.out.println("LEFT");
+							onlyOneDirection = false;
+			
+			
+						}
+						else if(e.getCode() == KeyCode.RIGHT && snek.m_CurrentDirection != CurrentDirection.LEFT)
+						{
+							snek.changeDirection(CurrentDirection.RIGHT);
+							System.out.println("RIGHT");
+							onlyOneDirection = false;
+			
+						}
+						else if(e.getCode() == KeyCode.DOWN && snek.m_CurrentDirection != CurrentDirection.UP)
+						{
+							snek.changeDirection(CurrentDirection.DOWN);
+							System.out.println("DOWN");
+							onlyOneDirection = false;
+			
+						}
+						else if(e.getCode() == KeyCode.UP && snek.m_CurrentDirection != CurrentDirection.DOWN)
+						{
+							snek.changeDirection(CurrentDirection.UP);
+							System.out.println("UP");
+							onlyOneDirection = false;
+			
+						}
+					}
+				});
+				
+			    snek.move();
 
-		if (snek.Positions.size() == 1) {
-			recs[snek.objectiveItem[1]][snek.objectiveItem[0]].setFill(Color.RED);
-		}
+			    for( int i = 0; i < snek.Positions.size(); i++) 
+			    {
+			    	if((snek.Positions.get(0)[0] > recs.length-1) 	||
+			    		(snek.Positions.get(0)[0] < 0) 				||
+			    		(snek.Positions.get(0)[1] > recs[0].length-1) ||
+			    		(snek.Positions.get(0)[1] < 0))
+			    	{
+			    		snek = new Snake();
+			    	}
+			    }
+				
+				for(int i = 0; i < recs.length; i++)
+				{
+					for(int j = 0; j < recs[i].length; j++)
+					{
+						recs[i][j].setFill(Color.DARKCYAN);
+					}
+				}
+				
+			    recs[snek.objectiveItem[0]][snek.objectiveItem[1]].setFill(Color.RED);
 
-		KeyFrame keyframe = new KeyFrame(Duration.millis(100), action -> {
-			GamePaneKeyFrameComp.keyFrameComp(this);
-		});
+				
+			    for(int i = 0; i < snek.Positions.size(); i++) //moves the display of the snake
+			    {
+			    	try
+			    	{
+			    		recs[snek.Positions.get(i)[0]][snek.Positions.get(i)[1]].setFill(Color.WHITE);
+			    	}
+			    	catch(ArrayIndexOutOfBoundsException e)
+			    	{
+			    		//:P
+			    	}
+			    }
+			    
+			    
+			    if( snek.checkIfDead())
+			    {
+			    	snek = new Snake();
+			    }
+			    
+			    snek.ateObjectiveItem();
 
-		timeline.getKeyFrames().add(keyframe);
-		timeline.play();
+
+			    
+
+				
+			});
+	
+			timeline.getKeyFrames().add(keyframe);
+			timeline.play();
+			
+		getChildren().addAll(gridpane);
+
 	}
-
-	public void Pause() {
-		timeline.stop();
-	}
-
-	public void Play() {
-		timeline.play();
-	}
-
-	public void Stop() {
-		timeline.stop();
-
-	}
-}// end GamePane
+}//end GamePane

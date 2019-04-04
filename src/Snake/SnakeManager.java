@@ -8,7 +8,7 @@ import Snake.Snake;
 /**
  * @author Danny
  * @version 1.0
- * 
+ * @created 17-Feb-2019 5:39:59 PM
  */
 public class SnakeManager {
 
@@ -20,9 +20,6 @@ public class SnakeManager {
 	public ControlPane m_ControlPane;
 	public DisplayPane m_DisplayPane;
 
-	/**
-	 * constructs a new SnakeManager instance
-	 */
 	public SnakeManager(){
 
 	}

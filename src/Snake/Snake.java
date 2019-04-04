@@ -5,241 +5,124 @@ import java.util.Random;
 
 import com.sun.xml.internal.ws.dump.LoggingDumpTube.Position;
 
-import ErrorMessages.*;
-import GamePaneHelper.DidSnakeHitWall;
-import GamePaneHelper.GamePaneSetsGets;
-import Panes.GamePane;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
-
 /**
  * @author Danny
  * @version 1.0
- *
+ * @created 17-Feb-2019 5:39:59 PM
  */
-
 public class Snake {
-
+	
+	
+	
 	public int[] objectiveItem = new int[2];
 	public ArrayList<int[]> Positions = new ArrayList<int[]>();
 	public int score;
-	public CurrentDirection m_CurrentDirection = CurrentDirection.RIGHT;
-	private boolean justAte = false;
-
-	/**
-	 * Constructs a new Snake instance
-	 */
-	public Snake(Rectangle[][] recs) {
-		int[] startingPos = { 0, 0 };
-		Positions.add(startingPos);
-		randomObjectiveItem(GamePaneSetsGets.getRecsRow(), GamePaneSetsGets.getRecsCol(), recs);
+	public CurrentDirection m_CurrentDirection;
+	
+// Paul R. Stuff Here
+	public int[] size = new int[3];
+	public int[] start = new int[2];
+	public int x;
+	public int y;
+//
+	
+	public Snake()
+	{
+		int[] x = {2,2};
+		Positions.add(x);
+		m_CurrentDirection = CurrentDirection.RIGHT;
+		randomObjectiveItem();
 	}
 
 	public void finalize() throws Throwable {
 
 	}
-
-	/**
-	 * @return interger score adds to the score which counts how many objectives the
-	 *         snake has eaten
-	 */
-	public int ateObjectiveItem(Rectangle[][] recs) {
-
-		if (Positions.get(0)[0] == objectiveItem[0] && Positions.get(0)[1] == objectiveItem[1]) {
+	public void ateObjectiveItem(){
+		if(Positions.get(0)[0] == objectiveItem[0] && Positions.get(0)[1] == objectiveItem[1])
+		{
 			score++;
+			randomObjectiveItem();
+			
+			int[] tempPosition = new int[2];
 
-			recs[this.Positions.get(0)[1]][this.Positions.get(0)[0]].setFill(Color.WHITE);
+				tempPosition[0] = Positions.get(0)[0];
+				tempPosition[1] = Positions.get(0)[1];
 
-			justAte = true;
-
-			randomObjectiveItem(GamePaneSetsGets.getRecsRow(), GamePaneSetsGets.getRecsCol(), recs);
+			Positions.add(tempPosition);
 		}
-		return score;
 	}
 
-	/**
-	 * @param direction changes the current direction of the snake depending on the
-	 *                  input by the keyboard
-	 */
-	public void changeDirection(CurrentDirection direction) {
+	public void changeDirection(CurrentDirection direction){
 		m_CurrentDirection = direction;
 	}
 
-	/**
-	 * @return isDead checks if the snake ran into a wall or over itself and
-	 *         returning the status of if its dead
-	 */
-	public boolean checkIfDead() {
+	public boolean checkIfDead(){
 		boolean isDead = false;
-		for (int i = 1; i < Positions.size(); i++) {
-			if ((Positions.get(0)[0] == Positions.get(i)[0] && Positions.get(0)[1] == Positions.get(i)[1]) && 0 != i) {
-				isDead = true;
-				System.out.println("head " + Positions.get(0)[0] + " , " + Positions.get(0)[1]);
-				System.out.println(i + " " + Positions.get(i)[0] + " , " + Positions.get(i)[1]);
-			}
-
+		for(int i = 1; i < Positions.size(); i++)
+		{
+				if((Positions.get(0)[0] == Positions.get(i)[0] && Positions.get(0)[1] == Positions.get(i)[1]) && 0 != i)
+				{
+					isDead = true;
+					System.out.println("head " + Positions.get(0)[0] + " , " + Positions.get(0)[1]);
+					System.out.println(i + " "  + Positions.get(i)[0] + " , " + Positions.get(i)[1]);
+				}
+				
 		}
-		return isDead;
-	}
+		return isDead;	}
 
-	/**
-	 * @return boolean checks if snake ate an objective item and if the answer is
-	 *         yes then add a unit length to the snake, if not then do nothing
-	 */
-	public boolean didEatObjectiveItem() {
-		if (Positions.get(0)[0] == objectiveItem[0] && Positions.get(0)[1] == objectiveItem[1]) {
+	public boolean didEatObjectiveItem(){
+		if(Positions.get(0)[0] == objectiveItem[0] && Positions.get(0)[1] == objectiveItem[1])
+		{
 			return true;
 		}
 		return false;
 	}
 
-	/**
-	 * the snake starts out going right and depending on what the keyboard input is
-	 * it will change its direction its either right, left, up, or down
-	 */
-	public void move(Rectangle[][] recs) {
-
-		if (m_CurrentDirection == CurrentDirection.RIGHT) {
-			updatePosition(1, 0, recs);// add 1 to x direction
-		} else if (m_CurrentDirection == CurrentDirection.LEFT) {
-			updatePosition(-1, 0, recs);// subtract 1 to x direction
-		} else if (m_CurrentDirection == CurrentDirection.UP) {
-			updatePosition(0, -1, recs);// add 1 to y direction
-		} else if (m_CurrentDirection == CurrentDirection.DOWN) {
-			updatePosition(0, 1, recs);// subtract 1 to y direction
+	public void move(){
+		
+		for(int i = Positions.size()-1; i > 0; i--)
+		{
+			int[] temp = new int[2];
+			temp[0] = Positions.get(i-1)[0];
+			temp[1] = Positions.get(i-1)[1];
+			
+			Positions.set(i, temp);
+			
+		
 		}
-
-		justAte = false;
-
-		// For testing...
-		/*
-		 * int i=0; for(i=0; i < this.Positions.size(); i++) { System.out.print("[" +
-		 * this.Positions.get(i)[1] +"," +this.Positions.get(i)[0] + "]"); }
-		 * System.out.println("");
-		 */
-
+		
+		if(m_CurrentDirection == CurrentDirection.RIGHT)
+			updatePosition(1, 0);//add 1 to x direction
+		else if(m_CurrentDirection == CurrentDirection.LEFT)
+			updatePosition(-1, 0);//subtract 1 to x direction
+		else if(m_CurrentDirection == CurrentDirection.UP)
+			updatePosition(0, -1);//add 1 to y direction
+		else if(m_CurrentDirection == CurrentDirection.DOWN)
+			updatePosition(0, 1);//subtract 1 to y direction
 	}
 
-	/**
-	 * generates a random objective item that is not within the snakes unit length
-	 */
-	public void randomObjectiveItem(int rowSize, int colSize, Rectangle[][] recs) {
-		Random spot = new Random();
-
-		// FIXME
-		// don's spawn in snake
-
-		int col = spot.nextInt(colSize);
-		int row = spot.nextInt(rowSize);
-		int originalCol = col;
-		int originalRow = row;
-
-
-		for (int i = 0; i < Positions.size(); i++) {
-
-			//FIXME this is a temp fix.
-			//This is a very poor way to spawn objectives.
-
-			while(Positions.get(i)[1] == row && Positions.get(i)[0] == col) {
-
-				col++;
-
-				if(col == GamePaneSetsGets.getRecsCol()) {
-
-					col = 0;
-					row++;
-
-					if(row == GamePaneSetsGets.getRecsRow()) {
-
-						row = 0;
-					}
+	public void randomObjectiveItem(){
+			Random spot = new Random();
+			
+			int row = spot.nextInt(25);
+			int col = spot.nextInt(15);
+			
+			for(int i = 0; i < Positions.size(); i++)
+			{
+				if(Positions.get(i)[0] == row && Positions.get(i)[1] == col)
+				{
+					row = spot.nextInt(25);
+					col = spot.nextInt(15);
 				}
-
-				if(col == originalCol && row == originalRow) {
-					System.out.println("GAME OVER");
-					System.exit(0);
-				}
-
-				i = -1;
 			}
-
-
-			/*
-			if (Positions.get(i)[1] == row && Positions.get(i)[0] == col) {
-
-				col = spot.nextInt(colSize);
-				row = spot.nextInt(rowSize);
-			}
-			*/
-
-		}
-
-		objectiveItem[1] = row;
-		objectiveItem[0] = col;
-
-		if (justAte == true) {
-			recs[objectiveItem[1]][objectiveItem[0]].setFill(Color.RED);
-		}
-
+			
+			objectiveItem[0] = row;
+			objectiveItem[1] = col;
 	}
 
-	/**
-	 * @param x rows
-	 * @param y columns updates the positions of the snake (how long it is)
-	 */
-	public void updatePosition(int x, int y, Rectangle[][] recs) {
-
-		if (justAte == true) {
-			int[] block = new int[2];
-			block[0] = this.Positions.get(0)[0] + x;
-			block[1] = this.Positions.get(0)[1] + y;
-
-			//Check if snake went out of bounds of gridpane.
-			if (block[0] < 0 || block[0] >= GamePaneSetsGets.getRecsCol() || block[1] < 0
-					|| block[1] >= GamePaneSetsGets.getRecsRow()) {
-				DidSnakeHitWall.didSnakeHitWall();
-			}
-
-			this.Positions.add(0, block);
-
-			//SnakeRandCalc.randCalc(this.Positions.get(this.Positions.size() - 1), this.Positions.get(0), justAte, this,
-			//		GamePaneSetsGets.getStart());
-
-			recs[this.Positions.get(0)[1]][this.Positions.get(0)[0]].setFill(Color.WHITE);
-
-		} else if (justAte == false) {
-
-			int[] block = new int[2];
-			block[0] = this.Positions.get(0)[0] + x;
-			block[1] = this.Positions.get(0)[1] + y;
-
-			//Check if snake went out of bounds of gridpane.
-			if (block[0] < 0 || block[0] >= GamePaneSetsGets.getRecsCol() || block[1] < 0
-					|| block[1] >= GamePaneSetsGets.getRecsRow()) {
-				DidSnakeHitWall.didSnakeHitWall();
-			}
-
-			recs[this.Positions.get(this.Positions.size() - 1)[1]][this.Positions.get(this.Positions.size() - 1)[0]]
-					.setFill(Color.DARKCYAN);
-
-			this.Positions.add(0, block);
-			//SnakeRandCalc.randCalc(this.Positions.get(this.Positions.size() - 1), this.Positions.get(0), justAte, this,
-			//		GamePaneSetsGets.getStart());
-			this.Positions.remove(this.Positions.size() - 1);
-
-			recs[this.Positions.get(0)[1]][this.Positions.get(0)[0]].setFill(Color.WHITE);
-		}
-
-		// Positions.get(0)[0] += x;
-		// Positions.get(0)[1] += y;
+	public void updatePosition(int x, int y)
+	{
+		Positions.get(0)[0] += x;
+		Positions.get(0)[1] += y;
 	}
-
-	public CurrentDirection getDirection() {
-		return m_CurrentDirection;
-	}
-
-	public void setDirection(CurrentDirection x) {
-		m_CurrentDirection = x;
-	}
-
-}// end Snake
+}//end Snake
