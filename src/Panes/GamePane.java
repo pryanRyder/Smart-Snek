@@ -65,16 +65,16 @@ public class GamePane extends Pane {
 		
 		GridPane gridpane = new GridPane();
 		
-				gridpane.setPadding(new Insets(5,5,5,5));
+		gridpane.setPadding(new Insets(5,5,5,5));
 
-				
+			
 			for(int x = 0; x < recs.length; x++) {
 				for(int y = 0; y < recs[x].length; y++) {
 		
 					Rectangle rec = new Rectangle();
 					rec.setHeight(28);
 					rec.setWidth(28);
-					rec.setFill(Color.DARKCYAN);
+					rec.setFill(Color.BLACK);
 					recs[x][y] = rec;
 					
 					gridpane.add(recs[x][y], x, y);
@@ -86,7 +86,7 @@ public class GamePane extends Pane {
 		    gridpane.setHgap(2);
 		    gridpane.setVgap(2);
 		    gridpane.relocate(80.0, 60.0);
-		    gridpane.setBackground(new Background(new BackgroundFill(Color.AQUAMARINE, null, null)));
+		    gridpane.setBackground(new Background(new BackgroundFill(Color.BLACK, null, null)));
 		   
 		    
 		    
@@ -98,7 +98,7 @@ public class GamePane extends Pane {
 		    
 		    for(int i = 0; i < snek.Positions.size(); i++)
 		    {
-		    	recs[snek.Positions.get(i)[0]][snek.Positions.get(i)[1]].setFill(Color.DARKMAGENTA);
+		    	recs[snek.Positions.get(i)[0]][snek.Positions.get(i)[1]].setFill(Color.WHITE);
 		    }
 		    
 		    
@@ -189,7 +189,7 @@ public class GamePane extends Pane {
 				{
 					for(int j = 0; j < recs[i].length; j++)
 					{
-						recs[i][j].setFill(Color.DARKCYAN);
+						recs[i][j].setFill(Color.WHITE);
 					}
 				}
 				
@@ -200,7 +200,7 @@ public class GamePane extends Pane {
 			    {
 			    	try
 			    	{
-			    		recs[snek.Positions.get(i)[0]][snek.Positions.get(i)[1]].setFill(Color.WHITE);
+			    		recs[snek.Positions.get(i)[0]][snek.Positions.get(i)[1]].setFill(Color.BLACK);
 			    	}
 			    	catch(ArrayIndexOutOfBoundsException e)
 			    	{
