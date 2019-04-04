@@ -20,7 +20,7 @@ import javafx.scene.input.MouseEvent;
 public class ControlPane extends Pane {
 	
 	boolean GAChecked = false;
-
+	GamePane snake_color = new GamePane();
 
 	public void finalize() throws Throwable {
 		super.finalize();
@@ -46,16 +46,14 @@ public class ControlPane extends Pane {
 		
 		Text txtAgentPane = new Text("Agent");
 		Pane AgentPane = new Pane();
-		Text txtLearningRate = new Text("Learning Rate");
-		TextField tfLearningRate = new TextField();
-		Text txtDiscountFactor = new Text("Discount Factor");
-		TextField tfDiscountFactor = new TextField();
-		Text txtMaximumReward = new Text("Maximum Reward");
-		TextField tfMaximumReward = new TextField();
+	//	Text txtLearningRate = new Text("Learning Rate");
+	//	TextField tfLearningRate = new TextField();
+		//Text txtDiscountFactor = new Text("Discount Factor");
+	//	TextField tfDiscountFactor = new TextField();
+	//	Text txtMaximumReward = new Text("Maximum Reward");
+	//	TextField tfMaximumReward = new TextField();
 		
 		Pane gridSizePane = new Pane();
-		
-
 		
 		gridSizePane.setStyle("-fx-background-color: '#e0e0e0'");
 		gridSizePane.setLayoutX(getPrefWidth()*0.02);
@@ -64,7 +62,6 @@ public class ControlPane extends Pane {
 		gridSizePane.setPrefWidth(content.getPrefWidth()*.95);
 		content.getChildren().add(gridSizePane);
 		
-		
 		Text txtgridSize = new Text("Grid Size");
 		txtgridSize.setStyle("-fx-font-size: 18");
 		txtgridSize.setLayoutX(gridSizePane.getPrefWidth()*0.02);
@@ -72,8 +69,6 @@ public class ControlPane extends Pane {
 		txtgridSize.setDisable(true);
 		gridSizePane.getChildren().add(txtgridSize);
 
-		
-		
 		Text txtWidth = new Text("Width Size");
 		txtWidth.setStyle("-fx-font-size: 15");
 		txtWidth.setLayoutX(gridSizePane.getPrefWidth()*0.02);
@@ -178,24 +173,78 @@ public class ControlPane extends Pane {
 		AgentPane.setPrefWidth(content.getPrefWidth()*.95);
 		content.getChildren().add(AgentPane);
 		
+		Text txtLearningRate = new Text("Learning Rate");
+		TextField tfLearningRate = new TextField();
+		Text txtDiscountFactor = new Text("Discount Factor");
+		TextField tfDiscountFactor = new TextField();
+		Text txtMaximumReward = new Text("Maximum Reward");
+		TextField tfMaximumReward = new TextField();
+		txtLearningRate.setLayoutX(AgentPane.getPrefWidth()*.02);
+		txtLearningRate.setLayoutY(AgentPane.getPrefHeight()*.30);
+		txtLearningRate.setStyle("-fx-font-size: 15;");
+		tfLearningRate.setLayoutX(AgentPane.getPrefWidth()*.02);
+		tfLearningRate.setLayoutY(AgentPane.getPrefHeight()* .33);
+		txtDiscountFactor.setLayoutX(AgentPane.getPrefWidth()*.02);
+		txtDiscountFactor.setLayoutY(AgentPane.getPrefHeight()*.46);
+		txtDiscountFactor.setStyle("-fx-font-size: 15;");
+		tfDiscountFactor.setLayoutX(AgentPane.getPrefWidth()*.02);
+		tfDiscountFactor.setLayoutY(AgentPane.getPrefHeight()*.49);
+		txtMaximumReward.setLayoutX(AgentPane.getPrefWidth()*.02);
+		txtMaximumReward.setLayoutY(AgentPane.getPrefHeight()*.61);
+		txtMaximumReward.setStyle("-fx-font-size: 15;");
+		tfMaximumReward.setLayoutX(AgentPane.getPrefWidth()*.02);
+		tfMaximumReward.setLayoutY(AgentPane.getPrefHeight()*.64);
+		
 		Button btDeepReinforcement = new Button("Deep Reinforcement");
 		btDeepReinforcement.setLayoutX(AgentPane.getPrefWidth()*.02);
 		btDeepReinforcement.setLayoutY(AgentPane.getPrefHeight()*.1);
 		AgentPane.getChildren().add(btDeepReinforcement);
-		
-		
+		btDeepReinforcement.setOnAction(ex->{
+			((GamePane) gamePane).setColor(Color.PURPLE);
+			
+			AgentPane.getChildren().add(txtLearningRate);
+			
+			AgentPane.getChildren().add(tfLearningRate);
+			
+			AgentPane.getChildren().add(txtDiscountFactor);
+			
+			AgentPane.getChildren().add(tfDiscountFactor);
+			
+			AgentPane.getChildren().add(txtMaximumReward);		
+			
+			AgentPane.getChildren().add(tfMaximumReward);
+ 
+		});
+
 		Button btDeep2 = new Button("Deep2");
 		btDeep2.setLayoutX(AgentPane.getPrefWidth()*.50);
 		btDeep2.setLayoutY(AgentPane.getPrefHeight()*.1);
 		AgentPane.getChildren().add(btDeep2);
-		
-		
-		
+		btDeep2.setOnAction(ex->{
+			((GamePane) gamePane).setColor(Color.ORANGE);
+			AgentPane.getChildren().remove(tfMaximumReward);
+			AgentPane.getChildren().remove(tfDiscountFactor);
+			AgentPane.getChildren().remove(txtMaximumReward);
+			AgentPane.getChildren().remove(txtDiscountFactor);
+			AgentPane.getChildren().remove(txtLearningRate);
+			AgentPane.getChildren().remove(tfLearningRate);
+
+		});
 		
 		Button btDeep3 = new Button("Deep3");
 		btDeep3.setLayoutX(AgentPane.getPrefWidth()*.75);
 		btDeep3.setLayoutY(AgentPane.getPrefHeight()*.1);
 		AgentPane.getChildren().add(btDeep3);
+		btDeep3.setOnAction(ex->{
+			((GamePane) gamePane).setColor(Color.GREEN);
+			AgentPane.getChildren().remove(tfMaximumReward);
+			AgentPane.getChildren().remove(tfDiscountFactor);
+			AgentPane.getChildren().remove(txtMaximumReward);
+			AgentPane.getChildren().remove(txtDiscountFactor);
+			AgentPane.getChildren().remove(txtLearningRate);
+			AgentPane.getChildren().remove(tfLearningRate);
+
+		});
 		
 		txtAgentPane = new Text("Agent Controller");
 		txtAgentPane.setLayoutX(AgentPane.getPrefWidth()*.02);
@@ -203,35 +252,7 @@ public class ControlPane extends Pane {
 		txtAgentPane.setStyle("-fx-font-size: 18");
 		AgentPane.getChildren().add(txtAgentPane);
 		
-		txtLearningRate.setLayoutX(AgentPane.getPrefWidth()*.02);
-		txtLearningRate.setLayoutY(AgentPane.getPrefHeight()*.30);
-		AgentPane.getChildren().add(txtLearningRate);
-		txtLearningRate.setStyle("-fx-font-size: 15;");
-
-
-		tfLearningRate.setLayoutX(AgentPane.getPrefWidth()*.02);
-		tfLearningRate.setLayoutY(AgentPane.getPrefHeight()* .33);
-		AgentPane.getChildren().add(tfLearningRate);
 		
-		txtDiscountFactor.setLayoutX(AgentPane.getPrefWidth()*.02);
-		txtDiscountFactor.setLayoutY(AgentPane.getPrefHeight()*.46);
-		txtDiscountFactor.setStyle("-fx-font-size: 15;");
-
-		AgentPane.getChildren().add(txtDiscountFactor);
-		
-		tfDiscountFactor.setLayoutX(AgentPane.getPrefWidth()*.02);
-		tfDiscountFactor.setLayoutY(AgentPane.getPrefHeight()*.49);
-		AgentPane.getChildren().add(tfDiscountFactor);
-		
-		txtMaximumReward.setLayoutX(AgentPane.getPrefWidth()*.02);
-		txtMaximumReward.setLayoutY(AgentPane.getPrefHeight()*.61);
-		txtMaximumReward.setStyle("-fx-font-size: 15;");
-
-		AgentPane.getChildren().add(txtMaximumReward);		
-		
-		tfMaximumReward.setLayoutX(AgentPane.getPrefWidth()*.02);
-		tfMaximumReward.setLayoutY(AgentPane.getPrefHeight()*.64);
-		AgentPane.getChildren().add(tfMaximumReward);
 		
 		btCreateNew.setLayoutX(AgentPane.getPrefWidth()*.02);
 		btCreateNew.setLayoutY(AgentPane.getPrefHeight()*.80);

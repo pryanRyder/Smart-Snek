@@ -34,7 +34,7 @@ public class GamePane extends Pane {
 
 	GridPane gridpane = new GridPane();
 	boolean onlyOneDirection = true;
-	Rectangle recs[][] = new Rectangle[40][40];
+	 Rectangle recs[][] = new Rectangle[40][40];
 	Scene scene;
 
 	public SnakeManager m_SnakeManager;
@@ -49,6 +49,9 @@ public class GamePane extends Pane {
 
 	//The scaler for the gaps.
 	double gapScale = 0.05;
+	
+	//Color of the Snake
+	 Color colorOfSnake = Color.BLACK;
 
 
 
@@ -169,6 +172,11 @@ public class GamePane extends Pane {
 	}*/
 
 
+	public GamePane() {
+		// TODO Auto-generated constructor stub
+	}
+
+
 	public void setUpGridPane()
 	{
 		//The size of the gaps.
@@ -207,7 +215,7 @@ public class GamePane extends Pane {
 						Rectangle rec = new Rectangle();
 						rec.setHeight(boxSide);
 						rec.setWidth(boxSide);
-						rec.setFill(Color.DARKCYAN);
+						rec.setFill(Color.WHITE);
 
 						recs[row][col] = rec;
 
@@ -283,7 +291,7 @@ public class GamePane extends Pane {
 	    {
 	    	try
 	    	{
-	    		recs[snek.Positions.get(i)[0]][snek.Positions.get(i)[1]].setFill(Color.BLACK);
+	    		recs[snek.Positions.get(i)[0]][snek.Positions.get(i)[1]].setFill(colorOfSnake);
 	    	}
 	    	catch(ArrayIndexOutOfBoundsException e)
 	    	{
@@ -363,4 +371,12 @@ public class GamePane extends Pane {
 		recs = new Rectangle[40][40];
 		setUpGridPane();
 	}
+	public void setColor(Color colorOfSnake) {
+		this.colorOfSnake=colorOfSnake;
+	}
+	public Color getColor (Color colorOfSnake) {
+		
+		return colorOfSnake;
+	}
+	
 }//end GamePane
