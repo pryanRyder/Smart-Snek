@@ -34,6 +34,11 @@ public class GamePane extends Pane {
 	boolean onlyOneDirection = true;
 	Rectangle recs[][] = new Rectangle[25][15];
 	Scene scene;
+	
+	// Iteration, Score, and HighScore Initializers 
+	String iterationString = new String();
+	int Iteration = 0;
+	
 
 
 	public SnakeManager m_SnakeManager;
@@ -105,7 +110,7 @@ public class GamePane extends Pane {
 		    Timeline timeline = new Timeline();
 			timeline.setCycleCount(Timeline.INDEFINITE);
 
-			KeyFrame keyframe = new KeyFrame(Duration.millis(75), action ->
+			KeyFrame keyframe = new KeyFrame(Duration.millis(20), action ->
 			{
 				onlyOneDirection = true;
 
@@ -209,13 +214,18 @@ public class GamePane extends Pane {
 			    }
 
 
-			    if( snek.checkIfDead())
+			    if(snek.checkIfDead())
 			    {
 			    	snek = new Snake();
+			    	
+			    	Iteration = Iteration + 1;
+			    	iterationString = Integer.toString(Iteration);
+			    	DisplayPane.getIteration(iterationString);
 			    }
+			    
+			    
 
 			    snek.ateObjectiveItem();
-
 			    snakeBrain.updateSnake(snek);
 			    snakeBrain.MakeDecision();
 			    snek.changeDirection(snakeBrain.getDecidedDecidedDirection());
@@ -227,7 +237,7 @@ public class GamePane extends Pane {
 
 			timeline.getKeyFrames().add(keyframe);
 			timeline.play();
-
+			
 		getChildren().addAll(gridpane);
 
 	}
