@@ -32,15 +32,15 @@ import javafx.util.Duration;
 
 public class GamePane extends Pane {
 
+	GridPane gridpane = new GridPane();
 	boolean onlyOneDirection = true;
 	Rectangle recs[][] = new Rectangle[25][15];
 	Scene scene;
 
-
 	public SnakeManager m_SnakeManager;
 	Snake snek = new Snake();
     SnakeBrain snakeBrain = new SnakeBrain(snek);
-   
+
 
 
 	public void finalize() throws Throwable {
@@ -50,107 +50,113 @@ public class GamePane extends Pane {
 
 	public GamePane( double width, double height)
 	{
-		this.scene = scene;
-		Text Title = new Text("I am the Game Pane");
-		getChildren().add(Title);
+
+	    //---------------------------- Set Up ------------------------------- //
+
+		//dealing with sizing
 		setPrefSize(width * 0.75, height * 0.75);
 
 		//The top left corner of this pane is at (width * 0.25, 0)
 		setLayoutX(width * 0.25);
-		setLayoutY(0);
 		setStyle("-fx-background-color: '#6d6d6d';");
 
+		//Create Display Pane
 		Pane displayPane = new DisplayPane(width, height);
 		getChildren().add(displayPane);
 
+		//Sets up Grid Pane
+		setUpGridPane();
 
-		GridPane gridpane = new GridPane();
+	    // generate random Objective Item
+	    snek.randomObjectiveItem();
 
-		gridpane.setPadding(new Insets(5,5,5,5));
+	    // Display random Objective Item
+	    recs[snek.objectiveItem[0]][snek.objectiveItem[1]].setFill(Color.RED);
 
-
-			for(int x = 0; x < recs.length; x++) {
-				for(int y = 0; y < recs[x].length; y++) {
-
-					Rectangle rec = new Rectangle();
-					rec.setHeight(28);
-					rec.setWidth(28);
-					rec.setFill(Color.BLACK);
-					recs[x][y] = rec;
-
-					gridpane.add(recs[x][y], x, y);
-				}
-			}
+	    // Set Each Tile In Grid Pane to White
+	    for(int i = 0; i < snek.Positions.size(); i++)
+	    {
+	    	recs[snek.Positions.get(i)[0]][snek.Positions.get(i)[1]].setFill(Color.WHITE);
+	    }
 
 
-
-		    gridpane.setHgap(2);
-		    gridpane.setVgap(2);
-		    gridpane.relocate(80.0, 60.0);
-		    gridpane.setBackground(new Background(new BackgroundFill(Color.BLACK, null, null)));
+	    //---------------------------- GAME LOOP ------------------------------- //
 
 
+	    Timeline timeline = new Timeline();
+		timeline.setCycleCount(Timeline.INDEFINITE);
 
-		    snek.randomObjectiveItem();
+		KeyFrame keyframe = new KeyFrame(Duration.millis(75), action ->
+		{
+			// Boolean Value that Determines whether you can go back on top of yourself
+			onlyOneDirection = true;
 
+		    //---------------------------- GAME IMPLEMENTATION ------------------------------- //
+
+
+			//moves the snake based off of key presses
+			keyPressHandler();
+
+			//moves the snakes position
+		    snek.move();
+
+		    //Checks if snake hits wall and resets the snake if dead
+		    CheckIfSnakeHitWall();
+
+		    //Clears the Grid
+			ClearGrid();
+
+			//Displays Objective Item
 		    recs[snek.objectiveItem[0]][snek.objectiveItem[1]].setFill(Color.RED);
 
-		    for(int i = 0; i < snek.Positions.size(); i++)
-		    {
-		    	recs[snek.Positions.get(i)[0]][snek.Positions.get(i)[1]].setFill(Color.WHITE);
-		    }
+		    //Moves the Snakes Position in GridPane
+			moveSnakeDisplay();
 
+			//Checks if the Snake ran into itself and resets if true
+			CheckIfSnakeHitSelf();
 
-		    Timeline timeline = new Timeline();
-			timeline.setCycleCount(Timeline.INDEFINITE);
+			//adds to score if snake eats objective item
+		    snek.ateObjectiveItem();
 
-			KeyFrame keyframe = new KeyFrame(Duration.millis(75), action ->
-			{
-				onlyOneDirection = true;
+		    //---------------------------- AI Integration ------------------------------- //
 
-			    //---------------------------- GAME IMPLEMENTATION -------------------------------
+		    //updates brain with the environment
+		    snakeBrain.updateSnake(snek);
+		    //brain makes decision based off of the environment
+		    snakeBrain.MakeDecision();
+		    //brain decides on a direction and changes the path of the snake
+		    snek.changeDirection(snakeBrain.getDecidedDecidedDirection());
 
+		});
 
-				//moves the snake based off of key presses
-				keyPressHandler();
+		timeline.getKeyFrames().add(keyframe);
+		timeline.play();
 
-				//moves the snakes position
-			    snek.move();
+	getChildren().addAll(gridpane);
 
-			    //Checks if snake hits wall and resets the snake if dead
-			    CheckIfSnakeHitWall();
+	}
 
-			    //Clears the Grid
-				ClearGrid();
+	public void setUpGridPane()
+	{
+		gridpane.setPadding(new Insets(5,5,5,5));
 
-				//Displays Objective Item
-			    recs[snek.objectiveItem[0]][snek.objectiveItem[1]].setFill(Color.RED);
+		for(int x = 0; x < recs.length; x++) {
+			for(int y = 0; y < recs[x].length; y++) {
 
-			    //Moves the Snakes Position in GridPane
-				moveSnakeDisplay();
+				Rectangle rec = new Rectangle();
+				rec.setHeight(28);
+				rec.setWidth(28);
+				rec.setFill(Color.BLACK);
+				recs[x][y] = rec;
 
-				//Checks if the Snake ran into itself and resets if true
-				CheckIfSnakeHitSelf();
+				gridpane.add(recs[x][y], x, y);
+			}
+		}
 
-				//adds to score if snake eats objective item
-			    snek.ateObjectiveItem();
-
-			    //---------------------------- AI Integration -------------------------------
-
-			    //updates brain with the environment
-			    snakeBrain.updateSnake(snek);
-			    //brain makes decision based off of the environment
-			    snakeBrain.MakeDecision();
-			    //brain decides on a direction and changes the path of the snake
-			    snek.changeDirection(snakeBrain.getDecidedDecidedDirection());
-
-			});
-
-			timeline.getKeyFrames().add(keyframe);
-			timeline.play();
-
-		getChildren().addAll(gridpane);
-
+	    gridpane.setHgap(2);
+	    gridpane.setVgap(2);
+	    gridpane.relocate(80.0, 60.0);
+	    gridpane.setBackground(new Background(new BackgroundFill(Color.BLACK, null, null)));
 	}
 
 	public void CheckIfSnakeHitSelf()
