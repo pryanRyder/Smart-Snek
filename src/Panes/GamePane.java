@@ -58,16 +58,11 @@ public class GamePane extends Pane {
 		setLayoutX(width * 0.25);
 		setLayoutY(0);
 		setStyle("-fx-background-color: '#6d6d6d';");
-<<<<<<< HEAD
 
-
-=======
-		
 		Pane displayPane = new DisplayPane(width, height);
-		getChildren().add(displayPane);		
-		
-		
->>>>>>> Danny
+		getChildren().add(displayPane);
+
+
 		GridPane gridpane = new GridPane();
 
 				gridpane.setPadding(new Insets(5,5,5,5));
@@ -220,7 +215,7 @@ public class GamePane extends Pane {
 			    }
 
 			    snek.ateObjectiveItem();
-			    
+
 			    snakeBrain.updateSnake(snek);
 			    snakeBrain.MakeDecision();
 			    snek.changeDirection(snakeBrain.getDecidedDecidedDirection());
