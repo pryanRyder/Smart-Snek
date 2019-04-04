@@ -1,5 +1,7 @@
 package Panes;
 
+import java.io.File;
+
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
@@ -9,6 +11,8 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
 /**
  * @author Danny
@@ -265,6 +269,13 @@ public class ControlPane extends Pane {
 		
 		getChildren().add(content);
 		Text Title = new Text("Control Panel");
+		//Image myPhoto = new Image(("qmark.png"));
+		//ImageView myViewImage = new ImageView(myPhoto);
+		//Image.getChildren().add(Pane);
+        //.getChildren().add(TitlePane);
+	
+		
+		
 		
 		/*
 		AgentPane.setStyle("-fx-background-color: '#e0e0e0'");
@@ -283,6 +294,9 @@ public class ControlPane extends Pane {
 		TitlePane.setPrefWidth(content.getPrefWidth()*.95);
 		TitlePane.getChildren().add(Title);
 		content.getChildren().add(TitlePane);
+		
+       // TitlePane.getChildren().add(myViewImage);
+
 		
 		
 		Title.setStyle("-fx-font-size: 20;"); // NEEDS TO BE CHANGED BASED ON SIZE
