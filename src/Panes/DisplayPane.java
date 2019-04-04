@@ -3,6 +3,7 @@ package Panes;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import Snake.Snake;
 
 /**
  * @author Danny
@@ -12,6 +13,8 @@ import javafx.scene.text.Text;
 public class DisplayPane extends Pane {
 	
 	static Text Iteration = new Text();
+	static Text Score = new Text();
+	static Text HighScore = new Text();
 
 	public void finalize() throws Throwable {
 		super.finalize();
@@ -20,6 +23,16 @@ public class DisplayPane extends Pane {
 	public static void getIteration(String Iter) 
 	{
 		Iteration.setText(Iter);
+	}
+	
+	public static void getScore(String score) 
+	{
+		Score.setText(score);
+	}
+	
+	public static void getHighScore(String highscore) 
+	{
+		HighScore.setText(highscore);
 	}
 	
 	public DisplayPane(double width, double height)
@@ -65,7 +78,45 @@ public class DisplayPane extends Pane {
 		iterationPane.getChildren().addAll(iterationTitle, Iteration);
 //   << End Iteration Pane   >>
 		
-		content.getChildren().addAll(Title, iterationPane);
+//   << Score Pane Build >>	
+		Pane scorePane = new Pane();
+		scorePane.setPrefSize(getPrefWidth()*0.15, getPrefHeight()*0.6);
+		scorePane.setLayoutX(getPrefWidth()*0.1);
+		scorePane.setLayoutY(getPrefHeight()*0.2);
+		scorePane.setStyle("-fx-background-color: '#a5a5a5'");
+			
+		Text scoreTitle = new Text("Score");			
+		scoreTitle.setStyle("-fx-font-size: 20;");    
+		scoreTitle.setLayoutX(scorePane.getPrefWidth()*0.01);
+		scoreTitle.setLayoutY(scorePane.getPrefHeight()*0.15);
+		
+		Score.setLayoutX(scorePane.getPrefWidth()*0.25);
+		Score.setLayoutY(scorePane.getPrefHeight()*0.6);
+		Score.setFont(Font.font(35));
+			
+		scorePane.getChildren().addAll(scoreTitle, Score);
+//   << End Score Pane   >>
+		
+//   << HighScore Pane Build >>	
+		Pane highscorePane = new Pane();
+		highscorePane.setPrefSize(getPrefWidth()*0.15, getPrefHeight()*0.6);
+		highscorePane.setLayoutX(getPrefWidth()*0.19);
+		highscorePane.setLayoutY(getPrefHeight()*0.2);
+		highscorePane.setStyle("-fx-background-color: '#a5a5a5'");
+				
+		Text highscoreTitle = new Text("High-Score");			
+		highscoreTitle.setStyle("-fx-font-size: 20;");    
+		highscoreTitle.setLayoutX(highscorePane.getPrefWidth()*0.01);			
+		highscoreTitle.setLayoutY(highscorePane.getPrefHeight()*0.15);
+			
+		HighScore.setLayoutX(highscorePane.getPrefWidth()*0.25);
+		HighScore.setLayoutY(highscorePane.getPrefHeight()*0.6);
+		HighScore.setFont(Font.font(35));
+				
+		highscorePane.getChildren().addAll(highscoreTitle, HighScore);
+//   << End HighScore Pane   >>
+		
+		content.getChildren().addAll(Title, iterationPane, scorePane, highscorePane);
 		
 		
 

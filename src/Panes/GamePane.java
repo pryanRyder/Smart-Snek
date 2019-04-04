@@ -30,6 +30,13 @@ import javafx.util.Duration;
  * @created 17-Feb-2019 5:39:59 PM
  */
 public class GamePane extends Pane {
+	
+	public String iterationString = new String();
+	public int iterationNum = 0;	
+	
+	public String scoreString = new String();
+	public int score = 0;
+	
 
 	GridPane gridpane = new GridPane();
 	boolean onlyOneDirection = true;
@@ -42,15 +49,7 @@ public class GamePane extends Pane {
 	Snake snek = new Snake(recs);
     SnakeBrain snakeBrain = new SnakeBrain(snek);
 
-	//The scale of the gridpane size to the gamepane size.
-	double scale = 0.9;
-
-	//The scaler for the borders.
-	double borderScale = 0.2;
-
-	//The scaler for the gaps.
-	double gapScale = 0.05;
-
+	
 	//The scale of the gridpane size to the gamepane size.
 	double scale = 0.9;
 
@@ -252,6 +251,7 @@ public class GamePane extends Pane {
 	    if( snek.checkIfDead())
 	    {
 	    	resetSnake();
+	    	
 	    }
 	}
 
@@ -259,6 +259,14 @@ public class GamePane extends Pane {
 	{
 		snek = new Snake(recs);
     	snakeBrain = new SnakeBrain(snek);
+    	
+    	score = 0;
+    	scoreString = Integer.toString(score);
+    	DisplayPane.getScore(scoreString);
+    	
+    	iterationNum = iterationNum + 1;
+    	iterationString = Integer.toString(iterationNum);
+    	DisplayPane.getIteration(iterationString);
 	}
 
 	public void CheckIfSnakeHitWall()
