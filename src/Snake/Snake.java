@@ -51,6 +51,11 @@ public class Snake {
 			Positions.add(tempPosition);
 		}
 	}
+	
+	public CurrentDirection getDirection()
+	{
+		return m_CurrentDirection;
+	}
 
 	public void changeDirection(CurrentDirection direction){
 		m_CurrentDirection = direction;

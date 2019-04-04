@@ -2,6 +2,7 @@ package Panes;
 
 import java.util.Collection;
 
+import Agent.SnakeBrain;
 import Snake.CurrentDirection;
 import Snake.Snake;
 import Snake.SnakeManager;
@@ -37,6 +38,8 @@ public class GamePane extends Pane {
 
 	public SnakeManager m_SnakeManager;
 	Snake snek = new Snake();
+    SnakeBrain snakeBrain = new SnakeBrain(snek);
+
 
 
 	public void finalize() throws Throwable {
@@ -55,8 +58,16 @@ public class GamePane extends Pane {
 		setLayoutX(width * 0.25);
 		setLayoutY(0);
 		setStyle("-fx-background-color: '#6d6d6d';");
+<<<<<<< HEAD
 
 
+=======
+		
+		Pane displayPane = new DisplayPane(width, height);
+		getChildren().add(displayPane);		
+		
+		
+>>>>>>> Danny
 		GridPane gridpane = new GridPane();
 
 				gridpane.setPadding(new Insets(5,5,5,5));
@@ -209,7 +220,10 @@ public class GamePane extends Pane {
 			    }
 
 			    snek.ateObjectiveItem();
-
+			    
+			    snakeBrain.updateSnake(snek);
+			    snakeBrain.MakeDecision();
+			    snek.changeDirection(snakeBrain.getDecidedDecidedDirection());
 
 
 
