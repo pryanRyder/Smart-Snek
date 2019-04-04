@@ -11,7 +11,7 @@ import javafx.scene.text.Text;
 public class AddGridPaneContent {
 
 	public static void addGridPaneContent(GamePane gamePane, GridPane gridpane, double width, double height,
-			Rectangle recs[][], Text stringScore, Text iterationString) {
+			Rectangle recs[][], Text stringScore, Text iterationString, Text highscore) {
 		
 		
 		Text Title = new Text("I am the Game Pane");
@@ -27,7 +27,7 @@ public class AddGridPaneContent {
 		    
 		gridpane.setBackground(new Background(new BackgroundFill(Color.BLACK, null, null)));
 		   
-		    AddGridPaneContentParts.addGridPaneContentParts(stringScore, gamePane, iterationString, gridpane);
+		    AddGridPaneContentParts.addGridPaneContentParts(stringScore, gamePane, iterationString, gridpane, highscore);
 	}
 	
 }

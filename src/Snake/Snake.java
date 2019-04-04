@@ -13,7 +13,7 @@ import javafx.scene.shape.Rectangle;
 /**
  * @author Danny
  * @version 1.0
- * 
+ *
  */
 
 
@@ -22,18 +22,6 @@ public class Snake {
 	public int[] objectiveItem = new int[2];
 	public ArrayList<int[]> Positions = new ArrayList<int[]>();
 	public int score;
-<<<<<<< HEAD
-	public CurrentDirection m_CurrentDirection;
-	
-
-	public int[] size = new int[3];
-	public int[] start = new int[2];
-	public int x;
-	public int y;
-
-	
-	public Snake()
-=======
 	public CurrentDirection m_CurrentDirection = CurrentDirection.RIGHT;
 	private boolean justAte = false;
 
@@ -41,7 +29,6 @@ public class Snake {
 	 * Constructs a new Snake instance
 	 */
 	public Snake(Rectangle[][] recs)
->>>>>>> Danny
 	{
 		int[] startingPos = {0,0};
 		Positions.add(startingPos);
@@ -52,22 +39,22 @@ public class Snake {
 	{
 
 	}
-	
+
 	/**
 	 * @return interger score
 	 *  adds to the score which counts how many objectives the snake has eaten
 	 */
 	public int ateObjectiveItem(Rectangle[][] recs){
-		
-		
+
+
 		if(Positions.get(0)[0] == objectiveItem[0] && Positions.get(0)[1] == objectiveItem[1])
 		{
 			score++;
 
 			recs[this.Positions.get(0)[1]][this.Positions.get(0)[0]].setFill(Color.WHITE);
-			
+
 			justAte = true;
-			
+
 			randomObjectiveItem(GamePane.getRecsRow(), GamePane.getRecsCol(), recs);
 		}
 		return score;
@@ -117,7 +104,7 @@ public class Snake {
 	 * its either right, left, up, or down
 	 */
 	public void move(Rectangle[][] recs){
-		
+
 		if(m_CurrentDirection == CurrentDirection.RIGHT) {
 			updatePosition(1, 0, recs);//add 1 to x direction
 		}
@@ -130,10 +117,10 @@ public class Snake {
 		else if(m_CurrentDirection == CurrentDirection.DOWN) {
 			updatePosition(0, 1, recs);//subtract 1 to y direction
 		}
-		
+
 		justAte = false;
-		
-		
+
+
 		//For testing...
 		/*
 		int i=0;
@@ -142,7 +129,7 @@ public class Snake {
 		}
 		System.out.println("");
 		*/
-		
+
 	}
 
 	/**
@@ -165,12 +152,12 @@ public class Snake {
 
 			objectiveItem[1] = row;
 			objectiveItem[0] = col;
-			
-			
+
+
 			if(justAte == true) {
 				recs[objectiveItem[1]][objectiveItem[0]].setFill(Color.RED);
 			}
-			
+
 	}
 
 	/**
@@ -180,45 +167,45 @@ public class Snake {
 	 */
 	public void updatePosition(int x, int y, Rectangle[][] recs)
 	{
-		
+
 		if(justAte == true) {
 			int[] block = new int[2];
 			block[0] = this.Positions.get(0)[0] + x;
 			block[1] = this.Positions.get(0)[1] + y;
-			
+
 			if(block[0] < 0 || block[0] >= GamePane.getRecsCol() || block[1] < 0 || block[1] >= GamePane.getRecsRow()) {
 				System.out.println("Out of bounds error!");
 				System.exit(-1);
 			}
-			
+
 			this.Positions.add(0, block);
 			recs[this.Positions.get(0)[1]][this.Positions.get(0)[0]].setFill(Color.WHITE);
 		}
 		else if(justAte == false) {
-			
-			
+
+
 			recs[this.Positions.get(this.Positions.size()-1)[1]][this.Positions.get(this.Positions.size()-1)[0]].setFill(Color.WHITE);
-			
-			
+
+
 			int[] block = new int[2];
 			block[0] = this.Positions.get(0)[0] + x;
 			block[1] = this.Positions.get(0)[1] + y;
-			
+
 			if(block[0] < 0 || block[0] >= GamePane.getRecsCol() || block[1] < 0 || block[1] >= GamePane.getRecsRow()) {
 				System.out.println("Out of bounds error!");
 				System.exit(-1);
 			}
-			
+
 			this.Positions.add(0, block);
 			this.Positions.remove(this.Positions.size()-1);
-			
-			
-			
-			
+
+
+
+
 			recs[this.Positions.get(0)[1]][this.Positions.get(0)[0]].setFill(Color.WHITE);
-			
+
 		}
-		
+
 		//Positions.get(0)[0] += x;
 		//Positions.get(0)[1] += y;
 	}
@@ -226,7 +213,7 @@ public class Snake {
 	public CurrentDirection getDirection() {
 		return m_CurrentDirection;
 	}
-	
+
 	public void setDirection(CurrentDirection x) {
 		m_CurrentDirection = x;
 	}

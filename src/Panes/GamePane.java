@@ -83,7 +83,7 @@ public class GamePane extends Pane {
 	public GamePane(double width, double height)
 	{
 		// this will add the gridpane
-		AddGridPaneContent.addGridPaneContent(this, gridpane, width, height, recs, stringScore, iterationString);
+		AddGridPaneContent.addGridPaneContent(this, gridpane, width, height, recs, stringScore, iterationString, highScoreString);
 
 	}
 
@@ -96,6 +96,7 @@ public class GamePane extends Pane {
 	 */
 	public void StartTraining()
 	{
+		
 		timeline = new Timeline();
 		timeline.setCycleCount(Timeline.INDEFINITE);
 
@@ -271,13 +272,15 @@ public class GamePane extends Pane {
 		    snek.ateObjectiveItem(recs);
 
 		    stringScore.setText(Integer.toString(snek.score));
+		    
+	
 
 		    if(Integer.parseInt(stringScore.getText())>highscore)
 		    {
 		    	highScoreString.setText(stringScore.getText());
 		    	highscore = Integer.parseInt(stringScore.getText());
 		    }
-
+		    
 		    iterationString.setText(Integer.toString(iteration));
 
 		    brain.updateSnake(snek);
