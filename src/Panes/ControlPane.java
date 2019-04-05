@@ -20,7 +20,6 @@ import javafx.scene.input.MouseEvent;
 public class ControlPane extends Pane {
 	
 	boolean GAChecked = false;
-	GamePane snake_color = new GamePane();
 
 	public void finalize() throws Throwable {
 		super.finalize();

@@ -41,14 +41,6 @@ public class GamePane extends Pane {
 	Snake snek = new Snake(recs);
     SnakeBrain snakeBrain = new SnakeBrain(snek);
 
-	//The scale of the gridpane size to the gamepane size.
-	double scale = 0.9;
-
-	//The scaler for the borders.
-	double borderScale = 0.2;
-
-	//The scaler for the gaps.
-	double gapScale = 0.05;
 
 	//Color of the Snake
 	 Color colorOfSnake = Color.BLACK;

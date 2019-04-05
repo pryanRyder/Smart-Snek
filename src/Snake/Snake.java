@@ -26,8 +26,6 @@ public class Snake {
 	public int y;
 //
 
-	public Snake() {
-
 	public Snake(Rectangle[][] recs)
 	{
 		this.recs = recs;
