@@ -20,7 +20,6 @@ import javafx.scene.input.MouseEvent;
 public class ControlPane extends Pane {
 	
 	boolean GAChecked = false;
-	GamePane snake_color = new GamePane();
 
 	public void finalize() throws Throwable {
 		super.finalize();
@@ -46,13 +45,6 @@ public class ControlPane extends Pane {
 		
 		Text txtAgentPane = new Text("Agent");
 		Pane AgentPane = new Pane();
-	//	Text txtLearningRate = new Text("Learning Rate");
-	//	TextField tfLearningRate = new TextField();
-		//Text txtDiscountFactor = new Text("Discount Factor");
-	//	TextField tfDiscountFactor = new TextField();
-	//	Text txtMaximumReward = new Text("Maximum Reward");
-	//	TextField tfMaximumReward = new TextField();
-		
 		Pane gridSizePane = new Pane();
 		
 		gridSizePane.setStyle("-fx-background-color: '#e0e0e0'");
@@ -310,15 +302,6 @@ public class ControlPane extends Pane {
 		
 		getChildren().add(content);
 		Text Title = new Text("Control Panel");
-		
-		/*
-		AgentPane.setStyle("-fx-background-color: '#e0e0e0'");
-		AgentPane.setLayoutX(getPrefWidth()*0.02);
-		AgentPane.setLayoutY(getPrefHeight()*0.10);
-		AgentPane.setPrefHeight(content.getPrefHeight()*.50);
-		AgentPane.setPrefWidth(content.getPrefWidth()*.95);
-		content.getChildren().add(AgentPane);
-		*/
 		
 		Pane TitlePane = new Pane();
 		TitlePane.setStyle("-fx-background-color: '#e0e0e0'");

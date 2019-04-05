@@ -26,8 +26,6 @@ public class Snake {
 	public int y;
 //
 
-	public Snake() {
-
 	public Snake(Rectangle[][] recs)
 	{
 		this.recs = recs;
@@ -35,6 +33,7 @@ public class Snake {
 		Positions.add(x);
 		m_CurrentDirection = CurrentDirection.RIGHT;
 		randomObjectiveItem();
+		score = 0;
 	}
 
 	public void finalize() throws Throwable {

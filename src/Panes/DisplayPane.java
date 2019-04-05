@@ -11,26 +11,31 @@ import javafx.scene.text.Text;
  */
 public class DisplayPane extends Pane {
 	
-	static Text Iteration = new Text();
+	Text Iteration = new Text();
+	Text score = new Text();
 
 	public void finalize() throws Throwable {
 		super.finalize();
 	}
 	
-	public static void getIteration(String Iter) 
+	public void setIteration(String Iter) 
 	{
 		Iteration.setText(Iter);
+	}
+	
+	public void setScore(String scr) 
+	{
+		score.setText(scr);
 	}
 	
 	public DisplayPane(double width, double height)
 	{
 		
-		
-		
 		setPrefSize(width * 0.75, height * 0.25);
 		
 		//The top left corner of this pane is at (width * 0.25, height * 0.75)
-		setLayoutX(width * 0.25);
+		setLayoutX(0);
+		//setLayoutX(width * 0.25);
 		setLayoutY(height * 0.75);
 		setStyle("-fx-background-color: '#4f4f4f';");
 		
@@ -65,7 +70,27 @@ public class DisplayPane extends Pane {
 		iterationPane.getChildren().addAll(iterationTitle, Iteration);
 //   << End Iteration Pane   >>
 		
-		content.getChildren().addAll(Title, iterationPane);
+		
+	//   << Score Pane Build >>	
+			Pane scorePane = new Pane();
+			scorePane.setPrefSize(getPrefWidth()*0.15, getPrefHeight()*0.6);
+			scorePane.setLayoutX(getPrefWidth()*0.15);
+			scorePane.setLayoutY(getPrefHeight()*0.2);
+			scorePane.setStyle("-fx-background-color: '#a5a5a5'");
+			
+			Text scoreTitle = new Text("Score");
+			scoreTitle.setStyle("-fx-font-size: 20;");    
+			scoreTitle.setLayoutX(scorePane.getPrefWidth()*0.01);
+			scoreTitle.setLayoutY(scorePane.getPrefHeight()*0.15);
+			
+			score.setLayoutX(scorePane.getPrefWidth()*0.25);
+			score.setLayoutY(scorePane.getPrefHeight()*0.6);
+			score.setFont(Font.font(35));
+			
+			scorePane.getChildren().addAll(scoreTitle, score);
+	//   << End Scre Pane   >>
+		
+		content.getChildren().addAll(Title, iterationPane, scorePane);
 		
 		
 

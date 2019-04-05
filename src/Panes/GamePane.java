@@ -40,6 +40,8 @@ public class GamePane extends Pane {
 	public SnakeManager m_SnakeManager;
 	Snake snek = new Snake(recs);
     SnakeBrain snakeBrain = new SnakeBrain(snek);
+    Pane displayPane;
+    private int iteration = 0;
 
 	//The scale of the gridpane size to the gamepane size.
 	double scale = 0.9;
@@ -54,18 +56,6 @@ public class GamePane extends Pane {
 	 Color colorOfSnake = Color.BLACK;
 	 Timeline timeline = new Timeline();
 
-
-	//The scale of the gridpane size to the gamepane size.
-	double scale = 0.9;
-
-	//The scaler for the borders.
-	double borderScale = 0.2;
-
-	//The scaler for the gaps.
-	double gapScale = 0.05;
-
-
-
 	public void finalize() throws Throwable {
 		super.finalize();
 	}
@@ -75,17 +65,18 @@ public class GamePane extends Pane {
 	{
 
 	    //---------------------------- Set Up ------------------------------- //
-
+		
+		//Create Display Pane
+		displayPane = new DisplayPane(width, height);
+		getChildren().add(displayPane);
+		
+		
 		//dealing with sizing
 		setPrefSize(width * 0.75, height * 0.75);
 
 		//The top left corner of this pane is at (width * 0.25, 0)
 		setLayoutX(width * 0.25);
 		setStyle("-fx-background-color: '#6d6d6d';");
-
-		//Create Display Pane
-		Pane displayPane = new DisplayPane(width, height);
-		getChildren().add(displayPane);
 
 		//Sets up Grid Pane
 		setUpGridPane();
@@ -108,7 +99,7 @@ public class GamePane extends Pane {
 
 		timeline.setCycleCount(Timeline.INDEFINITE);
 
-		KeyFrame keyframe = new KeyFrame(Duration.millis(75), action ->
+		KeyFrame keyframe = new KeyFrame(Duration.millis(45), action ->
 		{
 			// Boolean Value that Determines whether you can go back on top of yourself
 			onlyOneDirection = true;
@@ -139,6 +130,7 @@ public class GamePane extends Pane {
 
 			//adds to score if snake eats objective item
 		    snek.ateObjectiveItem();
+		    ((DisplayPane) displayPane).setScore(snek.score+"");
 
 		    //---------------------------- AI Integration ------------------------------- //
 
@@ -158,30 +150,6 @@ public class GamePane extends Pane {
 
 	}
 
-	/*public void setUpGridPane()
-	{
-		gridpane.setPadding(new Insets(5,5,5,5));
-
-		for(int x = 0; x < recs.length; x++) {
-			for(int y = 0; y < recs[x].length; y++) {
-
-				Rectangle rec = new Rectangle();
-				rec.setHeight(28);
-				rec.setWidth(28);
-				rec.setFill(Color.BLACK);
-				recs[x][y] = rec;
-
-				gridpane.add(recs[x][y], x, y);
-			}
-		}
-
-	    gridpane.setHgap(2);
-	    gridpane.setVgap(2);
-	    gridpane.relocate(80.0, 60.0);
-	    gridpane.setBackground(new Background(new BackgroundFill(Color.BLACK, null, null)));
-	}*/
-
-
 	public void setUpGridPane()
 	{
 		//The size of the gaps.
@@ -195,10 +163,6 @@ public class GamePane extends Pane {
 
 				//The height and width of the gridpane
 				double gHeight, gWidth;
-
-				//Figure out what the side length of the squares are.
-				// gamepane.getPrefHeight()*scale = 2*(borderScale*boxSide)+(# of rows)*boxSide +
-				//(# of rows -1)*(gapScale*boxSide)
 
 				//The scale will change the height, and in return, will also change the width.
 				double numerator = getPrefHeight() * scale;
@@ -242,12 +206,6 @@ public class GamePane extends Pane {
 			    double yPos = (getPrefHeight()-gHeight)/2;
 
 			    gridpane.relocate(xPos, yPos);
-
-			    //Test to see if gridpane is out of proportions.
-			    /*if(gWidth+xPos > getPrefWidth() || gHeight+yPos > getPrefHeight()) {
-			    	DimensionError.ShowError();
-			    }*/
-
 	}
 
 	public void CheckIfSnakeHitSelf()
@@ -255,6 +213,7 @@ public class GamePane extends Pane {
 
 	    if( snek.checkIfDead())
 	    {
+	    	iteration++;
 	    	resetSnake();
 	    }
 	}
@@ -263,6 +222,7 @@ public class GamePane extends Pane {
 	{
 		snek = new Snake(recs);
     	snakeBrain = new SnakeBrain(snek);
+    	((DisplayPane) displayPane).setIteration(iteration+"");
 	}
 
 	public void CheckIfSnakeHitWall()
@@ -274,6 +234,7 @@ public class GamePane extends Pane {
 	    		(snek.Positions.get(0)[1] > recs[0].length-1) ||
 	    		(snek.Positions.get(0)[1] < 0))
 	    	{
+	        	iteration++;
 		    	resetSnake();
 	    	}
 	    }

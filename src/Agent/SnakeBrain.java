@@ -13,7 +13,6 @@ public class SnakeBrain
 	public SnakeBrain(Snake snake)
 	{
 		this.snake = snake;
-		System.out.println("hello?");
 		DecidedDirection = snake.getDirection();
 	}
 	
@@ -87,35 +86,6 @@ public class SnakeBrain
 				if(!snakeBodyIsCloser)
 					direction = CurrentDirection.RIGHT;			}
 		}		
-
-			
-		/*
-		for(int i = 3; i < snake.Positions.size(); i++)
-		{
-			if(snake.Positions.get(i)[0] > 0 && (snake.Positions.get(0)[0] == snake.Positions.get(i)[0]-1 && snake.getDirection() == CurrentDirection.RIGHT))
-			{
-				int maybe = (Math.random() <= 0.5) ? 1 : 2;
-				switch(maybe)
-				{
-					case 1: direction = CurrentDirection.UP;
-						break;
-					case 2: direction = CurrentDirection.DOWN;
-						break;
-				}
-			}
-			
-			else if(snake.Positions.get(i)[0] > 0 && (snake.Positions.get(0)[0] == snake.Positions.get(i)[0]+1 && snake.getDirection() == CurrentDirection.LEFT))
-			{
-				int maybe = (Math.random() <= 0.5) ? 1 : 2;
-				switch(maybe)
-				{
-					case 1: direction = CurrentDirection.UP;
-						break;
-					case 2: direction = CurrentDirection.DOWN;
-						break;
-				}
-			}
-		}*/
 		
 		else if(snake.Positions.get(0)[0] == snake.recs[0].length-1 && snake.getDirection() == CurrentDirection.RIGHT)
 		{
