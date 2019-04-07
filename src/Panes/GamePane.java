@@ -40,7 +40,7 @@ public class GamePane extends Pane {
 
 	// protected variables are shared by GamePaneSetsGets
 	protected static boolean onlyOneDirection = true;
-	protected static Rectangle recs[][] = new Rectangle[10][3]; // [row][col] [15][25]
+	protected static Rectangle recs[][] = new Rectangle[15][25]; // [row][col] [15][25]
 	protected static Scene scene;
 	protected static SnakeManager m_SnakeManager;
 	protected static Snake snek = new Snake(recs);
@@ -86,8 +86,8 @@ public class GamePane extends Pane {
 			recs[snek.objectiveItem[1]][snek.objectiveItem[0]].setFill(Color.RED);
 		}
 
-		KeyFrame keyframe = new KeyFrame(Duration.millis(100), action -> {
-			GamePaneKeyFrameComp.keyFrameComp(this);
+		KeyFrame keyframe = new KeyFrame(Duration.millis(20), action -> {
+			GamePaneKeyFrameComp.keyFrameComp(this, snek, recs, brain);
 		});
 
 		timeline.getKeyFrames().add(keyframe);
