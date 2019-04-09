@@ -11,21 +11,21 @@ import javafx.scene.shape.Rectangle;
  * @created 17-Feb-2019 5:39:59 PM
  */
 public class Snake {
-	
-	
+
+
 	public Rectangle[][] recs;
 	public int[] objectiveItem = new int[2];
 	public ArrayList<int[]> Positions = new ArrayList<int[]>();
 	public int score;
 	public CurrentDirection m_CurrentDirection;
-	
+
 // Paul R. Stuff Here
 	public int[] size = new int[3];
 	public int[] start = new int[2];
 	public int x;
 	public int y;
 //
-	
+
 	public Snake(Rectangle[][] recs)
 	{
 		this.recs = recs;
@@ -33,6 +33,7 @@ public class Snake {
 		Positions.add(x);
 		m_CurrentDirection = CurrentDirection.RIGHT;
 		randomObjectiveItem();
+		score = 0;
 	}
 
 	public void finalize() throws Throwable {
@@ -43,7 +44,7 @@ public class Snake {
 		{
 			score++;
 			randomObjectiveItem();
-			
+
 			int[] tempPosition = new int[2];
 
 				tempPosition[0] = Positions.get(0)[0];
@@ -52,7 +53,7 @@ public class Snake {
 			Positions.add(tempPosition);
 		}
 	}
-	
+
 	public CurrentDirection getDirection()
 	{
 		return m_CurrentDirection;
@@ -72,7 +73,7 @@ public class Snake {
 					System.out.println("head " + Positions.get(0)[0] + " , " + Positions.get(0)[1]);
 					System.out.println(i + " "  + Positions.get(i)[0] + " , " + Positions.get(i)[1]);
 				}
-				
+
 		}
 		return isDead;	}
 
@@ -85,18 +86,18 @@ public class Snake {
 	}
 
 	public void move(){
-		
+
 		for(int i = Positions.size()-1; i > 0; i--)
 		{
 			int[] temp = new int[2];
 			temp[0] = Positions.get(i-1)[0];
 			temp[1] = Positions.get(i-1)[1];
-			
+
 			Positions.set(i, temp);
-			
-		
+
+
 		}
-		
+
 		if(m_CurrentDirection == CurrentDirection.RIGHT)
 			updatePosition(1, 0);//add 1 to x direction
 		else if(m_CurrentDirection == CurrentDirection.LEFT)
@@ -109,12 +110,12 @@ public class Snake {
 
 	public void randomObjectiveItem()
 	{
-		
+
 			Random spot = new Random();
-			
+
 			int row = spot.nextInt(recs.length);
 			int col = spot.nextInt(recs[0].length);
-			
+
 			for(int i = 0; i < Positions.size(); i++)
 			{
 				if(Positions.get(i)[0] == row && Positions.get(i)[1] == col)
@@ -123,7 +124,7 @@ public class Snake {
 					col = spot.nextInt(recs[0].length);
 				}
 			}
-			
+
 			objectiveItem[0] = row;
 			objectiveItem[1] = col;
 	}
