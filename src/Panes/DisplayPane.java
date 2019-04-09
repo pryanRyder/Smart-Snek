@@ -43,13 +43,13 @@ public class DisplayPane extends Pane {
 		setPrefSize(width * 0.75, height * 0.25);
 		
 		//The top left corner of this pane is at (width * 0.25, height * 0.75)
-		setLayoutX(width * 0.25);
+		setLayoutX(width * 0.00009);
 		setLayoutY(height * 0.75);
 		setStyle("-fx-background-color: '#4f4f4f';");
 		
 		Pane content = new Pane();
 		content.setPrefSize(getPrefWidth()*0.98, getPrefHeight()*0.90);
-		content.setLayoutX(getPrefWidth()*0.001);
+		content.setLayoutX(getPrefWidth()*0.009);
 		content.setLayoutY(getPrefHeight()*0.05);
 		content.setStyle("-fx-background-color: '#a5a5a5'");
 		getChildren().add(content);
