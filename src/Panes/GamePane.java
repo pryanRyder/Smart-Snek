@@ -146,6 +146,15 @@ public class GamePane extends Pane {
 	{
 		//The size of the gaps.
 				double gapSize;
+				
+				// The scale of the gridpane size to the gamepane size.
+				double scale = 0.9;
+				
+				//The sceler for the borders.
+				double borderScale = 0.2;
+				
+				//the sclaer for the gaps.
+				double gapScale = 0.05;
 
 				//The thickness of the borders.
 				double topBorder, rightBorder, bottomBorder, leftBorder;

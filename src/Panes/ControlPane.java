@@ -2,6 +2,8 @@ package Panes;
 
 import Agent.SnakeBrain;
 import Snake.Snake;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
@@ -9,6 +11,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
+import javafx.util.Duration;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.input.MouseEvent;
 
@@ -21,6 +24,7 @@ public class ControlPane extends Pane {
 
 	boolean GAChecked = false;
 
+
 	public void finalize() throws Throwable {
 		super.finalize();
 	}
@@ -29,6 +33,7 @@ public class ControlPane extends Pane {
 
 		Pane gamePane = new GamePane(width, height);
 		getChildren().add(gamePane);
+		
 
 		setPrefSize(width * 0.25, height);
 
@@ -235,29 +240,25 @@ public class ControlPane extends Pane {
 		txtMaximumReward.setStyle("-fx-font-size: 15;");
 		tfMaximumReward.setLayoutX(AgentPane.getPrefWidth()*.02);
 		tfMaximumReward.setLayoutY(AgentPane.getPrefHeight()*.64);
-
+		
+		Button btDeep2 = new Button("Deep2");
 		Button btDeepReinforcement = new Button("Deep Reinforcement");
 		btDeepReinforcement.setLayoutX(AgentPane.getPrefWidth()*.02);
 		btDeepReinforcement.setLayoutY(AgentPane.getPrefHeight()*.1);
 		AgentPane.getChildren().add(btDeepReinforcement);
 		btDeepReinforcement.setOnAction(ex->{
 			((GamePane) gamePane).setColor(Color.PURPLE);
-
 			AgentPane.getChildren().add(txtLearningRate);
-
 			AgentPane.getChildren().add(tfLearningRate);
-
 			AgentPane.getChildren().add(txtDiscountFactor);
-
 			AgentPane.getChildren().add(tfDiscountFactor);
-
 			AgentPane.getChildren().add(txtMaximumReward);
-
 			AgentPane.getChildren().add(tfMaximumReward);
+			btDeepReinforcement.setTextFill(Color.PURPLE);
 
 		});
 
-		Button btDeep2 = new Button("Deep2");
+		//Button btDeep2 = new Button("Deep2");
 		btDeep2.setLayoutX(AgentPane.getPrefWidth()*.50);
 		btDeep2.setLayoutY(AgentPane.getPrefHeight()*.1);
 		AgentPane.getChildren().add(btDeep2);
@@ -269,6 +270,7 @@ public class ControlPane extends Pane {
 			AgentPane.getChildren().remove(txtDiscountFactor);
 			AgentPane.getChildren().remove(txtLearningRate);
 			AgentPane.getChildren().remove(tfLearningRate);
+			btDeep2.setTextFill(Color.ORANGE);
 
 		});
 
@@ -284,9 +286,65 @@ public class ControlPane extends Pane {
 			AgentPane.getChildren().remove(txtDiscountFactor);
 			AgentPane.getChildren().remove(txtLearningRate);
 			AgentPane.getChildren().remove(tfLearningRate);
+			btDeep3.setTextFill(Color.GREEN);
+			
 
 		});
+	//This faster button makes the snake move faster
+		Button snekSpeed= new Button ("Faster");
+		snekSpeed.setLayoutX(AgentPane.getPrefWidth()*.75);
+		snekSpeed.setLayoutY(AgentPane.getPrefHeight()*.85);
+		AgentPane.getChildren().add(snekSpeed);
+		
+		snekSpeed.setOnAction(ex2->{
+			KeyFrame keyframe1 = new KeyFrame(Duration.millis(35), action ->
+			{
+				// Boolean Value that Determines whether you can go back on top of yourself
+				((GamePane) gamePane).onlyOneDirection = true;
 
+			    //---------------------------- GAME IMPLEMENTATION ------------------------------- //
+
+
+				//moves the snake based off of key presses
+				((GamePane) gamePane).keyPressHandler();
+
+				//moves the snakes position
+				((GamePane) gamePane). snek.move();
+
+			    //Checks if snake hits wall and resets the snake if dead
+			    ((GamePane) gamePane).  CheckIfSnakeHitWall();
+
+			    //Clears the Grid
+			    ((GamePane) gamePane).ClearGrid();
+
+				//Displays Objective Item
+				((GamePane) gamePane).recs[((GamePane) gamePane).snek.objectiveItem[0]][((GamePane) gamePane).snek.objectiveItem[1]].setFill(Color.RED);
+
+			    //Moves the Snakes Position in GridPane
+			    ((GamePane) gamePane).moveSnakeDisplay();
+
+				//Checks if the Snake ran into itself and resets if true
+				((GamePane) gamePane).CheckIfSnakeHitSelf();
+
+				//adds to score if snake eats objective item
+				((GamePane) gamePane). snek.ateObjectiveItem();
+			    ((DisplayPane) ((GamePane) gamePane).displayPane).setScore(((GamePane) gamePane).snek.score+"");
+
+			    //---------------------------- AI Integration ------------------------------- //
+
+			    //updates brain with the environment
+			    ((GamePane) gamePane). snakeBrain.updateSnake(((GamePane) gamePane).snek);
+			    //brain makes decision based off of the environment
+			    ((GamePane) gamePane).snakeBrain.MakeDecision();
+			    //brain decides on a direction and changes the path of the snake
+			    ((GamePane) gamePane).snek.changeDirection(((GamePane) gamePane).snakeBrain.getDecidedDecidedDirection());
+
+			});
+			
+			((GamePane) gamePane).timeline.getKeyFrames().add(keyframe1);
+		});
+		
+		
 		txtAgentPane = new Text("Agent Controller");
 		txtAgentPane.setLayoutX(AgentPane.getPrefWidth()*.02);
 		txtAgentPane.setLayoutY(AgentPane.getPrefHeight()*.05);
@@ -318,6 +376,7 @@ public class ControlPane extends Pane {
 		Title.setLayoutY(content.getPrefHeight()*0.04);
 		//Title.setLayoutX(value);
 		//Title.setLayoutY();
+		
 
 
 	}
