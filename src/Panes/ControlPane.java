@@ -228,16 +228,19 @@ public class ControlPane extends Pane {
 		btDeepReinforcement.setLayoutX(AgentPane.getPrefWidth()*.02);
 		btDeepReinforcement.setLayoutY(AgentPane.getPrefHeight()*.1);
 		AgentPane.getChildren().add(btDeepReinforcement);
+	
 		
-		Button btDeep2 = new Button("Deep2");
-		btDeep2.setLayoutX(AgentPane.getPrefWidth()*.50);
+		Button btDeep2 = new Button("Static AI");
+		btDeep2.setLayoutX(AgentPane.getPrefWidth()*.55);
 		btDeep2.setLayoutY(AgentPane.getPrefHeight()*.1);
 		AgentPane.getChildren().add(btDeep2);
 		
+		/*
 		Button btDeep3 = new Button("Deep3");
 		btDeep3.setLayoutX(AgentPane.getPrefWidth()*.75);
 		btDeep3.setLayoutY(AgentPane.getPrefHeight()*.1);
 		AgentPane.getChildren().add(btDeep3);
+		*/
 		
 		txtAgentPane = new Text("Agent Controller");
 		txtAgentPane.setLayoutX(AgentPane.getPrefWidth()*.02);
