@@ -26,14 +26,12 @@ public class Snake {
 	public int[] start = new int[2];
 	public int x;
 	public int y;
-	
+
 	String scoreString = new String();
-	
+
 	String highscoreString = new String();
 	public int highScore = 0;
 //
-
-	//public Snake()
 
 	public Snake(Rectangle[][] recs)
 	{
@@ -42,6 +40,7 @@ public class Snake {
 		Positions.add(x);
 		m_CurrentDirection = CurrentDirection.RIGHT;
 		randomObjectiveItem();
+		score = 0;
 	}
 
 	public void finalize() throws Throwable {
@@ -50,7 +49,7 @@ public class Snake {
 	public void ateObjectiveItem(){
 		if(Positions.get(0)[0] == objectiveItem[0] && Positions.get(0)[1] == objectiveItem[1])
 		{
-			
+
 			randomObjectiveItem();
 
 			int[] tempPosition = new int[2];
@@ -59,13 +58,13 @@ public class Snake {
 				tempPosition[1] = Positions.get(0)[1];
 
 			Positions.add(tempPosition);
-			
+
 			score++;
 			System.out.print("\n\n" + score);
 	    	scoreString = Integer.toString(score);
 	    	DisplayPane.getScore(scoreString);
-	    	
-	    	if(highScore < score) 
+
+	    	if(highScore < score)
 	    	{
 	    		highScore++;
 	    		highscoreString = Integer.toString(highScore);
@@ -94,9 +93,9 @@ public class Snake {
 					System.out.println("head " + Positions.get(0)[0] + " , " + Positions.get(0)[1]);
 					System.out.println(i + " "  + Positions.get(i)[0] + " , " + Positions.get(i)[1]);
 				}
-				
+
 		}
-		return isDead;	
+		return isDead;
 		}
 
 	public boolean didEatObjectiveItem(){

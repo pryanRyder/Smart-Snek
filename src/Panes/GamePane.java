@@ -29,47 +29,46 @@ import javafx.util.Duration;
  * @version 1.0
  * @created 17-Feb-2019 5:39:59 PM
  */
+
 public class GamePane extends Pane {
-	
+
 	public String iterationString = new String();
-	public int iterationNum = 0;	
-	
+	public int iterationNum = 0;
+
 	public String scoreString = new String();
 	public int score = 0;
-	
+
 
 	GridPane gridpane = new GridPane();
 	boolean onlyOneDirection = true;
-	Rectangle recs[][] = new Rectangle[25][15];
+	 Rectangle recs[][] = new Rectangle[40][40];
 	Scene scene;
-
-    Timeline timeline = new Timeline();
 
 	public SnakeManager m_SnakeManager;
 	Snake snek = new Snake(recs);
     SnakeBrain snakeBrain = new SnakeBrain(snek);
-
-	
-	//The scale of the gridpane size to the gamepane size.
-	double scale = 0.9;
-
-	//The scaler for the borders.
-	double borderScale = 0.2;
-
-	//The scaler for the gaps.
-	double gapScale = 0.05;
+    Pane displayPane;
+    private int iteration = 0;
 
 
+	//Color of the Snake
+	 Color colorOfSnake = Color.BLACK;
+	 Timeline timeline = new Timeline();
 
 	public void finalize() throws Throwable {
 		super.finalize();
 	}
 
 
-	public GamePane(double width, double height)
+	public GamePane( double width, double height)
 	{
 
 	    //---------------------------- Set Up ------------------------------- //
+
+		//Create Display Pane
+		displayPane = new DisplayPane(width, height);
+		getChildren().add(displayPane);
+
 
 		//dealing with sizing
 		setPrefSize(width * 0.75, height * 0.75);
@@ -77,10 +76,6 @@ public class GamePane extends Pane {
 		//The top left corner of this pane is at (width * 0.25, 0)
 		setLayoutX(width * 0.25);
 		setStyle("-fx-background-color: '#6d6d6d';");
-
-		//Create Display Pane
-		Pane displayPane = new DisplayPane(width, height);
-		getChildren().add(displayPane);
 
 		//Sets up Grid Pane
 		setUpGridPane();
@@ -103,7 +98,7 @@ public class GamePane extends Pane {
 
 		timeline.setCycleCount(Timeline.INDEFINITE);
 
-		KeyFrame keyframe = new KeyFrame(Duration.millis(75), action ->
+		KeyFrame keyframe = new KeyFrame(Duration.millis(45), action ->
 		{
 			// Boolean Value that Determines whether you can go back on top of yourself
 			onlyOneDirection = true;
@@ -134,6 +129,7 @@ public class GamePane extends Pane {
 
 			//adds to score if snake eats objective item
 		    snek.ateObjectiveItem();
+		    ((DisplayPane) displayPane).setScore(snek.score+"");
 
 		    //---------------------------- AI Integration ------------------------------- //
 
@@ -153,30 +149,6 @@ public class GamePane extends Pane {
 
 	}
 
-	/*public void setUpGridPane()
-	{
-		gridpane.setPadding(new Insets(5,5,5,5));
-
-		for(int x = 0; x < recs.length; x++) {
-			for(int y = 0; y < recs[x].length; y++) {
-
-				Rectangle rec = new Rectangle();
-				rec.setHeight(28);
-				rec.setWidth(28);
-				rec.setFill(Color.BLACK);
-				recs[x][y] = rec;
-
-				gridpane.add(recs[x][y], x, y);
-			}
-		}
-
-	    gridpane.setHgap(2);
-	    gridpane.setVgap(2);
-	    gridpane.relocate(80.0, 60.0);
-	    gridpane.setBackground(new Background(new BackgroundFill(Color.BLACK, null, null)));
-	}*/
-
-
 	public void setUpGridPane()
 	{
 		//The size of the gaps.
@@ -190,10 +162,6 @@ public class GamePane extends Pane {
 
 				//The height and width of the gridpane
 				double gHeight, gWidth;
-
-				//Figure out what the side length of the squares are.
-				// gamepane.getPrefHeight()*scale = 2*(borderScale*boxSide)+(# of rows)*boxSide +
-				//(# of rows -1)*(gapScale*boxSide)
 
 				//The scale will change the height, and in return, will also change the width.
 				double numerator = getPrefHeight() * scale;
@@ -237,12 +205,6 @@ public class GamePane extends Pane {
 			    double yPos = (getPrefHeight()-gHeight)/2;
 
 			    gridpane.relocate(xPos, yPos);
-
-			    //Test to see if gridpane is out of proportions.
-			    /*if(gWidth+xPos > getPrefWidth() || gHeight+yPos > getPrefHeight()) {
-			    	DimensionError.ShowError();
-			    }*/
-
 	}
 
 	public void CheckIfSnakeHitSelf()
@@ -250,8 +212,9 @@ public class GamePane extends Pane {
 
 	    if( snek.checkIfDead())
 	    {
+	    	iteration++;
 	    	resetSnake();
-	    	
+
 	    }
 	}
 
@@ -259,14 +222,7 @@ public class GamePane extends Pane {
 	{
 		snek = new Snake(recs);
     	snakeBrain = new SnakeBrain(snek);
-    	
-    	score = 0;
-    	scoreString = Integer.toString(score);
-    	DisplayPane.getScore(scoreString);
-    	
-    	iterationNum = iterationNum + 1;
-    	iterationString = Integer.toString(iterationNum);
-    	DisplayPane.getIteration(iterationString);
+    	((DisplayPane) displayPane).setIteration(iteration+"");
 	}
 
 	public void CheckIfSnakeHitWall()
@@ -278,6 +234,7 @@ public class GamePane extends Pane {
 	    		(snek.Positions.get(0)[1] > recs[0].length-1) ||
 	    		(snek.Positions.get(0)[1] < 0))
 	    	{
+	        	iteration++;
 		    	resetSnake();
 	    	}
 	    }
@@ -300,7 +257,7 @@ public class GamePane extends Pane {
 	    {
 	    	try
 	    	{
-	    		recs[snek.Positions.get(i)[0]][snek.Positions.get(i)[1]].setFill(Color.BLACK);
+	    		recs[snek.Positions.get(i)[0]][snek.Positions.get(i)[1]].setFill(colorOfSnake);
 	    	}
 	    	catch(ArrayIndexOutOfBoundsException e)
 	    	{
@@ -374,37 +331,27 @@ public class GamePane extends Pane {
 			}
 		});
 	}
+	public void ChangeGridSize(int width, int height)
+	{
+		recs = new Rectangle[40][40];
+		setUpGridPane();
+	}
+	public void setColor(Color colorOfSnake) {
+		this.colorOfSnake=colorOfSnake;
+	}
+	public Color getColor (Color colorOfSnake) {
 
-	public void Pause() {
-		timeline.stop();
+		return colorOfSnake;
 	}
 
-	public void Play() {
+	public void Play()
+	{
 		timeline.play();
 	}
 
-	public void Stop() {
-		timeline.stop();
-
-}
-	/*
-	public void ChangeGridSize(int width, int height)
+	public void Stop()
 	{
-		//getChildren().remove(gridpane);
-		recs = new Rectangle[width][height];
-		setUpGridPane();
-
-		snek.randomObjectiveItem();
-
-	    // Display random Objective Item
-	    recs[snek.objectiveItem[0]][snek.objectiveItem[1]].setFill(Color.RED);
-
-	    // Set Each Tile In Grid Pane to White
-	    for(int i = 0; i < snek.Positions.size(); i++)
-	    {
-	    	recs[snek.Positions.get(i)[0]][snek.Positions.get(i)[1]].setFill(Color.WHITE);
-	    }
-		//getChildren().add(gridpane);
+		timeline.stop();
 	}
-	*/
+
 }//end GamePane
