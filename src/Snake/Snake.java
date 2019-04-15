@@ -62,13 +62,11 @@ public class Snake {
 			score++;
 			System.out.print("\n\n" + score);
 	    	scoreString = Integer.toString(score);
-	    	DisplayPane.getScore(scoreString);
 
 	    	if(highScore < score)
 	    	{
 	    		highScore++;
 	    		highscoreString = Integer.toString(highScore);
-	    		DisplayPane.getHighScore(highscoreString);
 	    		System.out.print("\n\n" + highScore + "\n\n");
 	    	}
 		}

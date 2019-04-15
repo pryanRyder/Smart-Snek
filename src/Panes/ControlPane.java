@@ -257,11 +257,11 @@ public class ControlPane extends Pane {
 
 		});
 
-		Button btDeep2 = new Button("Deep2");
-		btDeep2.setLayoutX(AgentPane.getPrefWidth()*.50);
-		btDeep2.setLayoutY(AgentPane.getPrefHeight()*.1);
-		AgentPane.getChildren().add(btDeep2);
-		btDeep2.setOnAction(ex->{
+		Button btStatic = new Button("Static AI");
+		btStatic.setLayoutX(AgentPane.getPrefWidth()*.55);
+		btStatic.setLayoutY(AgentPane.getPrefHeight()*.1);
+		AgentPane.getChildren().add(btStatic);
+		btStatic.setOnAction(ex->{
 			((GamePane) gamePane).setColor(Color.ORANGE);
 			AgentPane.getChildren().remove(tfMaximumReward);
 			AgentPane.getChildren().remove(tfDiscountFactor);
@@ -272,22 +272,7 @@ public class ControlPane extends Pane {
 
 		});
 
-		/*
-		Button btDeep3 = new Button("Deep3");
-		btDeep3.setLayoutX(AgentPane.getPrefWidth()*.75);
-		btDeep3.setLayoutY(AgentPane.getPrefHeight()*.1);
-		AgentPane.getChildren().add(btDeep3);
-		btDeep3.setOnAction(ex->{
-			((GamePane) gamePane).setColor(Color.GREEN);
-			AgentPane.getChildren().remove(tfMaximumReward);
-			AgentPane.getChildren().remove(tfDiscountFactor);
-			AgentPane.getChildren().remove(txtMaximumReward);
-			AgentPane.getChildren().remove(txtDiscountFactor);
-			AgentPane.getChildren().remove(txtLearningRate);
-			AgentPane.getChildren().remove(tfLearningRate);
-
-		});
-
+	
 		txtAgentPane = new Text("Agent Controller");
 		txtAgentPane.setLayoutX(AgentPane.getPrefWidth()*.02);
 		txtAgentPane.setLayoutY(AgentPane.getPrefHeight()*.05);
