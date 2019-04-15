@@ -29,8 +29,8 @@ public class Snake {
 
 	String scoreString = new String();
 
-	String highscoreString = new String();
-	public int highScore = 0;
+	public String highscoreString = new String();
+	public int highScore;
 //
 
 	public Snake(Rectangle[][] recs)
@@ -60,15 +60,16 @@ public class Snake {
 			Positions.add(tempPosition);
 
 			score++;
-			System.out.print("\n\n" + score);
 	    	scoreString = Integer.toString(score);
-
+	    	
+/*
 	    	if(highScore < score)
 	    	{
 	    		highScore++;
 	    		highscoreString = Integer.toString(highScore);
-	    		System.out.print("\n\n" + highScore + "\n\n");
 	    	}
+*/
+	    	
 		}
 	}
 
