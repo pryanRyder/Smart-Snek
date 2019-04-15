@@ -2,6 +2,8 @@ package Snake;
 
 import java.util.ArrayList;
 import java.util.Random;
+
+import Panes.DisplayPane;
 import javafx.scene.shape.Rectangle;
 
 
@@ -24,6 +26,11 @@ public class Snake {
 	public int[] start = new int[2];
 	public int x;
 	public int y;
+
+	String scoreString = new String();
+
+	String highscoreString = new String();
+	public int highScore = 0;
 //
 
 	public Snake(Rectangle[][] recs)
@@ -42,7 +49,7 @@ public class Snake {
 	public void ateObjectiveItem(){
 		if(Positions.get(0)[0] == objectiveItem[0] && Positions.get(0)[1] == objectiveItem[1])
 		{
-			score++;
+
 			randomObjectiveItem();
 
 			int[] tempPosition = new int[2];
@@ -51,6 +58,17 @@ public class Snake {
 				tempPosition[1] = Positions.get(0)[1];
 
 			Positions.add(tempPosition);
+
+			score++;
+			System.out.print("\n\n" + score);
+	    	scoreString = Integer.toString(score);
+
+	    	if(highScore < score)
+	    	{
+	    		highScore++;
+	    		highscoreString = Integer.toString(highScore);
+	    		System.out.print("\n\n" + highScore + "\n\n");
+	    	}
 		}
 	}
 
@@ -75,7 +93,8 @@ public class Snake {
 				}
 
 		}
-		return isDead;	}
+		return isDead;
+		}
 
 	public boolean didEatObjectiveItem(){
 		if(Positions.get(0)[0] == objectiveItem[0] && Positions.get(0)[1] == objectiveItem[1])

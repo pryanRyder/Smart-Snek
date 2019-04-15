@@ -32,6 +32,13 @@ import javafx.util.Duration;
 
 public class GamePane extends Pane {
 
+	public String iterationString = new String();
+	public int iterationNum = 0;
+
+	public String scoreString = new String();
+	public int score = 0;
+
+
 	GridPane gridpane = new GridPane();
 	boolean onlyOneDirection = true;
 	 Rectangle recs[][] = new Rectangle[40][40];
@@ -67,12 +74,12 @@ public class GamePane extends Pane {
 	{
 
 	    //---------------------------- Set Up ------------------------------- //
-		
+
 		//Create Display Pane
 		displayPane = new DisplayPane(width, height);
 		getChildren().add(displayPane);
-		
-		
+
+
 		//dealing with sizing
 		setPrefSize(width * 0.75, height * 0.75);
 
@@ -159,6 +166,15 @@ public class GamePane extends Pane {
 
 				//The thickness of the borders.
 				double topBorder, rightBorder, bottomBorder, leftBorder;
+				
+				//The scaler for the borders
+				double borderScale = 0.2;
+				
+				//The sclae of the gridpane size to the gamepane size. 
+				double scale = 0.9;
+				
+				//The thickness of the borders.
+				double gapScale = 0.05;
 
 				//The side length of the boxes.
 				double boxSide;
@@ -217,6 +233,7 @@ public class GamePane extends Pane {
 	    {
 	    	iteration++;
 	    	resetSnake();
+
 	    }
 	}
 
