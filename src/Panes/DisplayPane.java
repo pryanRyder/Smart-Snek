@@ -14,6 +14,9 @@ public class DisplayPane extends Pane {
 
 	Text Iteration = new Text();
 	Text score = new Text();
+	Text highscore = new Text();
+	
+	int highscoreINT = 0;
 
 	public void finalize() throws Throwable {
 		super.finalize();
@@ -27,6 +30,15 @@ public class DisplayPane extends Pane {
 	public void setScore(String scr)
 	{
 		score.setText(scr);
+	}
+	
+	public void setHighScore(int scr) {
+    	if(highscoreINT < scr)
+    	{
+    		highscoreINT++;
+    		String highscoreString = Integer.toString(highscoreINT);
+    		highscore.setText(highscoreString);
+    	}
 	}
 
 	public DisplayPane(double width, double height)
@@ -90,8 +102,27 @@ public class DisplayPane extends Pane {
 
 			scorePane.getChildren().addAll(scoreTitle, score);
 	//   << End Scre Pane   >>
+			
+		//   << Score Pane Build >>
+				Pane highscorePane = new Pane();
+				highscorePane.setPrefSize(getPrefWidth()*0.15, getPrefHeight()*0.6);
+				highscorePane.setLayoutX(getPrefWidth()*0.25);
+				highscorePane.setLayoutY(getPrefHeight()*0.2);
+				highscorePane.setStyle("-fx-background-color: '#a5a5a5'");
+				
+				Text highscoreTitle = new Text("HighScore");
+				highscoreTitle.setStyle("-fx-font-size: 20;");
+				highscoreTitle.setLayoutX(highscorePane.getPrefWidth()*0.01);
+				highscoreTitle.setLayoutY(highscorePane.getPrefHeight()*0.15);
 
-		content.getChildren().addAll(Title, iterationPane, scorePane);
+				highscore.setLayoutX(highscorePane.getPrefWidth()*0.25);
+				highscore.setLayoutY(highscorePane.getPrefHeight()*0.6);
+				highscore.setFont(Font.font(35));
+
+					highscorePane.getChildren().addAll(highscoreTitle, highscore);
+			//   << End Scre Pane   >>
+
+		content.getChildren().addAll(Title, iterationPane, scorePane, highscorePane);
 
 
 

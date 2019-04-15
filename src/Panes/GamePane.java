@@ -98,7 +98,7 @@ public class GamePane extends Pane {
 
 		timeline.setCycleCount(Timeline.INDEFINITE);
 
-		KeyFrame keyframe = new KeyFrame(Duration.millis(45), action ->
+		KeyFrame keyframe = new KeyFrame(Duration.millis(8), action ->
 		{
 			// Boolean Value that Determines whether you can go back on top of yourself
 			onlyOneDirection = true;
@@ -130,6 +130,9 @@ public class GamePane extends Pane {
 			//adds to score if snake eats objective item
 		    snek.ateObjectiveItem();
 		    ((DisplayPane) displayPane).setScore(snek.score+"");
+		    
+		    //adds to highscore if the int score is greater than int highscore. 
+		    ((DisplayPane) displayPane).setHighScore(snek.score);
 
 		    //---------------------------- AI Integration ------------------------------- //
 
@@ -348,7 +351,7 @@ public class GamePane extends Pane {
 	public void setColor(Color colorOfSnake) {
 		this.colorOfSnake=colorOfSnake;
 	}
-	public Color getColor (Color colorOfSnake) {
+	public Color getColor(Color colorOfSnake) {
 
 		return colorOfSnake;
 	}
