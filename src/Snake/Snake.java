@@ -14,7 +14,27 @@ public class Snake extends DQN
 	private int fruitX, fruitY;
 	private int snakeX, snakeY;
 	private int width, height;
-	private char[][] Grid;
+	public char[][] Grid;
+	
+	private double idle = -0.1;
+	private double hitwall = -1;
+	private double hitSelf = -1;
+	private double ateApple = 5;
+	
+	private double distanceFromFruit;
+	
+	public Snake(int[] topology, double learningRate, double discountFactor, int width, int height, double hitwall, double ateApple, double idle)
+	{
+		super(topology, learningRate, discountFactor);
+		this.width = width;
+		this.height = height;
+		this.Grid = new char[width][height];
+		this.ateApple = ateApple;
+		this.hitwall = hitwall;
+		this.idle = idle;
+		reset();
+		
+	}
 	
 	public Snake(int[] topology, double learningRate, double discountFactor, int width, int height)
 	{
@@ -34,6 +54,11 @@ public class Snake extends DQN
 		}
 		
 		return x;
+	}
+	
+	public void updateDistanceFromFruit()
+	{
+		distanceFromFruit = Math.sqrt((snakeX-fruitX)*(snakeX-fruitX) + (snakeY -fruitY)*(snakeY -fruitY));
 	}
 	
 	public void updateGrid()
@@ -65,6 +90,8 @@ public class Snake extends DQN
 		snakeX = (int) (Math.random() * width);
 		snakeY = (int) (Math.random() * height);
 		
+		updateDistanceFromFruit();
+		
 		do
 		{
 			fruitX = (int) (Math.random() * width);
@@ -80,7 +107,7 @@ public class Snake extends DQN
 	@Override
 	protected double[] getState()
 	{
-		return new double[] {snakeX, snakeY, fruitX, fruitY};
+		return new double[] {snakeX, snakeY, fruitX, fruitY, distanceFromFruit};
 	}
 
 	@Override
@@ -111,11 +138,15 @@ public class Snake extends DQN
 		
 		steps++;
 		
+		updateDistanceFromFruit();
+		
+		
+		
 		// dead if out of bounds
 		if(snakeX < 0 || snakeY < 0 || snakeX >= width || snakeY >= height)
 		{
 			dead = true;
-			return -1;
+			return getHitwall();
 		}
 		
 		// award if on fruit
@@ -130,11 +161,11 @@ public class Snake extends DQN
 			}
 			while(fruitX != snakeX && fruitY != snakeY);
 			
-			return 8;
-		}
+			return getAteApple();
+		} 
 		
 		// punish otherwise
-		return -0.1;
+		return -1*distanceFromFruit;
 	}
 	
 	public boolean isDead()
@@ -180,6 +211,38 @@ public class Snake extends DQN
 	public int getHeight()
 	{
 		return height;
+	}
+
+	public double getHitwall() {
+		return hitwall;
+	}
+
+	public void setHitwall(double hitwall) {
+		this.hitwall = hitwall;
+	}
+
+	public double getIdle() {
+		return idle;
+	}
+
+	public void setIdle(double idle) {
+		this.idle = idle;
+	}
+
+	public double getHitSelf() {
+		return hitSelf;
+	}
+
+	public void setHitSelf(double hitSelf) {
+		this.hitSelf = hitSelf;
+	}
+
+	public double getAteApple() {
+		return ateApple;
+	}
+
+	public void setAteApple(double ateApple) {
+		this.ateApple = ateApple;
 	}
 
 

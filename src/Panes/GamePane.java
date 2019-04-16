@@ -2,6 +2,8 @@ package Panes;
 
 import java.util.Collection;
 
+import javax.swing.plaf.synth.SynthSeparatorUI;
+
 import Agent.SnakeBrain;
 import Snake.CurrentDirection;
 import Snake.*;
@@ -47,7 +49,7 @@ public class GamePane extends Pane {
     Pane displayPane;
     private int iteration = 0;
     
-	final int[] topology = {4, 30, 4};
+	final int[] topology = {5, 20, 4};
 	Snake snek;
     
 	//The scale of the gridpane size to the gamepane size.
@@ -63,14 +65,51 @@ public class GamePane extends Pane {
 	//Color of the Snake
 	 Color colorOfSnake = Color.BLACK;
 	 Timeline timeline = new Timeline();
-	 
-	 
-	 
 
 	public void finalize() throws Throwable {
 		super.finalize();
 	}
 
+	
+	public void setSnek(double newLearningRate, double newDiscountFactor, double epsilonDecay, double hitWall, double ateApple, double idle)
+	{
+		snek = new Snake(topology, newLearningRate, newDiscountFactor, recs.length, recs[0].length, hitWall, ateApple, idle);
+		snek.setEpsilonDecay(epsilonDecay);
+	}
+	
+	
+	public void trainSnek(int episodes)
+	{
+		((DisplayPane) displayPane).appendConsole("\nround\tavgScore\tmaxScore\n");
+		for(int round = 0; round < episodes; round++)
+		{
+			
+			double averageScore = 0;
+			int maxScore = 0;
+			for(int gameIndex = 0; gameIndex < 2000; gameIndex++)
+			{
+				snek.reset();
+				while(!snek.isDone())
+				{
+					snek.step();
+				}
+				
+				averageScore += snek.getScore();
+				
+				if(snek.getScore() > maxScore)
+				{
+					maxScore = snek.getScore();
+				}
+			}
+			
+			averageScore /= 1000.0;
+			
+			System.out.println(round + "," + averageScore + "," + maxScore);
+			((DisplayPane) displayPane).appendConsole(round + "\t\t" + averageScore + "\t\t" + maxScore);
+		}
+		
+		NeuralNetwork.saveNetwork(snek.getNetwork(), "snake.nn");
+	}
 
 	public GamePane( double width, double height)
 	{
@@ -105,7 +144,7 @@ public class GamePane extends Pane {
 
 		timeline.setCycleCount(Timeline.INDEFINITE);
 
-		KeyFrame keyframe = new KeyFrame(Duration.millis(8), action ->
+		KeyFrame keyframe = new KeyFrame(Duration.millis(40), action ->
 		{
 			// Boolean Value that Determines whether you can go back on top of yourself
 			onlyOneDirection = true;
@@ -121,6 +160,14 @@ public class GamePane extends Pane {
 
 		    //Clears the Grid
 			ClearGrid();
+			
+			snek.step();
+			snek.updateGrid();
+			
+			UpdateGrid();
+			
+			if(snek.isDead())
+				snek.reset();
 
 			//Displays Objective Item
 
@@ -145,6 +192,23 @@ public class GamePane extends Pane {
 	getChildren().addAll(gridpane);
 
 	}
+	
+	public void UpdateGrid()
+	{
+		for(int i = 0; i < recs.length; i++)
+		{
+			for( int j = 0; j < recs[0].length; j++)
+			{
+				if(snek.Grid[i][j] == 'f')
+					recs[i][j].setFill(Color.RED);
+				if(snek.Grid[i][j] == 'O')
+					recs[i][j].setFill(Color.BLACK);
+			}
+		}
+	}
+	
+	
+	
 
 	public void setUpGridPane()
 	{

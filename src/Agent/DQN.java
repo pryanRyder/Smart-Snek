@@ -179,6 +179,12 @@ public abstract class DQN
 	
 	class Experience
 	{
+		private final double[] state;
+		private final double[] nextState;
+		private final int actionIndex;
+		private final double reward;
+		private final boolean done;
+		
 		public Experience(double[] state, double[] nextState, int actionIndex, double reward, boolean done)
 		{
 			this.state = state;
@@ -213,10 +219,6 @@ public abstract class DQN
 			return done;
 		}
 
-		private final double[] state;
-		private final double[] nextState;
-		private final int actionIndex;
-		private final double reward;
-		private final boolean done;
+
 	}
 }
