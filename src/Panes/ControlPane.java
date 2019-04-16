@@ -147,7 +147,7 @@ public class ControlPane extends Pane {
 
 		btStartTraining.setOnAction(e->
 		{
-			((GamePane) gamePane).resetSnake();
+			((GamePane) gamePane).reset();
 			((GamePane) gamePane).Play();
 
 			btStartTraining.setDisable(true);
@@ -190,7 +190,7 @@ public class ControlPane extends Pane {
 		{
 			btPlay.setDisable(true);
 			btPause.setDisable(false);
-			((GamePane) gamePane).resetSnake();
+			((GamePane) gamePane).reset();
 			((GamePane) gamePane).Play();
 		});
 

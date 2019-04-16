@@ -1,157 +1,186 @@
 package Snake;
 
-import java.util.ArrayList;
-import java.util.Random;
+import java.util.Arrays;
 
-import Panes.DisplayPane;
-import javafx.scene.shape.Rectangle;
+import Agent.DQN;
 
 
-/**
- * @author Danny
- * @version 1.0
- * @created 17-Feb-2019 5:39:59 PM
- */
-public class Snake {
+public class Snake extends DQN
+{
 
-
-	public Rectangle[][] recs;
-	public int[] objectiveItem = new int[2];
-	public ArrayList<int[]> Positions = new ArrayList<int[]>();
-	public int score;
-	public CurrentDirection m_CurrentDirection;
-
-// Paul R. Stuff Here
-	public int[] size = new int[3];
-	public int[] start = new int[2];
-	public int x;
-	public int y;
-
-	String scoreString = new String();
-
-	public String highscoreString = new String();
-	public int highScore;
-//
-
-	public Snake(Rectangle[][] recs)
+	private boolean dead;
+	private int steps;
+	private int score;
+	private int fruitX, fruitY;
+	private int snakeX, snakeY;
+	private int width, height;
+	private char[][] Grid;
+	
+	public Snake(int[] topology, double learningRate, double discountFactor, int width, int height)
 	{
-		this.recs = recs;
-		int[] x = {0,0};
-		Positions.add(x);
-		m_CurrentDirection = CurrentDirection.RIGHT;
-		randomObjectiveItem();
-		score = 0;
+		super(topology, learningRate, discountFactor);
+		this.width = width;
+		this.height = height;
+		this.Grid = new char[width][height];
+		reset();
 	}
-
-	public void finalize() throws Throwable {
-
-	}
-	public void ateObjectiveItem(){
-		if(Positions.get(0)[0] == objectiveItem[0] && Positions.get(0)[1] == objectiveItem[1])
-		{
-
-			randomObjectiveItem();
-
-			int[] tempPosition = new int[2];
-
-				tempPosition[0] = Positions.get(0)[0];
-				tempPosition[1] = Positions.get(0)[1];
-
-			Positions.add(tempPosition);
-
-			score++;
-	    	scoreString = Integer.toString(score);
-	    	
-/*
-	    	if(highScore < score)
-	    	{
-	    		highScore++;
-	    		highscoreString = Integer.toString(highScore);
-	    	}
-*/
-	    	
-		}
-	}
-
-	public CurrentDirection getDirection()
+	
+	public String toString()
 	{
-		return m_CurrentDirection;
-	}
-
-	public void changeDirection(CurrentDirection direction){
-		m_CurrentDirection = direction;
-	}
-
-	public boolean checkIfDead(){
-		boolean isDead = false;
-		for(int i = 1; i < Positions.size(); i++)
+		String x = "";
+		for(int i = 0; i < Grid.length; i++)
 		{
-				if((Positions.get(0)[0] == Positions.get(i)[0] && Positions.get(0)[1] == Positions.get(i)[1]) && 0 != i)
-				{
-					isDead = true;
-					System.out.println("head " + Positions.get(0)[0] + " , " + Positions.get(0)[1]);
-					System.out.println(i + " "  + Positions.get(i)[0] + " , " + Positions.get(i)[1]);
-				}
-
+			x += Arrays.toString(Grid[i]) + "\n";
 		}
-		return isDead;
-		}
-
-	public boolean didEatObjectiveItem(){
-		if(Positions.get(0)[0] == objectiveItem[0] && Positions.get(0)[1] == objectiveItem[1])
-		{
-			return true;
-		}
-		return false;
+		
+		return x;
 	}
-
-	public void move(){
-
-		for(int i = Positions.size()-1; i > 0; i--)
-		{
-			int[] temp = new int[2];
-			temp[0] = Positions.get(i-1)[0];
-			temp[1] = Positions.get(i-1)[1];
-
-			Positions.set(i, temp);
-
-
-		}
-
-		if(m_CurrentDirection == CurrentDirection.RIGHT)
-			updatePosition(1, 0);//add 1 to x direction
-		else if(m_CurrentDirection == CurrentDirection.LEFT)
-			updatePosition(-1, 0);//subtract 1 to x direction
-		else if(m_CurrentDirection == CurrentDirection.UP)
-			updatePosition(0, -1);//add 1 to y direction
-		else if(m_CurrentDirection == CurrentDirection.DOWN)
-			updatePosition(0, 1);//subtract 1 to y direction
-	}
-
-	public void randomObjectiveItem()
+	
+	public void updateGrid()
 	{
-
-			Random spot = new Random();
-
-			int row = spot.nextInt(recs.length);
-			int col = spot.nextInt(recs[0].length);
-
-			for(int i = 0; i < Positions.size(); i++)
+		char[][] x = new char[width][height];
+		
+		for(int i = 0; i < x.length; i++)
+		{
+			for(int j = 0; j < x[0].length; j++)
 			{
-				if(Positions.get(i)[0] == row && Positions.get(i)[1] == col)
-				{
-					row = spot.nextInt(recs.length);
-					col = spot.nextInt(recs[0].length);
-				}
+				x[i][j] = ' ';
 			}
-
-			objectiveItem[0] = row;
-			objectiveItem[1] = col;
+		}
+		
+		try {
+		x[fruitY][fruitX] = 'f';
+		x[snakeY][snakeX] = 'O';
+		}
+		catch(Exception e)
+		{
+			
+		}
+		
+		Grid = x;
 	}
 
-	public void updatePosition(int x, int y)
+	public void reset()
 	{
-		Positions.get(0)[0] += x;
-		Positions.get(0)[1] += y;
+		snakeX = (int) (Math.random() * width);
+		snakeY = (int) (Math.random() * height);
+		
+		do
+		{
+			fruitX = (int) (Math.random() * width);
+			fruitY = (int) (Math.random() * height);
+		}
+		while(fruitX != snakeX && fruitY != snakeY);
+		
+		score = 0;
+		steps = 0;
+		dead = false;
 	}
-}//end Snake
+	
+	@Override
+	protected double[] getState()
+	{
+		return new double[] {snakeX, snakeY, fruitX, fruitY};
+	}
+
+	@Override
+	public boolean isDone()
+	{
+		return steps >= 500 || dead;
+	}
+
+	@Override
+	protected double executeActionAndGetReward(int actionIndex)
+	{
+		if(actionIndex == 0) // go up
+		{
+			snakeY++;
+		}
+		else if(actionIndex == 1) // go down
+		{
+			snakeY--;
+		}
+		else if(actionIndex == 2) // go left
+		{
+			snakeX--;
+		}
+		else if(actionIndex == 3) // go right
+		{
+			snakeX++;
+		}
+		
+		steps++;
+		
+		// dead if out of bounds
+		if(snakeX < 0 || snakeY < 0 || snakeX >= width || snakeY >= height)
+		{
+			dead = true;
+			return -1;
+		}
+		
+		// award if on fruit
+		if(snakeX == fruitX && snakeY == fruitY)
+		{
+			score++;
+			
+			do
+			{
+				fruitX = (int) (Math.random() * width);
+				fruitY = (int) (Math.random() * height);
+			}
+			while(fruitX != snakeX && fruitY != snakeY);
+			
+			return 8;
+		}
+		
+		// punish otherwise
+		return -0.1;
+	}
+	
+	public boolean isDead()
+	{
+		return dead;
+	}
+
+	public int getSteps()
+	{
+		return steps;
+	}
+
+	public int getScore()
+	{
+		return score;
+	}
+
+	public int getFruitX()
+	{
+		return fruitX;
+	}
+
+	public int getFruitY()
+	{
+		return fruitY;
+	}
+
+	public int getSnakeX()
+	{
+		return snakeX;
+	}
+
+	public int getSnakeY()
+	{
+		return snakeY;
+	}
+
+	public int getWidth()
+	{
+		return width;
+	}
+
+	public int getHeight()
+	{
+		return height;
+	}
+
+
+}

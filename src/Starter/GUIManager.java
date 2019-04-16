@@ -1,4 +1,4 @@
-package Package1;
+package Starter;
 
 import Panes.ControlPane;
 import Panes.DisplayPane;
