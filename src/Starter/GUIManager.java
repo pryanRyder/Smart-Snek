@@ -1,14 +1,10 @@
 package Starter;
 
-import Panes.ControlPane;
-import Panes.DisplayPane;
-import Panes.GamePane;
-import Panes.HelpTabPane;
+
 import Panes.MasterPane;
 import javafx.application.Application;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
-import javafx.scene.layout.Pane;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 
