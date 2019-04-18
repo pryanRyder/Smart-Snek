@@ -1,29 +1,14 @@
 package Panes;
 
-import java.util.Collection;
-
-import javax.swing.plaf.synth.SynthSeparatorUI;
-
-import Agent.SnakeBrain;
 import Agent.SnakeDQN;
-import Snake.CurrentDirection;
-import Snake.*;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.geometry.Insets;
-import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.TextField;
-import javafx.scene.input.KeyCode;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.RowConstraints;
-import javafx.scene.layout.TilePane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
-import javafx.scene.text.Text;
 import javafx.util.Duration;
 import DQN.*;
 
