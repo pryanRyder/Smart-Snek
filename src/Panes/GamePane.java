@@ -5,6 +5,7 @@ import java.util.Collection;
 import javax.swing.plaf.synth.SynthSeparatorUI;
 
 import Agent.SnakeBrain;
+import Agent.SnakeDQN;
 import Snake.CurrentDirection;
 import Snake.*;
 import javafx.animation.KeyFrame;
@@ -49,8 +50,9 @@ public class GamePane extends Pane {
     Pane displayPane;
     private int iteration = 0;
     
-	final int[] topology = {5, 20, 4};
-	Snake snek;
+	final int[] topology = {2, 30, 30, 4};
+	SnakeDQN dqn = new SnakeDQN(topology, 0.001, 0.995, 10, 10);
+
     
 	//The scale of the gridpane size to the gamepane size.
 	double scale = 0.9;
@@ -65,59 +67,63 @@ public class GamePane extends Pane {
 	//Color of the Snake
 	 Color colorOfSnake = Color.BLACK;
 	 Timeline timeline = new Timeline();
-
+	 
 	public void finalize() throws Throwable {
 		super.finalize();
 	}
 
-	
 	public void setSnek(double newLearningRate, double newDiscountFactor, double epsilonDecay, double hitWall, double ateApple, double idle)
 	{
-		snek = new Snake(topology, newLearningRate, newDiscountFactor, recs.length, recs[0].length, hitWall, ateApple, idle);
-		snek.setEpsilonDecay(epsilonDecay);
+		//	public SnakeDQN(int[] topology, double learningRate, double discountFactor, int width, int height, double hitWall, double ateApple, double idle)
+
+		dqn = new SnakeDQN(topology, newLearningRate, newDiscountFactor, recs.length, recs[0].length, idle, ateApple, hitWall);
+		
+		System.out.println(idle + " " + ateApple + " " + hitWall);
+		
+		dqn.setEpsilonDecay(epsilonDecay);
+		
 	}
 	
 	
 	public void trainSnek(int episodes)
 	{
-		((DisplayPane) displayPane).appendConsole("\nround\tavgScore\tmaxScore\n");
+		//((DisplayPane) displayPane).appendConsole("\nround\tavgScore\tmaxScore\n");
 		for(int round = 0; round < episodes; round++)
 		{
-			
 			double averageScore = 0;
 			int maxScore = 0;
-			for(int gameIndex = 0; gameIndex < 2000; gameIndex++)
+			double averageEpsilon = 0;
+			int totalSteps = 0;
+			for(int gameIndex = 0; gameIndex < 1000; gameIndex++)
 			{
-				snek.reset();
-				while(!snek.isDone())
+				dqn.reset();
+				
+				while(!dqn.isDone())
 				{
-					snek.step();
+					totalSteps++;
+					averageEpsilon += dqn.getEpsilon();
+					dqn.step();
 				}
 				
-				averageScore += snek.getScore();
+				averageScore += dqn.getScore();
 				
-				if(snek.getScore() > maxScore)
+				if(dqn.getScore() > maxScore)
 				{
-					maxScore = snek.getScore();
+					maxScore = dqn.getScore();
 				}
 			}
 			
 			averageScore /= 1000.0;
-			
-			System.out.println(round + "," + averageScore + "," + maxScore);
-			((DisplayPane) displayPane).appendConsole(round + "\t\t" + averageScore + "\t\t" + maxScore);
-		}
+			averageEpsilon /= (double)totalSteps;
+			System.out.println(round + "," + averageScore + "," + maxScore + "," + averageEpsilon);
 		
-		NeuralNetwork.saveNetwork(snek.getNetwork(), "snake.nn");
+			//((DisplayPane) displayPane).appendConsole(round + "\t\t" + averageScore + "\t\t" + maxScore);
+		}
+		NeuralNetwork.saveNetwork(dqn.getNetwork(), "snake.nn");
 	}
 
 	public GamePane( double width, double height)
 	{
-		
-		snek = new Snake(topology, 0.001, 0.995, 10, 10);
-		snek.setEpsilonMin(0.001);
-
-
 	    //---------------------------- Set Up ------------------------------- //
 
 		//Create Display Pane
@@ -161,13 +167,13 @@ public class GamePane extends Pane {
 		    //Clears the Grid
 			ClearGrid();
 			
-			snek.step();
-			snek.updateGrid();
+			dqn.step();
+			dqn.UpdateGrid();
 			
 			UpdateGrid();
 			
-			if(snek.isDead())
-				snek.reset();
+			if(dqn.isDead())
+				dqn.reset();
 
 			//Displays Objective Item
 
@@ -176,10 +182,10 @@ public class GamePane extends Pane {
 			//Checks if the Snake ran into itself and resets if true
 
 			//adds to score if snake eats objective item
-		    ((DisplayPane) displayPane).setScore(snek.getScore()+"");
+		    ((DisplayPane) displayPane).setScore(dqn.getScore()+"");
 		    
 		    //adds to highscore if the int score is greater than int highscore. 
-		    ((DisplayPane) displayPane).setHighScore(snek.getScore());
+		    ((DisplayPane) displayPane).setHighScore(dqn.getScore());
 
 		    //---------------------------- AI Integration ------------------------------- //
 
@@ -199,9 +205,9 @@ public class GamePane extends Pane {
 		{
 			for( int j = 0; j < recs[0].length; j++)
 			{
-				if(snek.Grid[i][j] == 'f')
+				if(dqn.Grid[i][j] == 'f')
 					recs[i][j].setFill(Color.RED);
-				if(snek.Grid[i][j] == 'O')
+				if(dqn.Grid[i][j] == 'O')
 					recs[i][j].setFill(Color.BLACK);
 			}
 		}
@@ -316,7 +322,7 @@ public class GamePane extends Pane {
 	
 	public void reset()
 	{
-		snek.reset();
+		dqn.reset();
 	}
 
 }//end GamePane

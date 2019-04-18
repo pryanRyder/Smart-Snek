@@ -1,7 +1,6 @@
 package Panes;
 
 import Agent.SnakeBrain;
-import Snake.Snake;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
@@ -219,7 +218,7 @@ public class ControlPane extends Pane {
 		/////////////////////////////////////////////////////
 		
 		Text txtEpsilonDecay = new Text("Epsilon Decay");
-		TextField tfEpsilonDecay = new TextField("0.995");
+		TextField tfEpsilonDecay = new TextField("0.99999");
 
 		Text txtRewards = new Text("Rewards:");
 		
@@ -231,10 +230,10 @@ public class ControlPane extends Pane {
 		
 		
 		Text txtEatsApple = new Text("Eats Apple");
-		TextField tfEatsApple = new TextField("8");
+		TextField tfEatsApple = new TextField("1");
 		
 		Text txtIdle = new Text("Idle");
-		TextField tfIdle = new TextField("-0.1");
+		TextField tfIdle = new TextField("0");
 
 		
 		
@@ -380,7 +379,6 @@ public class ControlPane extends Pane {
 			((GamePane) gamePane).trainSnek(Integer.parseInt(tfEpisodes.getText()));
 		});
 		
-		
 		AgentPane.getChildren().addAll(txtEpisodes, tfEpisodes);
 
 
@@ -389,18 +387,14 @@ public class ControlPane extends Pane {
 		AgentPane.getChildren().add(btCreateNew);
 		
 		btCreateNew.setOnAction(e ->{
-			((GamePane) gamePane).setSnek(Double.parseDouble(tfLearningRate.getText()), Double.parseDouble(tfDiscountFactor.getText())
-					, Double.parseDouble(tfEpsilonDecay.getText()), Double.parseDouble(tfIdle.getText()), Double.parseDouble(tfEatsApple.getText()), Double.parseDouble(tfwallDeath.getText()));
+			//	public SnakeDQN(int[] topology, double learningRate, double discountFactor, int width, int height, double hitWall, double ateApple, double idle)
+
+			((GamePane) gamePane).setSnek(Double.parseDouble(tfLearningRate.getText()), Double.parseDouble(tfDiscountFactor.getText()), Double.parseDouble(tfEpsilonDecay.getText()), Double.parseDouble(tfIdle.getText()), Double.parseDouble(tfEatsApple.getText()), Double.parseDouble(tfwallDeath.getText()));
 			
 			btTrain.setDisable(false);
 			tfEpisodes.setDisable(false);
 			
 		});
-
-
-		
-		
-
 
 		getChildren().add(content);
 		Text Title = new Text("Control Panel");

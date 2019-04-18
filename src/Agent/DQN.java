@@ -7,10 +7,16 @@ import DQN.NeuralNetwork;
 
 public abstract class DQN
 {
+	private double discountFactor;
+	private double epsilon;
+	private double epsilonMin;
+	private double epsilonDecay;
+	private NeuralNetwork network;
+	private final List<Experience> memory;
+	
 	public DQN(int[] topology, double learningRate, double discountFactor)
 	{
 		network = new NeuralNetwork(topology, learningRate, 0);
-		this.learningRate = learningRate;
 		this.discountFactor = discountFactor;
 		epsilon = 1.0;
 		epsilonMin = 0.05;
@@ -20,12 +26,12 @@ public abstract class DQN
 	
 	public double getLearningRate()
 	{
-		return learningRate;
+		return network.learningRate;
 	}
 
 	public void setLearningRate(double learningRate)
 	{
-		this.learningRate = clamp(learningRate, 0, 1);
+		network.learningRate = clamp(learningRate, 0, 1);
 	}
 
 	public double getDiscountFactor()
@@ -132,15 +138,27 @@ public abstract class DQN
 	
 	private void learn(Experience exp)
 	{
-		double qTarget = exp.getReward();
-		if(!exp.isDone())
+		double[] state = exp.getState();
+		double[] nextState = exp.getNextState();
+		double reward = exp.getReward();
+		int actionIndex = exp.getActionIndex();
+		boolean isDone = exp.isDone();
+		
+		double qTarget;
+		if(isDone)
 		{
-			double[] nextStateQValues = network.predict(exp.getNextState());
-			double maxQValue = nextStateQValues[getMaxIndex(nextStateQValues)];
-			qTarget += discountFactor * maxQValue;
+			qTarget = reward;
 		}
-		double[] qValues = network.predict(exp.getState());
-		qValues[exp.getActionIndex()] = (1 - learningRate) * qValues[exp.getActionIndex()] + learningRate * qTarget;
+		else
+		{
+			double[] nextStateQValues = network.predict(nextState);
+			double maxQValue = nextStateQValues[getMaxIndex(nextStateQValues)];
+			qTarget = reward + discountFactor * maxQValue;
+		}
+		
+		double[] qValues = network.predict(state);
+		qValues[actionIndex] = qTarget;
+		
 		network.train(exp.getState(), qValues, false);
 	}
 	
@@ -169,22 +187,16 @@ public abstract class DQN
 		return value;
 	}
 	
-	private double learningRate;
-	private double discountFactor;
-	private double epsilon;
-	private double epsilonMin;
-	private double epsilonDecay;
-	private NeuralNetwork network;
-	private final List<Experience> memory;
+
 	
 	class Experience
 	{
+
 		private final double[] state;
 		private final double[] nextState;
 		private final int actionIndex;
 		private final double reward;
 		private final boolean done;
-		
 		public Experience(double[] state, double[] nextState, int actionIndex, double reward, boolean done)
 		{
 			this.state = state;
@@ -218,7 +230,6 @@ public abstract class DQN
 		{
 			return done;
 		}
-
 
 	}
 }
