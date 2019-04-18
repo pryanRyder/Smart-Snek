@@ -1,10 +1,13 @@
 package Panes;
 
+import java.io.File;
+
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
+import javafx.stage.FileChooser;
 
 /**
  * @author Danny
@@ -225,7 +228,7 @@ public class ControlPane extends Pane {
 		
 		
 		Text txtEatsApple = new Text("Eats Apple");
-		TextField tfEatsApple = new TextField("1");
+		TextField tfEatsApple = new TextField("3");
 		
 		Text txtIdle = new Text("Idle");
 		TextField tfIdle = new TextField("0");
@@ -347,6 +350,12 @@ public class ControlPane extends Pane {
 
 		});
 
+		
+		btUpload.setOnAction(e ->
+		{
+			
+	        final FileChooser  fileChooser = new FileChooser();
+		});
 	
 		txtAgentPane = new Text("Agent Controller");
 		txtAgentPane.setLayoutX(AgentPane.getPrefWidth()*.02);
@@ -384,7 +393,7 @@ public class ControlPane extends Pane {
 		btCreateNew.setOnAction(e ->{
 			//	public SnakeDQN(int[] topology, double learningRate, double discountFactor, int width, int height, double hitWall, double ateApple, double idle)
 
-			((GamePane) gamePane).setSnek(Double.parseDouble(tfLearningRate.getText()), Double.parseDouble(tfDiscountFactor.getText()), Double.parseDouble(tfEpsilonDecay.getText()), Double.parseDouble(tfIdle.getText()), Double.parseDouble(tfEatsApple.getText()), Double.parseDouble(tfwallDeath.getText()));
+			((GamePane) gamePane).setSnek(Double.parseDouble(tfLearningRate.getText()), Double.parseDouble(tfDiscountFactor.getText()), Double.parseDouble(tfEpsilonDecay.getText()), Double.parseDouble(tfIdle.getText()), Double.parseDouble(tfEatsApple.getText()), Double.parseDouble(tfwallDeath.getText()), Double.parseDouble(tfSelfDestruct.getText()));
 			
 			btTrain.setDisable(false);
 			tfEpisodes.setDisable(false);

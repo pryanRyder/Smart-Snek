@@ -1,73 +1,160 @@
 package Agent;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 public class SnakeDQN extends DQN
 {
-
 	private boolean dead;
 	private int steps;
 	private int score;
 	private int fruitX, fruitY;
-	private int snakeX, snakeY;
 	private int width, height;
-	public char[][] Grid;
+	public double[][] Grid;
+	
+	public ArrayList<int[]> Positions = new ArrayList<int[]>();
 	
 	double hitWall = -1;
-	double ateApple = 1;
+	double ateApple = 5;
 	double idle = 0;
+	double hitSelf = -3;
 	
-	public SnakeDQN(int[] topology, double learningRate, double discountFactor, int width, int height)
+	final static int[] topology = {10, 70, 60, 4};
+	
+	int savedX = -1;
+	int savedY = -1;
+	
+	public double[] headNeighbors = {0, 0, 0, 0};
+	
+	int f;
+	
+	public SnakeDQN(double learningRate, double discountFactor, int width, int height)
 	{
 		
 		super(topology, learningRate, discountFactor);
 		this.width = width;
 		this.height = height;
-		Grid = new char[height][width];
+		Grid = new double[height][width];
 		reset();
-		
 	}
 	
-	public SnakeDQN(int[] topology, double learningRate, double discountFactor, int width, int height, double hitWall, double ateApple, double idle)
+	public SnakeDQN(double learningRate, double discountFactor, int width, int height, double hitWall, double ateApple, double idle, double hitSelf)
 	{
 		super(topology, learningRate, discountFactor);
 		
+		this.hitSelf = hitSelf;
 		this.idle = idle;
 		this.ateApple = ateApple;
 		this.hitWall = hitWall;
-		
 		this.width = width;
 		this.height = height;
-		Grid = new char[height][width];
+		Grid = new double[height][width];
 		reset();
-		
 	}
 
 	public void UpdateGrid()
 	{
+		double[] tmp = {0, 0, 0, 0};
+		headNeighbors = tmp;
+		
 		for(int i = 0; i < Grid.length; i++)
 		{
 			for( int j = 0; j < Grid[0].length; j++)
 			{
-				if(i == snakeY && j == snakeX)
-					Grid[i][j] = 'O';
+				if(i == Positions.get(0)[0] && j == Positions.get(0)[1])
+					Grid[i][j] = 1;
 				else if(i == fruitY && j == fruitX)
-					Grid[i][j] = 'f';
+					Grid[i][j] = .5;
 				else
-					Grid[i][j] = ' ';
+					Grid[i][j] = 0;
 			}
+		}
+		
+		for(int i = 1; i < Positions.size(); i++)
+		{			
+			try {
+			Grid[Positions.get(i)[0]][Positions.get(i)[1]] = 1;
+			}
+			catch(ArrayIndexOutOfBoundsException e)
+			{
+				
+			}
+		}
+		
+		//update neighbors
+		
+		//up
+		try 
+		{
+			if(Grid[Positions.get(0)[0]-1][Positions.get(0)[1]] == 1)
+			{
+				headNeighbors[0] = 1;
+			}
+		}
+		catch(Exception e)
+		{
+			headNeighbors[0] = 1;
+		}
+		
+		//down
+		try 
+		{
+			if(Grid[Positions.get(0)[0]+1][Positions.get(0)[1]] == 1)
+			{
+				headNeighbors[1] = 1;
+			}
+		}
+		catch(Exception e)
+		{
+			headNeighbors[1] = 1;
+		}
+		
+		//left
+		try 
+		{
+			if(Grid[Positions.get(0)[0]][Positions.get(0)[1]-1] == 1)
+			{
+				headNeighbors[2] = 1;
+			}
+		}
+		catch(Exception e)
+		{
+			headNeighbors[2] = 1;
+		}
+		
+		//right
+		try 
+		{
+			if(Grid[Positions.get(0)[0]+1][Positions.get(0)[1]+1] == 1)
+			{
+				headNeighbors[3] = 1;
+			}
+		}
+		catch(Exception e)
+		{
+			headNeighbors[3] = 1;
 		}
 	}
 	
 	public void reset()
 	{
-		snakeX = (int) (Math.random() * width);
-		snakeY = (int) (Math.random() * height);
+		double[] tmp = {0, 0, 0, 0};
+		headNeighbors = tmp;
+		
+		Positions = new ArrayList<int[]>();
+		
+		Positions.add(new int[2]);
+		
+		
+		Positions.get(0)[0] = 0;
+		Positions.get(0)[1] = 0;
 		
 		do
 		{
 			fruitX = (int) (Math.random() * width);
 			fruitY = (int) (Math.random() * height);
 		}
-		while(fruitX != snakeX && fruitY != snakeY);
+		while(fruitX != Positions.get(0)[0] && fruitY != Positions.get(0)[1]);
 		
 		score = 0;
 		steps = 0;
@@ -76,10 +163,34 @@ public class SnakeDQN extends DQN
 		UpdateGrid();
 	}
 	
+	public double[] FlattenGrid()
+	{
+		double[] flattenedGrid = new double[Grid.length*Grid.length];
+		
+		ArrayList<Double> adderBoi = new ArrayList<Double>();
+		
+		for(int i = 0; i < Grid.length; i++)
+		{
+			for( int j = 0; j < Grid[0].length; j++)
+			{
+				adderBoi.add(Grid[i][j]);
+			}
+		}
+		
+		for(int i = 0; i < flattenedGrid.length; i++)
+		{
+			flattenedGrid[i] = adderBoi.get(i);
+		}
+
+		return flattenedGrid;
+	}
+	
+	
+	
 	@Override
 	protected double[] getState()
 	{
-		return new double[] {Math.signum(fruitX - snakeX), Math.signum(fruitY - snakeY)};
+		return new double[] {Math.signum(Positions.get(0)[1] - fruitX), Math.signum(Positions.get(0)[0] - fruitY), Math.signum(Positions.get(0)[1]), Math.signum(Positions.get(0)[0]), Math.signum(fruitX), Math.signum(fruitY), headNeighbors[0], headNeighbors[1], headNeighbors[2], headNeighbors[3]};
 	}
 
 	@Override
@@ -90,37 +201,65 @@ public class SnakeDQN extends DQN
 
 	@Override
 	protected double executeActionAndGetReward(int actionIndex)
-	{
+	{		
+		//TODO:
+		// make program a lot harder by
+		// limiting actions to 3 different directions
+		double[] tmp = {0, 0, 0, 0};
+		headNeighbors = tmp;
+		
+		//System.out.println(Arrays.toString(headNeighbors));
+		
+		for(int i = Positions.size()-1; i > 0; i--)
+		{
+			int[] temp = new int[2];
+			temp[0] = Positions.get(i-1)[0];
+			temp[1] = Positions.get(i-1)[1];
+
+			Positions.set(i, temp);
+		}
+		
 		if(actionIndex == 0) // go up
 		{
-			snakeY++;
+			Positions.get(0)[0]++;
 		}
 		else if(actionIndex == 1) // go down
 		{
-			snakeY--;
+			Positions.get(0)[0]--;
 		}
 		else if(actionIndex == 2) // go left
 		{
-			snakeX--;
+			Positions.get(0)[1]--;
 		}
 		else if(actionIndex == 3) // go right
 		{
-			snakeX++;
+			Positions.get(0)[1]++;
 		}
+		UpdateGrid();		
+
+
 		
 		steps++;
-		
-		
+				
+		//ran into itself
+		for(int i = 1 ; i < Positions.size(); i++)
+		{
+			if( Positions.get(0)[0] == Positions.get(i)[0] && Positions.get(0)[1] == Positions.get(i)[1] )
+			{
+				dead = true;
+				return hitSelf;
+			}
+		}
 		
 		// dead if out of bounds
-		if(snakeX < 0 || snakeY < 0 || snakeX >= width || snakeY >= height)
+		if(Positions.get(0)[0] < 0 || Positions.get(0)[1] < 0 || Positions.get(0)[1] >= width || Positions.get(0)[0] >= height)
 		{
 			dead = true;
 			return hitWall;
 		}
 		
 		// award if on fruit
-		if(snakeX == fruitX && snakeY == fruitY)
+		if(Positions.get(0)[1] == fruitX && Positions.get(0)[0] == fruitY)
 		{
 			score++;
 			
@@ -129,15 +268,27 @@ public class SnakeDQN extends DQN
 				fruitX = (int) (Math.random() * width);
 				fruitY = (int) (Math.random() * height);
 			}
-			while(fruitX != snakeX && fruitY != snakeY);
+			while(fruitX != Positions.get(0)[1] && fruitY != Positions.get(0)[0]);
+			
+			savedX = Positions.get(0)[1];
+			savedY = Positions.get(0)[0];
+			
+			f = 1;
+			f--;
 			
 			return ateApple;
-		}
-		
-		return idle;
-		
-		// punish otherwise
-//		return -0.1;
+		}		
+
+		if(f == 0)
+		{
+			int[] temp = new int[2];
+			temp[0] = savedY;
+			temp[1] = savedX;
+			
+			Positions.add(temp);
+			f--;
+		}		
+		return idle;		
 	}
 	
 	public boolean isDead()
@@ -165,16 +316,6 @@ public class SnakeDQN extends DQN
 		return fruitY;
 	}
 
-	public int getSnakeX()
-	{
-		return snakeX;
-	}
-
-	public int getSnakeY()
-	{
-		return snakeY;
-	}
-
 	public int getWidth()
 	{
 		return width;
@@ -184,5 +325,4 @@ public class SnakeDQN extends DQN
 	{
 		return height;
 	}
-
 }
