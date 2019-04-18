@@ -103,7 +103,7 @@ public class ControlPane extends Pane {
 		});
 
 
-		Button btCreateNew = new Button("Create New");
+		Button btCreateNew = new Button("Create Network");
 		Button btTrain = new Button("Train");
 		Button btUpload = new Button("Upload");
 

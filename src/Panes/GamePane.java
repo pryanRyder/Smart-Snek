@@ -173,7 +173,10 @@ public class GamePane extends Pane {
 			UpdateGrid();
 			
 			if(dqn.isDead())
+			{
+				iteration++;
 				dqn.reset();
+			}
 
 			//Displays Objective Item
 
@@ -186,6 +189,9 @@ public class GamePane extends Pane {
 		    
 		    //adds to highscore if the int score is greater than int highscore. 
 		    ((DisplayPane) displayPane).setHighScore(dqn.getScore());
+		    
+		    ((DisplayPane) displayPane).setIteration(iteration+"");
+
 
 		    //---------------------------- AI Integration ------------------------------- //
 
