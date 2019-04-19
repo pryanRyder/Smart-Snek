@@ -38,10 +38,9 @@ public class GamePane extends Pane {
 	public String scoreString = new String();
 	public int score = 0;
 
-
 	GridPane gridpane = new GridPane();
 	boolean onlyOneDirection = true;
-	 Rectangle recs[][] = new Rectangle[40][40];
+	Rectangle recs[][] = new Rectangle[40][40];
 	Scene scene;
 
 	public SnakeManager m_SnakeManager;
@@ -98,12 +97,12 @@ public class GamePane extends Pane {
 
 		timeline.setCycleCount(Timeline.INDEFINITE);
 
-		KeyFrame keyframe = new KeyFrame(Duration.millis(8), action ->
+		KeyFrame keyframe = new KeyFrame(Duration.millis(25), action ->
 		{
 			// Boolean Value that Determines whether you can go back on top of yourself
 			onlyOneDirection = true;
 
-		    //---------------------------- GAME IMPLEMENTATION ------------------------------- //
+		//---------------------------- GAME IMPLEMENTATION ------------------------------- //
 
 
 			//moves the snake based off of key presses
@@ -134,7 +133,7 @@ public class GamePane extends Pane {
 		    //adds to highscore if the int score is greater than int highscore. 
 		    ((DisplayPane) displayPane).setHighScore(snek.score);
 
-		    //---------------------------- AI Integration ------------------------------- //
+		//---------------------------- AI Integration ------------------------------- //
 
 		    //updates brain with the environment
 		    snakeBrain.updateSnake(snek);
