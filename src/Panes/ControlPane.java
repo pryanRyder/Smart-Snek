@@ -307,7 +307,8 @@ public class ControlPane extends Pane {
 			btStatic.setStyle("-fx-background-color: '#006400'; -fx-text-fill: 'white';");
 
 			
-			((GamePane) gamePane).setColor(Color.ORANGE);
+			((GamePane) gamePane).colorOfSnake(0.937, 0.525, 0.043);
+			
 			tfDiscountFactor.setDisable(true);
 
 			tfEpsilonDecay.setDisable(true);
@@ -329,7 +330,7 @@ public class ControlPane extends Pane {
 			btDQN.setStyle("-fx-background-color: '#301934'; -fx-text-fill: 'white';");
 			btStatic.setStyle("-fx-background-color: 'white'; -fx-text-fill: '#006400';");
 
-			((GamePane) gamePane).setColor(Color.PURPLE);
+			((GamePane) gamePane).colorOfSnake(0.682, 0.070, 0.792);
 
 			tfDiscountFactor.setDisable(false);
 
@@ -431,4 +432,5 @@ public class ControlPane extends Pane {
 
 
 	}
+	
 }//end ControlPane

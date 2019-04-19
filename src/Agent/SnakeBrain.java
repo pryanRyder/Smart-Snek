@@ -8,13 +8,15 @@ public class SnakeBrain
 {
 	CurrentDirection DecidedDirection;
 	//constructor
+	
 	public SnakeBrain()
 	{
-
+		
 	}
 	
 	public void updateSnake()
 	{
+		
 	}
 	
 	public void MakeDecision()
