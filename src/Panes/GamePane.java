@@ -54,7 +54,7 @@ public class GamePane extends Pane {
 	double gapScale = 0.05;
 
 	//Color of the Snake
-	 Color colorOfSnake = Color.BLACK;
+	 Color colorOfSnake = Color.PURPLE;
 	 Timeline timeline = new Timeline();
 
 	boolean dq = false;
