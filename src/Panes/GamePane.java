@@ -157,7 +157,6 @@ public class GamePane extends Pane {
 
 	    //---------------------------- GAME LOOP ------------------------------- //
 
-
 		timeline.setCycleCount(Timeline.INDEFINITE);
 
 		KeyFrame keyframe = new KeyFrame(Duration.millis(70), action ->
@@ -166,8 +165,6 @@ public class GamePane extends Pane {
 			onlyOneDirection = true;
 
 		//---------------------------- GAME IMPLEMENTATION ------------------------------- //
-
-
 			ClearGrid();
 
 			dqn.step();
@@ -196,9 +193,10 @@ public class GamePane extends Pane {
 
 
 		});
-
+		
 		timeline.getKeyFrames().add(keyframe);
 		//timeline.play();
+		
 
 	getChildren().addAll(gridpane);
 
