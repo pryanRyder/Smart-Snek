@@ -9,6 +9,7 @@ public class SnakeBrain
 	CurrentDirection DecidedDirection;
 	//constructor
 	
+	// Will move the snake based off hard inputs such as objective item location, 
 	public SnakeBrain()
 	{
 		

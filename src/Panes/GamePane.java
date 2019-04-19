@@ -51,7 +51,7 @@ public class GamePane extends Pane {
 	double gapScale = 0.05;
 
 	//Color of Snake Class Variable
-	Color colorOfSnake = Color.BLACK;
+	Color colorOfSnake = Color.PURPLE;
 	
 	
 	 Timeline timeline = new Timeline();

@@ -322,6 +322,8 @@ public class ControlPane extends Pane {
 			tfIdle.setDisable(true);
 
 			tfEatsApple.setDisable(true);
+			
+			btStartTraining.setDisable(false);
 
 		});
 		
@@ -330,8 +332,8 @@ public class ControlPane extends Pane {
 			btDQN.setStyle("-fx-background-color: '#301934'; -fx-text-fill: 'white';");
 			btStatic.setStyle("-fx-background-color: 'white'; -fx-text-fill: '#006400';");
 
-			((GamePane) gamePane).colorOfSnake(0.682, 0.070, 0.792);
-
+			((GamePane) gamePane).colorOfSnake(0.529, 0.066, 0.611);
+			
 			tfDiscountFactor.setDisable(false);
 
 			tfEpsilonDecay.setDisable(false);
@@ -345,9 +347,6 @@ public class ControlPane extends Pane {
 			tfIdle.setDisable(false);
 
 			tfEatsApple.setDisable(false);
-
-			
-			
 
 
 		});
