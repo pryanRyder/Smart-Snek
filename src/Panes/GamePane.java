@@ -14,6 +14,7 @@ import javafx.scene.Scene;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 
@@ -38,6 +39,7 @@ public class GamePane extends Pane {
 
     Pane displayPane;
     private int iteration = 0;
+
 
 	SnakeDQN dqn = new SnakeDQN(0.001, 0.995, 10, 10);
 
@@ -202,6 +204,18 @@ public class GamePane extends Pane {
 
 	}
 
+	//Color of the Snake
+	public void colorOfSnake(double red, double green, double blue)
+	{
+		colorOfSnake = Color.color(red, green, blue);
+
+		System.out.println("\n\n\n" + red + "\n\n\n");
+
+		System.out.println("Does this thing even work");
+
+	};
+
+
 	public void UpdateGrid()
 	{
 		for(int i = 0; i < recs.length; i++)
@@ -211,13 +225,10 @@ public class GamePane extends Pane {
 				if(dqn.Grid[i][j] == .5)
 					recs[i][j].setFill(Color.RED);
 				if(dqn.Grid[i][j] == 1)
-					recs[i][j].setFill(Color.BLACK);
+					recs[i][j].setFill(colorOfSnake);
 			}
 		}
 	}
-
-
-
 
 	public void setUpGridPane()
 	{
@@ -298,16 +309,16 @@ public class GamePane extends Pane {
 		}
 	}
 
-
-
 	public void ChangeGridSize(int width, int height)
 	{
 		recs = new Rectangle[40][40];
 		setUpGridPane();
 	}
+
 	public void setColor(Color colorOfSnake) {
-		this.colorOfSnake=colorOfSnake;
+		// this.colorOfSnake = colorOfSnake;
 	}
+
 	public Color getColor(Color colorOfSnake) {
 
 		return colorOfSnake;
