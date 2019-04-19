@@ -1,5 +1,8 @@
 package Panes;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.ObjectInputStream;
 import java.util.Arrays;
 
 import Agent.SnakeDQN;
@@ -49,15 +52,27 @@ public class GamePane extends Pane {
 	//The scaler for the gaps.
 	double gapScale = 0.05;
     
-
 	//Color of the Snake
 	 Color colorOfSnake = Color.BLACK;
 	 Timeline timeline = new Timeline();
+	 
+	boolean dq = false;
+	boolean stat = false;
+	
+	
+	
 	 
 	public void finalize() throws Throwable {
 		super.finalize();
 	}
 
+	public void setNN(File nnFile) throws Exception
+	{
+		ObjectInputStream ois = new ObjectInputStream(new FileInputStream(nnFile));
+		NeuralNetwork nn = (NeuralNetwork)ois.readObject();
+		dqn.setNetwork(nn);
+	}
+	
 	public void setSnek(double newLearningRate, double newDiscountFactor, double epsilonDecay, double hitWall, double ateApple, double idle, double hitSelf)
 	{
 		//	public SnakeDQN(int[] topology, double learningRate, double discountFactor, int width, int height, double hitWall, double ateApple, double idle)
@@ -153,6 +168,7 @@ public class GamePane extends Pane {
 
 		    //---------------------------- GAME IMPLEMENTATION ------------------------------- //
 
+			
 			ClearGrid();
 			
 			dqn.step();

@@ -8,6 +8,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 
 /**
  * @author Danny
@@ -300,62 +301,23 @@ public class ControlPane extends Pane {
 		btStatic.setLayoutY(AgentPane.getPrefHeight()*.1);
 		AgentPane.getChildren().add(btStatic);
 		btStatic.setStyle("-fx-background-color: 'white'; -fx-text-fill: '#006400';");
-
-		btStatic.setOnAction(ex->{
-			
-			btDQN.setStyle("-fx-background-color: 'white'; -fx-text-fill: '#301934';");
-			btStatic.setStyle("-fx-background-color: '#006400'; -fx-text-fill: 'white';");
-
-			
-			((GamePane) gamePane).setColor(Color.ORANGE);
-			tfDiscountFactor.setDisable(true);
-
-			tfEpsilonDecay.setDisable(true);
-
-			tfwallDeath.setDisable(true);
-
-			tfLearningRate.setDisable(true);
-			
-			tfSelfDestruct.setDisable(true);
-
-			tfIdle.setDisable(true);
-
-			tfEatsApple.setDisable(true);
-
-		});
-		
-		btDQN.setOnAction(ex->{
-			
-			btDQN.setStyle("-fx-background-color: '#301934'; -fx-text-fill: 'white';");
-			btStatic.setStyle("-fx-background-color: 'white'; -fx-text-fill: '#006400';");
-
-			((GamePane) gamePane).setColor(Color.PURPLE);
-
-			tfDiscountFactor.setDisable(false);
-
-			tfEpsilonDecay.setDisable(false);
-
-			tfwallDeath.setDisable(false);
-
-			tfLearningRate.setDisable(false);
-			
-			tfSelfDestruct.setDisable(false);
-
-			tfIdle.setDisable(false);
-
-			tfEatsApple.setDisable(false);
-
-			
-			
-
-
-		});
-
-		
+	
 		btUpload.setOnAction(e ->
 		{
 			
-	        final FileChooser  fileChooser = new FileChooser();
+	        FileChooser  fileChooser = new FileChooser();
+	        Stage tempStage = new Stage();
+	        tempStage.show();
+	        File neuralNetworkFile = fileChooser.showOpenDialog(tempStage);
+	        
+	        try {
+				((GamePane)gamePane).setNN(neuralNetworkFile);
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+	        btTrain.setDisable(false);
+	        btStartTraining.setDisable(false);
 		});
 	
 		txtAgentPane = new Text("Agent Controller");
@@ -428,6 +390,54 @@ public class ControlPane extends Pane {
 		Title.setLayoutY(content.getPrefHeight()*0.04);
 		//Title.setLayoutX(value);
 		//Title.setLayoutY();
+		
+		btStatic.setOnAction(ex->{
+			
+			btDQN.setStyle("-fx-background-color: 'white'; -fx-text-fill: '#301934';");
+			btStatic.setStyle("-fx-background-color: '#006400'; -fx-text-fill: 'white';");
+
+			
+			((GamePane) gamePane).setColor(Color.ORANGE);
+			tfDiscountFactor.setDisable(true);
+			tfEpsilonDecay.setDisable(true);
+			tfwallDeath.setDisable(true);
+			tfLearningRate.setDisable(true);
+			tfSelfDestruct.setDisable(true);
+			tfIdle.setDisable(true);
+			tfEatsApple.setDisable(true);
+			
+			btUpload.setDisable(true);
+			btCreateNew.setDisable(true);
+			
+			btStartTraining.setDisable(true);
+			
+			btTrain.setDisable(true);
+
+		});
+		
+		btDQN.setOnAction(ex->{
+			
+			btDQN.setStyle("-fx-background-color: '#301934'; -fx-text-fill: 'white';");
+			btStatic.setStyle("-fx-background-color: 'white'; -fx-text-fill: '#006400';");
+
+			((GamePane) gamePane).setColor(Color.PURPLE);
+
+			tfDiscountFactor.setDisable(false);
+			tfEpsilonDecay.setDisable(false);
+			tfwallDeath.setDisable(false);
+			tfLearningRate.setDisable(false);
+			tfSelfDestruct.setDisable(false);
+			tfIdle.setDisable(false);
+			tfEatsApple.setDisable(false);
+
+			btUpload.setDisable(false);
+			btCreateNew.setDisable(false);
+			
+			btStartTraining.setDisable(true);
+			
+
+
+		});
 
 
 	}
