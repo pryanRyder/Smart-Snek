@@ -6,7 +6,7 @@ import java.io.ObjectInputStream;
 import java.util.Arrays;
 
 import Agent.SnakeDQN;
-import NeuralNetwork.*;
+import NeuralNetwork.NeuralNetwork;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.geometry.Insets;
@@ -31,7 +31,6 @@ public class GamePane extends Pane {
 	public String scoreString = new String();
 	public int score = 0;
 
-
 	GridPane gridpane = new GridPane();
 	boolean onlyOneDirection = true;
 	 Rectangle recs[][] = new Rectangle[10][10];
@@ -39,10 +38,10 @@ public class GamePane extends Pane {
 
     Pane displayPane;
     private int iteration = 0;
-    
+
 	SnakeDQN dqn = new SnakeDQN(0.001, 0.995, 10, 10);
 
-    
+
 	//The scale of the gridpane size to the gamepane size.
 	double scale = 0.9;
 
@@ -51,17 +50,17 @@ public class GamePane extends Pane {
 
 	//The scaler for the gaps.
 	double gapScale = 0.05;
-    
+
 	//Color of the Snake
 	 Color colorOfSnake = Color.BLACK;
 	 Timeline timeline = new Timeline();
-	 
+
 	boolean dq = false;
 	boolean stat = false;
-	
-	
-	
-	 
+
+
+
+
 	public void finalize() throws Throwable {
 		super.finalize();
 	}
@@ -72,29 +71,29 @@ public class GamePane extends Pane {
 		NeuralNetwork nn = (NeuralNetwork)ois.readObject();
 		dqn.setNetwork(nn);
 	}
-	
+
 	public void setSnek(double newLearningRate, double newDiscountFactor, double epsilonDecay, double hitWall, double ateApple, double idle, double hitSelf)
 	{
 		//	public SnakeDQN(int[] topology, double learningRate, double discountFactor, int width, int height, double hitWall, double ateApple, double idle)
 
 		dqn = new SnakeDQN(newLearningRate, newDiscountFactor, recs.length, recs[0].length, idle, ateApple, hitWall, hitSelf);
-		
+
 		System.out.println(idle + " " + ateApple + " " + hitWall);
-		
+
 		dqn.setEpsilonDecay(epsilonDecay);
-		
+
 	}
-	
+
 	public void appendConsoleDisplay(String s)
 	{
 		((DisplayPane) displayPane).appendConsole(s);
 	}
-	
+
 	public void setConsole(String s)
 	{
 		((DisplayPane) displayPane).Console.setText(s);
 	}
-	
+
 	public void trainSnek(int episodes)
 	{
 		((DisplayPane) displayPane).appendConsole("\nround\tavgScore\tmaxScore\n");
@@ -107,28 +106,28 @@ public class GamePane extends Pane {
 			for(int gameIndex = 0; gameIndex < 1000; gameIndex++)
 			{
 				dqn.reset();
-				
+
 				while(!dqn.isDone())
 				{
 					totalSteps++;
 					averageEpsilon += dqn.getEpsilon();
 					dqn.step();
 				}
-				
+
 				averageScore += dqn.getScore();
-				
+
 				if(dqn.getScore() > maxScore)
 				{
 					maxScore = dqn.getScore();
 				}
 			}
-			
+
 			averageScore /= 1000.0;
 			averageEpsilon /= (double)totalSteps;
 			System.out.println(round + "," + averageScore + "," + maxScore + "," + averageEpsilon);
-		
+
 			((DisplayPane) displayPane).appendConsole(round + "\t\t" + averageScore + "\t\t" + maxScore);
-			
+
 		}
 		NeuralNetwork.saveNetwork(dqn.getNetwork(), "snake.nn");
 	}
@@ -166,18 +165,18 @@ public class GamePane extends Pane {
 			// Boolean Value that Determines whether you can go back on top of yourself
 			onlyOneDirection = true;
 
-		    //---------------------------- GAME IMPLEMENTATION ------------------------------- //
+		//---------------------------- GAME IMPLEMENTATION ------------------------------- //
 
-			
+
 			ClearGrid();
-			
+
 			dqn.step();
 			dqn.UpdateGrid();
-			
+
 			UpdateGrid();
-			
+
 			//System.out.println(Arrays.toString(dqn.headNeighbors));
-			
+
 			if(dqn.isDead())
 			{
 				iteration++;
@@ -186,16 +185,16 @@ public class GamePane extends Pane {
 
 			//adds to score if snake eats objective item
 		    ((DisplayPane) displayPane).setScore(dqn.getScore()+"");
-		    
-		    //adds to highscore if the int score is greater than int highscore. 
+
+		    //adds to highscore if the int score is greater than int highscore.
 		    ((DisplayPane) displayPane).setHighScore(dqn.getScore());
-		    
+
 		    ((DisplayPane) displayPane).setIteration(iteration+"");
 
 
 		    //---------------------------- AI Integration ------------------------------- //
 
-		    
+
 		});
 
 		timeline.getKeyFrames().add(keyframe);
@@ -204,7 +203,7 @@ public class GamePane extends Pane {
 	getChildren().addAll(gridpane);
 
 	}
-	
+
 	public void UpdateGrid()
 	{
 		for(int i = 0; i < recs.length; i++)
@@ -218,9 +217,9 @@ public class GamePane extends Pane {
 			}
 		}
 	}
-	
-	
-	
+
+
+
 
 	public void setUpGridPane()
 	{
@@ -229,13 +228,13 @@ public class GamePane extends Pane {
 
 				//The thickness of the borders.
 				double topBorder, rightBorder, bottomBorder, leftBorder;
-				
+
 				//The scaler for the borders
 				double borderScale = 0.2;
-				
-				//The sclae of the gridpane size to the gamepane size. 
+
+				//The sclae of the gridpane size to the gamepane size.
 				double scale = 0.9;
-				
+
 				//The thickness of the borders.
 				double gapScale = 0.05;
 
@@ -302,7 +301,7 @@ public class GamePane extends Pane {
 	}
 
 
-	
+
 	public void ChangeGridSize(int width, int height)
 	{
 		recs = new Rectangle[40][40];
@@ -325,7 +324,7 @@ public class GamePane extends Pane {
 	{
 		timeline.stop();
 	}
-	
+
 	public void reset()
 	{
 		dqn.reset();
