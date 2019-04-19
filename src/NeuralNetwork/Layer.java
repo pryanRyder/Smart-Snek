@@ -1,4 +1,4 @@
-package DQN;
+package NeuralNetwork;
 
 
 import java.io.Serializable;

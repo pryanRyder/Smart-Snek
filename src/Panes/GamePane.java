@@ -3,6 +3,7 @@ package Panes;
 import java.util.Arrays;
 
 import Agent.SnakeDQN;
+import NeuralNetwork.*;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.geometry.Insets;
@@ -12,7 +13,6 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
-import DQN.*;
 
 /**
  * @author Danny, Paul, Yara

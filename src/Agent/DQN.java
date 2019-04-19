@@ -3,7 +3,7 @@ package Agent;
 import java.util.ArrayList;
 import java.util.List;
 
-import DQN.NeuralNetwork;
+import NeuralNetwork.NeuralNetwork;
 
 public abstract class DQN
 {
