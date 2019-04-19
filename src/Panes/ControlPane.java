@@ -358,7 +358,7 @@ public class ControlPane extends Pane {
 
 	        FileChooser  fileChooser = new FileChooser();
 	        Stage tempStage = new Stage();
-	        tempStage.show();
+	       // tempStage.show();
 	        File neuralNetworkFile = fileChooser.showOpenDialog(tempStage);
 
 	        try {
