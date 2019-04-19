@@ -130,8 +130,9 @@ public class DisplayPane extends Pane {
 					
 					
 		Console = new TextArea();
-		Console.setLayoutX(getPrefWidth()*0.50);
-		Console.setLayoutY(getPrefHeight()*0.1);
+		Console.setLayoutX(getPrefWidth()*0.45);
+		Console.setLayoutY(getPrefHeight()*0.05);
+		Console.setPrefHeight(getPrefHeight()*.75);
 		//Console.setDisable(true);
 		Console.setStyle("-fx-opacity: 1; -fx-text-fill: 'black';");
 		Console.setText("No Loaded Network");
