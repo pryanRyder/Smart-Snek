@@ -104,6 +104,7 @@ public class ControlPane extends Pane {
 		Button btCreateNew = new Button("Create Network");
 		Button btTrain = new Button("Train");
 		Button btUpload = new Button("Upload");
+		
 
 		Pane trainingPane = new Pane();
 
@@ -119,6 +120,8 @@ public class ControlPane extends Pane {
 		Button btPlay = new Button("Play");
 		Button btPause = new Button("Pause");
 		Button btRestart = new Button("Restart");
+		
+		btStartTraining.setDisable(true);
 
 		Text txtTrainingController = new Text("Training Controller");
 		txtTrainingController.setStyle("-fx-font-size: 18");
@@ -195,12 +198,6 @@ public class ControlPane extends Pane {
 			((GamePane) gamePane).Play();
 		});
 
-
-
-		btUpload.setLayoutX(content.getPrefWidth()*.02);
-		btUpload.setLayoutY(content.getPrefHeight()*.15);
-		content.getChildren().add(btUpload);
-
 		AgentPane.setStyle("-fx-background-color: '#e0e0e0'");
 		AgentPane.setLayoutX(getPrefWidth()*0.02);
 		AgentPane.setLayoutY(getPrefHeight()*0.10);
@@ -238,49 +235,53 @@ public class ControlPane extends Pane {
 		
 		txtLearningRate.setLayoutX(AgentPane.getPrefWidth()*.02);
 		txtLearningRate.setLayoutY(AgentPane.getPrefHeight()*.20);
-		txtLearningRate.setStyle("-fx-font-size: 15;");
+		txtLearningRate.setStyle("-fx-font-size: 12;");
 		tfLearningRate.setLayoutX(AgentPane.getPrefWidth()*.02);
 		tfLearningRate.setLayoutY(AgentPane.getPrefHeight()* .21);
 		
 		txtDiscountFactor.setLayoutX(AgentPane.getPrefWidth()*.02);
 		txtDiscountFactor.setLayoutY(AgentPane.getPrefHeight()*.30);
-		txtDiscountFactor.setStyle("-fx-font-size: 15;");
+		txtDiscountFactor.setStyle("-fx-font-size: 12;");
 		tfDiscountFactor.setLayoutX(AgentPane.getPrefWidth()*.02);
 		tfDiscountFactor.setLayoutY(AgentPane.getPrefHeight()*.31);
 		
 		txtEpsilonDecay.setLayoutX(AgentPane.getPrefWidth()*.02);
 		txtEpsilonDecay.setLayoutY(AgentPane.getPrefHeight()*.40);
-		txtEpsilonDecay.setStyle("-fx-font-size: 15;");
+		txtEpsilonDecay.setStyle("-fx-font-size: 12;");
 		tfEpsilonDecay.setLayoutX(AgentPane.getPrefWidth()*.02);
 		tfEpsilonDecay.setLayoutY(AgentPane.getPrefHeight()* .41);
 		
 		txtRewards.setLayoutX(AgentPane.getPrefWidth()*.02);
-		txtRewards.setLayoutY(AgentPane.getPrefHeight()*.50);
-		txtRewards.setStyle("-fx-font-size: 18;");		
+		txtRewards.setLayoutY(AgentPane.getPrefHeight()*.52);
+		txtRewards.setStyle("-fx-font-size: 15;");		
 		
 		txtwallDeath.setLayoutX(AgentPane.getPrefWidth()*.02);
 		txtwallDeath.setLayoutY(AgentPane.getPrefHeight()*.57);
-		txtwallDeath.setStyle("-fx-font-size: 15;");
+		txtwallDeath.setStyle("-fx-font-size: 12;");
 		tfwallDeath.setLayoutX(AgentPane.getPrefWidth()*.02);
 		tfwallDeath.setLayoutY(AgentPane.getPrefHeight()*.58);
+		tfwallDeath.setPrefWidth(60);
 		
 		txtSelfDestruct.setLayoutX(AgentPane.getPrefWidth()*.50);
 		txtSelfDestruct.setLayoutY(AgentPane.getPrefHeight()*.57);
-		txtSelfDestruct.setStyle("-fx-font-size: 15;");
+		txtSelfDestruct.setStyle("-fx-font-size: 12;");
 		tfSelfDestruct.setLayoutX(AgentPane.getPrefWidth()*.50);
 		tfSelfDestruct.setLayoutY(AgentPane.getPrefHeight()*.58);
+		tfSelfDestruct.setPrefWidth(60);
 		
 		txtEatsApple.setLayoutX(AgentPane.getPrefWidth()*.02);
 		txtEatsApple.setLayoutY(AgentPane.getPrefHeight()*.67);
-		txtEatsApple.setStyle("-fx-font-size: 15;");
+		txtEatsApple.setStyle("-fx-font-size: 12;");
 		tfEatsApple.setLayoutX(AgentPane.getPrefWidth()*.02);
 		tfEatsApple.setLayoutY(AgentPane.getPrefHeight()*.68);
+		tfEatsApple.setPrefWidth(60);
 		
 		txtIdle.setLayoutX(AgentPane.getPrefWidth()*.50);
 		txtIdle.setLayoutY(AgentPane.getPrefHeight()*.67);
-		txtIdle.setStyle("-fx-font-size: 15;");
+		txtIdle.setStyle("-fx-font-size: 12;");
 		tfIdle.setLayoutX(AgentPane.getPrefWidth()*.50);
 		tfIdle.setLayoutY(AgentPane.getPrefHeight()*.68);
+		tfIdle.setPrefWidth(60);
 
 		Button btDQN = new Button("DQN");
 		btDQN.setLayoutX(AgentPane.getPrefWidth()*.02);
@@ -368,11 +369,11 @@ public class ControlPane extends Pane {
 		AgentPane.getChildren().add(btTrain);
 		
 		Text txtEpisodes = new Text("Episodes");
-		TextField tfEpisodes = new TextField("500");
+		TextField tfEpisodes = new TextField("100");
 		
 		txtEpisodes.setLayoutX(AgentPane.getPrefWidth()*.30);
 		txtEpisodes.setLayoutY(AgentPane.getPrefHeight()*.90);
-		txtEpisodes.setStyle("-fx-font-size: 15;");
+		txtEpisodes.setStyle("-fx-font-size: 12;");
 		tfEpisodes.setLayoutX(AgentPane.getPrefWidth()*.30);
 		tfEpisodes.setLayoutY(AgentPane.getPrefHeight()* .91);
 		
@@ -387,8 +388,14 @@ public class ControlPane extends Pane {
 
 
 		btCreateNew.setLayoutX(AgentPane.getPrefWidth()*.02);
-		btCreateNew.setLayoutY(AgentPane.getPrefHeight()*.80);
+		btCreateNew.setLayoutY(AgentPane.getPrefHeight()*.77);
 		AgentPane.getChildren().add(btCreateNew);
+
+		
+		btUpload.setText("Upload Net");
+		btUpload.setLayoutX(AgentPane.getPrefWidth()*.4);
+		btUpload.setLayoutY(AgentPane.getPrefHeight()*.77);
+		AgentPane.getChildren().add(btUpload);
 		
 		btCreateNew.setOnAction(e ->{
 			//	public SnakeDQN(int[] topology, double learningRate, double discountFactor, int width, int height, double hitWall, double ateApple, double idle)
@@ -397,6 +404,9 @@ public class ControlPane extends Pane {
 			
 			btTrain.setDisable(false);
 			tfEpisodes.setDisable(false);
+			btStartTraining.setDisable(false);
+			
+			((GamePane)gamePane).setConsole("Created new network");
 			
 		});
 

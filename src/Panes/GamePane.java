@@ -70,6 +70,15 @@ public class GamePane extends Pane {
 		
 	}
 	
+	public void appendConsoleDisplay(String s)
+	{
+		((DisplayPane) displayPane).appendConsole(s);
+	}
+	
+	public void setConsole(String s)
+	{
+		((DisplayPane) displayPane).Console.setText(s);
+	}
 	
 	public void trainSnek(int episodes)
 	{

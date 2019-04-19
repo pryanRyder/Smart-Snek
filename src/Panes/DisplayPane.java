@@ -15,7 +15,7 @@ public class DisplayPane extends Pane {
 	Text Iteration = new Text();
 	Text score = new Text();
 	Text highscore = new Text();
-	TextArea Console = new TextArea();
+	public TextArea Console = new TextArea();
 	
 	int highscoreINT = 0;
 
