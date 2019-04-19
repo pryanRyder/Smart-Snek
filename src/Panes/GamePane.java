@@ -150,10 +150,10 @@ public class GamePane extends Pane {
 				// The scale of the gridpane size to the gamepane size.
 				double scale = 0.9;
 				
-				//The sceler for the borders.
+				//The scaler for the borders.
 				double borderScale = 0.2;
 				
-				//the sclaer for the gaps.
+				//the scaler for the gaps.
 				double gapScale = 0.05;
 
 				//The thickness of the borders.

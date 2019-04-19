@@ -197,6 +197,8 @@ public class ControlPane extends Pane {
 			btPause.setDisable(false);
 			((GamePane) gamePane).resetSnake();
 			((GamePane) gamePane).Play();
+			
+			
 		});
 
 
