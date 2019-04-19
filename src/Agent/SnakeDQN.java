@@ -263,12 +263,8 @@ public class SnakeDQN extends DQN
 		{
 			score++;
 			
-			do
-			{
-				fruitX = (int) (Math.random() * width);
-				fruitY = (int) (Math.random() * height);
-			}
-			while(fruitX != Positions.get(0)[1] && fruitY != Positions.get(0)[0]);
+			randomFruit();
+			
 			
 			savedX = Positions.get(0)[1];
 			savedY = Positions.get(0)[0];
@@ -290,6 +286,52 @@ public class SnakeDQN extends DQN
 		}		
 		return idle;		
 	}
+	
+	public void randomFruit()
+	{
+		/*do
+		{
+			fruitX = (int) (Math.random() * width);
+			fruitY = (int) (Math.random() * height);
+		}
+		while(fruitX != Positions.get(0)[1] && fruitY != Positions.get(0)[0]);
+		*/
+		
+		//list of valid grid positions
+		ArrayList<int[]> VGP = new ArrayList<int[]>();
+		
+		for(int i = 0; i < height; i++)
+		{
+			for(int j = 0; j < width; j++)
+			{
+				int[] temp  = new int[2];
+				temp[0] = i;
+				temp[1] = j;
+				VGP.add(temp);
+			}
+		}
+		
+		//remove snake's positions from the list of valid grid positions
+		for(int i = 0; i < VGP.size(); i++)
+		{
+			for(int j = 0; j < Positions.size(); j++)
+			{
+				if(Positions.get(j)[0] == VGP.get(i)[0] && Positions.get(j)[1] == VGP.get(i)[1])
+				{
+					VGP.remove(i);
+					if(i != 0)
+						i-=1;
+				}
+			}
+		}
+		
+		int randomIndex = (int) (Math.random() * VGP.size());
+		
+		fruitX = VGP.get(randomIndex)[1];
+		fruitY = VGP.get(randomIndex)[0];
+		
+	}
+	
 	
 	public boolean isDead()
 	{
