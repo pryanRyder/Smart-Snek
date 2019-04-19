@@ -8,6 +8,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 
 /**
  * @author Danny
@@ -104,7 +105,7 @@ public class ControlPane extends Pane {
 		Button btCreateNew = new Button("Create Network");
 		Button btTrain = new Button("Train");
 		Button btUpload = new Button("Upload");
-		
+
 
 		Pane trainingPane = new Pane();
 
@@ -120,7 +121,7 @@ public class ControlPane extends Pane {
 		Button btPlay = new Button("Play");
 		Button btPause = new Button("Pause");
 		Button btRestart = new Button("Restart");
-		
+
 		btStartTraining.setDisable(true);
 
 		Text txtTrainingController = new Text("Training Controller");
@@ -209,73 +210,73 @@ public class ControlPane extends Pane {
 		TextField tfLearningRate = new TextField("0.001");
 		Text txtDiscountFactor = new Text("Discount Factor");
 		TextField tfDiscountFactor = new TextField("0.995");
-		
+
 		/////////////////////////////////////////////////////
-		
+
 		Text txtEpsilonDecay = new Text("Epsilon Decay");
 		TextField tfEpsilonDecay = new TextField("0.99999");
 
 		Text txtRewards = new Text("Rewards:");
-		
+
 		Text txtwallDeath = new Text("Wall Death");
 		TextField tfwallDeath = new TextField("-1");
-		
+
 		Text txtSelfDestruct = new Text("Hits Self");
 		TextField tfSelfDestruct = new TextField("-1");
-		
-		
+
+
 		Text txtEatsApple = new Text("Eats Apple");
 		TextField tfEatsApple = new TextField("3");
-		
+
 		Text txtIdle = new Text("Idle");
 		TextField tfIdle = new TextField("0");
 
-		
-		
-		
+
+
+
 		txtLearningRate.setLayoutX(AgentPane.getPrefWidth()*.02);
 		txtLearningRate.setLayoutY(AgentPane.getPrefHeight()*.20);
 		txtLearningRate.setStyle("-fx-font-size: 12;");
 		tfLearningRate.setLayoutX(AgentPane.getPrefWidth()*.02);
 		tfLearningRate.setLayoutY(AgentPane.getPrefHeight()* .21);
-		
+
 		txtDiscountFactor.setLayoutX(AgentPane.getPrefWidth()*.02);
 		txtDiscountFactor.setLayoutY(AgentPane.getPrefHeight()*.30);
 		txtDiscountFactor.setStyle("-fx-font-size: 12;");
 		tfDiscountFactor.setLayoutX(AgentPane.getPrefWidth()*.02);
 		tfDiscountFactor.setLayoutY(AgentPane.getPrefHeight()*.31);
-		
+
 		txtEpsilonDecay.setLayoutX(AgentPane.getPrefWidth()*.02);
 		txtEpsilonDecay.setLayoutY(AgentPane.getPrefHeight()*.40);
 		txtEpsilonDecay.setStyle("-fx-font-size: 12;");
 		tfEpsilonDecay.setLayoutX(AgentPane.getPrefWidth()*.02);
 		tfEpsilonDecay.setLayoutY(AgentPane.getPrefHeight()* .41);
-		
+
 		txtRewards.setLayoutX(AgentPane.getPrefWidth()*.02);
 		txtRewards.setLayoutY(AgentPane.getPrefHeight()*.52);
-		txtRewards.setStyle("-fx-font-size: 15;");		
-		
+		txtRewards.setStyle("-fx-font-size: 15;");
+
 		txtwallDeath.setLayoutX(AgentPane.getPrefWidth()*.02);
 		txtwallDeath.setLayoutY(AgentPane.getPrefHeight()*.57);
 		txtwallDeath.setStyle("-fx-font-size: 12;");
 		tfwallDeath.setLayoutX(AgentPane.getPrefWidth()*.02);
 		tfwallDeath.setLayoutY(AgentPane.getPrefHeight()*.58);
 		tfwallDeath.setPrefWidth(60);
-		
+
 		txtSelfDestruct.setLayoutX(AgentPane.getPrefWidth()*.50);
 		txtSelfDestruct.setLayoutY(AgentPane.getPrefHeight()*.57);
 		txtSelfDestruct.setStyle("-fx-font-size: 12;");
 		tfSelfDestruct.setLayoutX(AgentPane.getPrefWidth()*.50);
 		tfSelfDestruct.setLayoutY(AgentPane.getPrefHeight()*.58);
 		tfSelfDestruct.setPrefWidth(60);
-		
+
 		txtEatsApple.setLayoutX(AgentPane.getPrefWidth()*.02);
 		txtEatsApple.setLayoutY(AgentPane.getPrefHeight()*.67);
 		txtEatsApple.setStyle("-fx-font-size: 12;");
 		tfEatsApple.setLayoutX(AgentPane.getPrefWidth()*.02);
 		tfEatsApple.setLayoutY(AgentPane.getPrefHeight()*.68);
 		tfEatsApple.setPrefWidth(60);
-		
+
 		txtIdle.setLayoutX(AgentPane.getPrefWidth()*.50);
 		txtIdle.setLayoutY(AgentPane.getPrefHeight()*.67);
 		txtIdle.setStyle("-fx-font-size: 12;");
@@ -288,7 +289,7 @@ public class ControlPane extends Pane {
 		btDQN.setLayoutY(AgentPane.getPrefHeight()*.1);
 		btDQN.setStyle("-fx-background-color: '#301934'; -fx-text-fill: 'white';");
 		AgentPane.getChildren().add(btDQN);
-		
+
 		AgentPane.getChildren().addAll(txtLearningRate, tfLearningRate,txtDiscountFactor, tfDiscountFactor,
 				txtEpsilonDecay, tfEpsilonDecay,txtRewards
 				,txtwallDeath,tfwallDeath,txtSelfDestruct,tfSelfDestruct,
@@ -302,13 +303,13 @@ public class ControlPane extends Pane {
 		btStatic.setStyle("-fx-background-color: 'white'; -fx-text-fill: '#006400';");
 
 		btStatic.setOnAction(ex->{
-			
+
 			btDQN.setStyle("-fx-background-color: 'white'; -fx-text-fill: '#301934';");
 			btStatic.setStyle("-fx-background-color: '#006400'; -fx-text-fill: 'white';");
 
-			
+
 			((GamePane) gamePane).colorOfSnake(0.937, 0.525, 0.043);
-			
+
 			tfDiscountFactor.setDisable(true);
 
 			tfEpsilonDecay.setDisable(true);
@@ -316,24 +317,24 @@ public class ControlPane extends Pane {
 			tfwallDeath.setDisable(true);
 
 			tfLearningRate.setDisable(true);
-			
+
 			tfSelfDestruct.setDisable(true);
 
 			tfIdle.setDisable(true);
 
 			tfEatsApple.setDisable(true);
-			
+
 			btStartTraining.setDisable(false);
 
 		});
-		
+
 		btDQN.setOnAction(ex->{
-			
+
 			btDQN.setStyle("-fx-background-color: '#301934'; -fx-text-fill: 'white';");
 			btStatic.setStyle("-fx-background-color: 'white'; -fx-text-fill: '#006400';");
 
 			((GamePane) gamePane).colorOfSnake(0.529, 0.066, 0.611);
-			
+
 			tfDiscountFactor.setDisable(false);
 
 			tfEpsilonDecay.setDisable(false);
@@ -341,7 +342,7 @@ public class ControlPane extends Pane {
 			tfwallDeath.setDisable(false);
 
 			tfLearningRate.setDisable(false);
-			
+
 			tfSelfDestruct.setDisable(false);
 
 			tfIdle.setDisable(false);
@@ -351,13 +352,25 @@ public class ControlPane extends Pane {
 
 		});
 
-		
+
 		btUpload.setOnAction(e ->
 		{
-			
-	        final FileChooser  fileChooser = new FileChooser();
+
+	        FileChooser  fileChooser = new FileChooser();
+	        Stage tempStage = new Stage();
+	        tempStage.show();
+	        File neuralNetworkFile = fileChooser.showOpenDialog(tempStage);
+
+	        try {
+				((GamePane)gamePane).setNN(neuralNetworkFile);
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+	        btTrain.setDisable(false);
+	        btStartTraining.setDisable(false);
 		});
-	
+
 		txtAgentPane = new Text("Agent Controller");
 		txtAgentPane.setLayoutX(AgentPane.getPrefWidth()*.02);
 		txtAgentPane.setLayoutY(AgentPane.getPrefHeight()*.05);
@@ -367,23 +380,23 @@ public class ControlPane extends Pane {
 		btTrain.setLayoutX(AgentPane.getPrefWidth()*.02);
 		btTrain.setLayoutY(AgentPane.getPrefHeight()*.90);
 		AgentPane.getChildren().add(btTrain);
-		
+
 		Text txtEpisodes = new Text("Episodes");
 		TextField tfEpisodes = new TextField("100");
-		
+
 		txtEpisodes.setLayoutX(AgentPane.getPrefWidth()*.30);
 		txtEpisodes.setLayoutY(AgentPane.getPrefHeight()*.90);
 		txtEpisodes.setStyle("-fx-font-size: 12;");
 		tfEpisodes.setLayoutX(AgentPane.getPrefWidth()*.30);
 		tfEpisodes.setLayoutY(AgentPane.getPrefHeight()* .91);
-		
+
 		btTrain.setDisable(true);
 		tfEpisodes.setDisable(true);
-		
+
 		btTrain.setOnAction(e ->{
 			((GamePane) gamePane).trainSnek(Integer.parseInt(tfEpisodes.getText()));
 		});
-		
+
 		AgentPane.getChildren().addAll(txtEpisodes, tfEpisodes);
 
 
@@ -391,23 +404,23 @@ public class ControlPane extends Pane {
 		btCreateNew.setLayoutY(AgentPane.getPrefHeight()*.77);
 		AgentPane.getChildren().add(btCreateNew);
 
-		
+
 		btUpload.setText("Upload Net");
 		btUpload.setLayoutX(AgentPane.getPrefWidth()*.4);
 		btUpload.setLayoutY(AgentPane.getPrefHeight()*.77);
 		AgentPane.getChildren().add(btUpload);
-		
+
 		btCreateNew.setOnAction(e ->{
 			//	public SnakeDQN(int[] topology, double learningRate, double discountFactor, int width, int height, double hitWall, double ateApple, double idle)
 
 			((GamePane) gamePane).setSnek(Double.parseDouble(tfLearningRate.getText()), Double.parseDouble(tfDiscountFactor.getText()), Double.parseDouble(tfEpsilonDecay.getText()), Double.parseDouble(tfIdle.getText()), Double.parseDouble(tfEatsApple.getText()), Double.parseDouble(tfwallDeath.getText()), Double.parseDouble(tfSelfDestruct.getText()));
-			
+
 			btTrain.setDisable(false);
 			tfEpisodes.setDisable(false);
 			btStartTraining.setDisable(false);
-			
+
 			((GamePane)gamePane).setConsole("Created new network");
-			
+
 		});
 
 		getChildren().add(content);
@@ -429,7 +442,55 @@ public class ControlPane extends Pane {
 		//Title.setLayoutX(value);
 		//Title.setLayoutY();
 
+		btStatic.setOnAction(ex->{
+
+			btDQN.setStyle("-fx-background-color: 'white'; -fx-text-fill: '#301934';");
+			btStatic.setStyle("-fx-background-color: '#006400'; -fx-text-fill: 'white';");
+
+
+			((GamePane) gamePane).setColor(Color.ORANGE);
+			tfDiscountFactor.setDisable(true);
+			tfEpsilonDecay.setDisable(true);
+			tfwallDeath.setDisable(true);
+			tfLearningRate.setDisable(true);
+			tfSelfDestruct.setDisable(true);
+			tfIdle.setDisable(true);
+			tfEatsApple.setDisable(true);
+
+			btUpload.setDisable(true);
+			btCreateNew.setDisable(true);
+
+			btStartTraining.setDisable(true);
+
+			btTrain.setDisable(true);
+
+		});
+
+		btDQN.setOnAction(ex->{
+
+			btDQN.setStyle("-fx-background-color: '#301934'; -fx-text-fill: 'white';");
+			btStatic.setStyle("-fx-background-color: 'white'; -fx-text-fill: '#006400';");
+
+			((GamePane) gamePane).setColor(Color.PURPLE);
+
+			tfDiscountFactor.setDisable(false);
+			tfEpsilonDecay.setDisable(false);
+			tfwallDeath.setDisable(false);
+			tfLearningRate.setDisable(false);
+			tfSelfDestruct.setDisable(false);
+			tfIdle.setDisable(false);
+			tfEatsApple.setDisable(false);
+
+			btUpload.setDisable(false);
+			btCreateNew.setDisable(false);
+
+			btStartTraining.setDisable(true);
+
+
+
+		});
+
 
 	}
-	
+
 }//end ControlPane

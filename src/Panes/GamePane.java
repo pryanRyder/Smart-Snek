@@ -1,5 +1,8 @@
 package Panes;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.ObjectInputStream;
 import java.util.Arrays;
 
 import Agent.SnakeDQN;
@@ -36,7 +39,7 @@ public class GamePane extends Pane {
 
     Pane displayPane;
     private int iteration = 0;
-    
+
 
 	SnakeDQN dqn = new SnakeDQN(0.001, 0.995, 10, 10);
 
@@ -50,14 +53,25 @@ public class GamePane extends Pane {
 	//The scaler for the gaps.
 	double gapScale = 0.05;
 
-	//Color of Snake Class Variable
-	Color colorOfSnake = Color.PURPLE;
-	
-	
+	//Color of the Snake
+	 Color colorOfSnake = Color.BLACK;
 	 Timeline timeline = new Timeline();
-	
+
+	boolean dq = false;
+	boolean stat = false;
+
+
+
+
 	public void finalize() throws Throwable {
 		super.finalize();
+	}
+
+	public void setNN(File nnFile) throws Exception
+	{
+		ObjectInputStream ois = new ObjectInputStream(new FileInputStream(nnFile));
+		NeuralNetwork nn = (NeuralNetwork)ois.readObject();
+		dqn.setNetwork(nn);
 	}
 
 	public void setSnek(double newLearningRate, double newDiscountFactor, double epsilonDecay, double hitWall, double ateApple, double idle, double hitSelf)
@@ -155,6 +169,7 @@ public class GamePane extends Pane {
 
 		//---------------------------- GAME IMPLEMENTATION ------------------------------- //
 
+
 			ClearGrid();
 
 			dqn.step();
@@ -190,18 +205,18 @@ public class GamePane extends Pane {
 	getChildren().addAll(gridpane);
 
 	}
-	
+
 	//Color of the Snake
-	public void colorOfSnake(double red, double green, double blue) 
+	public void colorOfSnake(double red, double green, double blue)
 	{
 		colorOfSnake = Color.color(red, green, blue);
-		
+
 		System.out.println("\n\n\n" + red + "\n\n\n");
-		
+
 		System.out.println("Does this thing even work");
-		
+
 	};
-			
+
 
 	public void UpdateGrid()
 	{
@@ -212,7 +227,7 @@ public class GamePane extends Pane {
 				if(dqn.Grid[i][j] == .5)
 					recs[i][j].setFill(Color.RED);
 				if(dqn.Grid[i][j] == 1)
-					recs[i][j].setFill(colorOfSnake); 
+					recs[i][j].setFill(colorOfSnake);
 			}
 		}
 	}
@@ -301,11 +316,11 @@ public class GamePane extends Pane {
 		recs = new Rectangle[40][40];
 		setUpGridPane();
 	}
-	
+
 	public void setColor(Color colorOfSnake) {
 		// this.colorOfSnake = colorOfSnake;
 	}
-	
+
 	public Color getColor(Color colorOfSnake) {
 
 		return colorOfSnake;
