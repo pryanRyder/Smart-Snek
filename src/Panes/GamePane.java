@@ -3,7 +3,7 @@ package Panes;
 import java.util.Arrays;
 
 import Agent.SnakeDQN;
-import NeuralNetwork.*;
+import NeuralNetwork.NeuralNetwork;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.geometry.Insets;
