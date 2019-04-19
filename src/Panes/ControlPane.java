@@ -1,25 +1,22 @@
 package Panes;
 
-import Agent.SnakeBrain;
-import Snake.Snake;
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
-import javafx.event.Event;
-import javafx.event.EventHandler;
+import java.io.File;
+
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
-import javafx.util.Duration;
-import javafx.scene.shape.Rectangle;
-import javafx.scene.input.MouseEvent;
+import javafx.stage.FileChooser;
 
 /**
  * @author Danny
  * @version 1.0
  * @created 17-Feb-2019 5:39:58 PM
  */
+
+
+//fuck this class
 public class ControlPane extends Pane {
 
 	boolean GAChecked = false;
@@ -33,7 +30,7 @@ public class ControlPane extends Pane {
 
 		Pane gamePane = new GamePane(width, height);
 		getChildren().add(gamePane);
-		
+
 
 		setPrefSize(width * 0.25, height);
 
@@ -106,8 +103,10 @@ public class ControlPane extends Pane {
 		});
 
 
-		Button btCreateNew = new Button("Create New");
+		Button btCreateNew = new Button("Create Network");
+		Button btTrain = new Button("Train");
 		Button btUpload = new Button("Upload");
+
 
 		Pane trainingPane = new Pane();
 
@@ -119,10 +118,12 @@ public class ControlPane extends Pane {
 		content.getChildren().add(trainingPane);
 
 		Button btStop = new Button("STOP");
-		Button btStartTraining = new Button("Start Training");
+		Button btStartTraining = new Button("Start Game");
 		Button btPlay = new Button("Play");
 		Button btPause = new Button("Pause");
 		Button btRestart = new Button("Restart");
+
+		btStartTraining.setDisable(true);
 
 		Text txtTrainingController = new Text("Training Controller");
 		txtTrainingController.setStyle("-fx-font-size: 18");
@@ -152,7 +153,7 @@ public class ControlPane extends Pane {
 
 		btStartTraining.setOnAction(e->
 		{
-			((GamePane) gamePane).resetSnake();
+			((GamePane) gamePane).reset();
 			((GamePane) gamePane).Play();
 
 			btStartTraining.setDisable(true);
@@ -195,24 +196,11 @@ public class ControlPane extends Pane {
 		{
 			btPlay.setDisable(true);
 			btPause.setDisable(false);
-			((GamePane) gamePane).resetSnake();
+			((GamePane) gamePane).reset();
 			((GamePane) gamePane).Play();
-			
-			
+
+
 		});
-
-
-		/*
-		txtAgentPane.setLayoutX(content.getPrefWidth()*.04);
-		txtAgentPane.setLayoutY(content.getPrefHeight()*.12);
-		txtAgentPane.setStyle("-fx-font-size: 18;");
-		content.getChildren().add(txtAgentPane);
-*/
-
-
-		btUpload.setLayoutX(content.getPrefWidth()*.02);
-		btUpload.setLayoutY(content.getPrefHeight()*.15);
-		content.getChildren().add(btUpload);
 
 		AgentPane.setStyle("-fx-background-color: '#e0e0e0'");
 		AgentPane.setLayoutX(getPrefWidth()*0.02);
@@ -222,143 +210,209 @@ public class ControlPane extends Pane {
 		content.getChildren().add(AgentPane);
 
 		Text txtLearningRate = new Text("Learning Rate");
-		TextField tfLearningRate = new TextField();
+		TextField tfLearningRate = new TextField("0.001");
 		Text txtDiscountFactor = new Text("Discount Factor");
-		TextField tfDiscountFactor = new TextField();
-		Text txtMaximumReward = new Text("Maximum Reward");
-		TextField tfMaximumReward = new TextField();
+		TextField tfDiscountFactor = new TextField("0.995");
+
+		/////////////////////////////////////////////////////
+
+		Text txtEpsilonDecay = new Text("Epsilon Decay");
+		TextField tfEpsilonDecay = new TextField("0.99999");
+
+		Text txtRewards = new Text("Rewards:");
+
+		Text txtwallDeath = new Text("Wall Death");
+		TextField tfwallDeath = new TextField("-1");
+
+		Text txtSelfDestruct = new Text("Hits Self");
+		TextField tfSelfDestruct = new TextField("-1");
+
+
+		Text txtEatsApple = new Text("Eats Apple");
+		TextField tfEatsApple = new TextField("3");
+
+		Text txtIdle = new Text("Idle");
+		TextField tfIdle = new TextField("0");
+
+
+
+
 		txtLearningRate.setLayoutX(AgentPane.getPrefWidth()*.02);
-		txtLearningRate.setLayoutY(AgentPane.getPrefHeight()*.30);
-		txtLearningRate.setStyle("-fx-font-size: 15;");
+		txtLearningRate.setLayoutY(AgentPane.getPrefHeight()*.20);
+		txtLearningRate.setStyle("-fx-font-size: 12;");
 		tfLearningRate.setLayoutX(AgentPane.getPrefWidth()*.02);
-		tfLearningRate.setLayoutY(AgentPane.getPrefHeight()* .33);
+		tfLearningRate.setLayoutY(AgentPane.getPrefHeight()* .21);
+
 		txtDiscountFactor.setLayoutX(AgentPane.getPrefWidth()*.02);
-		txtDiscountFactor.setLayoutY(AgentPane.getPrefHeight()*.46);
-		txtDiscountFactor.setStyle("-fx-font-size: 15;");
+		txtDiscountFactor.setLayoutY(AgentPane.getPrefHeight()*.30);
+		txtDiscountFactor.setStyle("-fx-font-size: 12;");
 		tfDiscountFactor.setLayoutX(AgentPane.getPrefWidth()*.02);
-		tfDiscountFactor.setLayoutY(AgentPane.getPrefHeight()*.49);
-		txtMaximumReward.setLayoutX(AgentPane.getPrefWidth()*.02);
-		txtMaximumReward.setLayoutY(AgentPane.getPrefHeight()*.61);
-		txtMaximumReward.setStyle("-fx-font-size: 15;");
-		tfMaximumReward.setLayoutX(AgentPane.getPrefWidth()*.02);
-		tfMaximumReward.setLayoutY(AgentPane.getPrefHeight()*.64);
-		
-		Button btDeep2 = new Button("Deep2");
-		Button btDeepReinforcement = new Button("Deep Reinforcement");
-		btDeepReinforcement.setLayoutX(AgentPane.getPrefWidth()*.02);
-		btDeepReinforcement.setLayoutY(AgentPane.getPrefHeight()*.1);
-		AgentPane.getChildren().add(btDeepReinforcement);
-		btDeepReinforcement.setOnAction(ex->{
-			((GamePane) gamePane).setColor(Color.PURPLE);
-			AgentPane.getChildren().add(txtLearningRate);
-			AgentPane.getChildren().add(tfLearningRate);
-			AgentPane.getChildren().add(txtDiscountFactor);
-			AgentPane.getChildren().add(tfDiscountFactor);
-			AgentPane.getChildren().add(txtMaximumReward);
-			AgentPane.getChildren().add(tfMaximumReward);
-			btDeepReinforcement.setTextFill(Color.PURPLE);
+		tfDiscountFactor.setLayoutY(AgentPane.getPrefHeight()*.31);
 
-		});
+		txtEpsilonDecay.setLayoutX(AgentPane.getPrefWidth()*.02);
+		txtEpsilonDecay.setLayoutY(AgentPane.getPrefHeight()*.40);
+		txtEpsilonDecay.setStyle("-fx-font-size: 12;");
+		tfEpsilonDecay.setLayoutX(AgentPane.getPrefWidth()*.02);
+		tfEpsilonDecay.setLayoutY(AgentPane.getPrefHeight()* .41);
 
-		//Button btDeep2 = new Button("Deep2");
-		btDeep2.setLayoutX(AgentPane.getPrefWidth()*.50);
-		btDeep2.setLayoutY(AgentPane.getPrefHeight()*.1);
-		AgentPane.getChildren().add(btDeep2);
-		btDeep2.setOnAction(ex->{
+		txtRewards.setLayoutX(AgentPane.getPrefWidth()*.02);
+		txtRewards.setLayoutY(AgentPane.getPrefHeight()*.52);
+		txtRewards.setStyle("-fx-font-size: 15;");
+
+		txtwallDeath.setLayoutX(AgentPane.getPrefWidth()*.02);
+		txtwallDeath.setLayoutY(AgentPane.getPrefHeight()*.57);
+		txtwallDeath.setStyle("-fx-font-size: 12;");
+		tfwallDeath.setLayoutX(AgentPane.getPrefWidth()*.02);
+		tfwallDeath.setLayoutY(AgentPane.getPrefHeight()*.58);
+		tfwallDeath.setPrefWidth(60);
+
+		txtSelfDestruct.setLayoutX(AgentPane.getPrefWidth()*.50);
+		txtSelfDestruct.setLayoutY(AgentPane.getPrefHeight()*.57);
+		txtSelfDestruct.setStyle("-fx-font-size: 12;");
+		tfSelfDestruct.setLayoutX(AgentPane.getPrefWidth()*.50);
+		tfSelfDestruct.setLayoutY(AgentPane.getPrefHeight()*.58);
+		tfSelfDestruct.setPrefWidth(60);
+
+		txtEatsApple.setLayoutX(AgentPane.getPrefWidth()*.02);
+		txtEatsApple.setLayoutY(AgentPane.getPrefHeight()*.67);
+		txtEatsApple.setStyle("-fx-font-size: 12;");
+		tfEatsApple.setLayoutX(AgentPane.getPrefWidth()*.02);
+		tfEatsApple.setLayoutY(AgentPane.getPrefHeight()*.68);
+		tfEatsApple.setPrefWidth(60);
+
+		txtIdle.setLayoutX(AgentPane.getPrefWidth()*.50);
+		txtIdle.setLayoutY(AgentPane.getPrefHeight()*.67);
+		txtIdle.setStyle("-fx-font-size: 12;");
+		tfIdle.setLayoutX(AgentPane.getPrefWidth()*.50);
+		tfIdle.setLayoutY(AgentPane.getPrefHeight()*.68);
+		tfIdle.setPrefWidth(60);
+
+		Button btDQN = new Button("DQN");
+		btDQN.setLayoutX(AgentPane.getPrefWidth()*.02);
+		btDQN.setLayoutY(AgentPane.getPrefHeight()*.1);
+		btDQN.setStyle("-fx-background-color: '#301934'; -fx-text-fill: 'white';");
+		AgentPane.getChildren().add(btDQN);
+
+		AgentPane.getChildren().addAll(txtLearningRate, tfLearningRate,txtDiscountFactor, tfDiscountFactor,
+				txtEpsilonDecay, tfEpsilonDecay,txtRewards
+				,txtwallDeath,tfwallDeath,txtSelfDestruct,tfSelfDestruct,
+				txtEatsApple,tfEatsApple,
+				txtIdle, tfIdle);
+
+		Button btStatic = new Button("Static AI");
+		btStatic.setLayoutX(AgentPane.getPrefWidth()*.55);
+		btStatic.setLayoutY(AgentPane.getPrefHeight()*.1);
+		AgentPane.getChildren().add(btStatic);
+		btStatic.setStyle("-fx-background-color: 'white'; -fx-text-fill: '#006400';");
+
+		btStatic.setOnAction(ex->{
+
+			btDQN.setStyle("-fx-background-color: 'white'; -fx-text-fill: '#301934';");
+			btStatic.setStyle("-fx-background-color: '#006400'; -fx-text-fill: 'white';");
+
+
 			((GamePane) gamePane).setColor(Color.ORANGE);
-			AgentPane.getChildren().remove(tfMaximumReward);
-			AgentPane.getChildren().remove(tfDiscountFactor);
-			AgentPane.getChildren().remove(txtMaximumReward);
-			AgentPane.getChildren().remove(txtDiscountFactor);
-			AgentPane.getChildren().remove(txtLearningRate);
-			AgentPane.getChildren().remove(tfLearningRate);
-			btDeep2.setTextFill(Color.ORANGE);
+			tfDiscountFactor.setDisable(true);
+
+			tfEpsilonDecay.setDisable(true);
+
+			tfwallDeath.setDisable(true);
+
+			tfLearningRate.setDisable(true);
+
+			tfSelfDestruct.setDisable(true);
+
+			tfIdle.setDisable(true);
+
+			tfEatsApple.setDisable(true);
 
 		});
 
-		Button btDeep3 = new Button("Deep3");
-		btDeep3.setLayoutX(AgentPane.getPrefWidth()*.75);
-		btDeep3.setLayoutY(AgentPane.getPrefHeight()*.1);
-		AgentPane.getChildren().add(btDeep3);
-		btDeep3.setOnAction(ex->{
-			((GamePane) gamePane).setColor(Color.GREEN);
-			AgentPane.getChildren().remove(tfMaximumReward);
-			AgentPane.getChildren().remove(tfDiscountFactor);
-			AgentPane.getChildren().remove(txtMaximumReward);
-			AgentPane.getChildren().remove(txtDiscountFactor);
-			AgentPane.getChildren().remove(txtLearningRate);
-			AgentPane.getChildren().remove(tfLearningRate);
-			btDeep3.setTextFill(Color.GREEN);
-			
+		btDQN.setOnAction(ex->{
+
+			btDQN.setStyle("-fx-background-color: '#301934'; -fx-text-fill: 'white';");
+			btStatic.setStyle("-fx-background-color: 'white'; -fx-text-fill: '#006400';");
+
+			((GamePane) gamePane).setColor(Color.PURPLE);
+
+			tfDiscountFactor.setDisable(false);
+
+			tfEpsilonDecay.setDisable(false);
+
+			tfwallDeath.setDisable(false);
+
+			tfLearningRate.setDisable(false);
+
+			tfSelfDestruct.setDisable(false);
+
+			tfIdle.setDisable(false);
+
+			tfEatsApple.setDisable(false);
+
+
+
+
 
 		});
-	//This faster button makes the snake move faster
-		Button snekSpeed= new Button ("Faster");
-		snekSpeed.setLayoutX(AgentPane.getPrefWidth()*.75);
-		snekSpeed.setLayoutY(AgentPane.getPrefHeight()*.85);
-		AgentPane.getChildren().add(snekSpeed);
-		
-		snekSpeed.setOnAction(ex2->{
-			KeyFrame keyframe1 = new KeyFrame(Duration.millis(35), action ->
-			{
-				// Boolean Value that Determines whether you can go back on top of yourself
-				((GamePane) gamePane).onlyOneDirection = true;
-
-			    //---------------------------- GAME IMPLEMENTATION ------------------------------- //
 
 
-				//moves the snake based off of key presses
-				((GamePane) gamePane).keyPressHandler();
+		btUpload.setOnAction(e ->
+		{
 
-				//moves the snakes position
-				((GamePane) gamePane). snek.move();
-
-			    //Checks if snake hits wall and resets the snake if dead
-			    ((GamePane) gamePane).  CheckIfSnakeHitWall();
-
-			    //Clears the Grid
-			    ((GamePane) gamePane).ClearGrid();
-
-				//Displays Objective Item
-				((GamePane) gamePane).recs[((GamePane) gamePane).snek.objectiveItem[0]][((GamePane) gamePane).snek.objectiveItem[1]].setFill(Color.RED);
-
-			    //Moves the Snakes Position in GridPane
-			    ((GamePane) gamePane).moveSnakeDisplay();
-
-				//Checks if the Snake ran into itself and resets if true
-				((GamePane) gamePane).CheckIfSnakeHitSelf();
-
-				//adds to score if snake eats objective item
-				((GamePane) gamePane). snek.ateObjectiveItem();
-			    ((DisplayPane) ((GamePane) gamePane).displayPane).setScore(((GamePane) gamePane).snek.score+"");
-
-			    //---------------------------- AI Integration ------------------------------- //
-
-			    //updates brain with the environment
-			    ((GamePane) gamePane). snakeBrain.updateSnake(((GamePane) gamePane).snek);
-			    //brain makes decision based off of the environment
-			    ((GamePane) gamePane).snakeBrain.MakeDecision();
-			    //brain decides on a direction and changes the path of the snake
-			    ((GamePane) gamePane).snek.changeDirection(((GamePane) gamePane).snakeBrain.getDecidedDecidedDirection());
-
-			});
-			
-			((GamePane) gamePane).timeline.getKeyFrames().add(keyframe1);
+	        final FileChooser  fileChooser = new FileChooser();
 		});
-		
-		
+
 		txtAgentPane = new Text("Agent Controller");
 		txtAgentPane.setLayoutX(AgentPane.getPrefWidth()*.02);
 		txtAgentPane.setLayoutY(AgentPane.getPrefHeight()*.05);
 		txtAgentPane.setStyle("-fx-font-size: 18");
 		AgentPane.getChildren().add(txtAgentPane);
 
+		btTrain.setLayoutX(AgentPane.getPrefWidth()*.02);
+		btTrain.setLayoutY(AgentPane.getPrefHeight()*.90);
+		AgentPane.getChildren().add(btTrain);
+
+		Text txtEpisodes = new Text("Episodes");
+		TextField tfEpisodes = new TextField("100");
+
+		txtEpisodes.setLayoutX(AgentPane.getPrefWidth()*.30);
+		txtEpisodes.setLayoutY(AgentPane.getPrefHeight()*.90);
+		txtEpisodes.setStyle("-fx-font-size: 12;");
+		tfEpisodes.setLayoutX(AgentPane.getPrefWidth()*.30);
+		tfEpisodes.setLayoutY(AgentPane.getPrefHeight()* .91);
+
+		btTrain.setDisable(true);
+		tfEpisodes.setDisable(true);
+
+		btTrain.setOnAction(e ->{
+			((GamePane) gamePane).trainSnek(Integer.parseInt(tfEpisodes.getText()));
+		});
+
+		AgentPane.getChildren().addAll(txtEpisodes, tfEpisodes);
 
 
 		btCreateNew.setLayoutX(AgentPane.getPrefWidth()*.02);
-		btCreateNew.setLayoutY(AgentPane.getPrefHeight()*.80);
+		btCreateNew.setLayoutY(AgentPane.getPrefHeight()*.77);
 		AgentPane.getChildren().add(btCreateNew);
 
+
+		btUpload.setText("Upload Net");
+		btUpload.setLayoutX(AgentPane.getPrefWidth()*.4);
+		btUpload.setLayoutY(AgentPane.getPrefHeight()*.77);
+		AgentPane.getChildren().add(btUpload);
+
+		btCreateNew.setOnAction(e ->{
+			//	public SnakeDQN(int[] topology, double learningRate, double discountFactor, int width, int height, double hitWall, double ateApple, double idle)
+
+			((GamePane) gamePane).setSnek(Double.parseDouble(tfLearningRate.getText()), Double.parseDouble(tfDiscountFactor.getText()), Double.parseDouble(tfEpsilonDecay.getText()), Double.parseDouble(tfIdle.getText()), Double.parseDouble(tfEatsApple.getText()), Double.parseDouble(tfwallDeath.getText()), Double.parseDouble(tfSelfDestruct.getText()));
+
+			btTrain.setDisable(false);
+			tfEpisodes.setDisable(false);
+			btStartTraining.setDisable(false);
+
+			((GamePane)gamePane).setConsole("Created new network");
+
+		});
 
 		getChildren().add(content);
 		Text Title = new Text("Control Panel");
@@ -378,7 +432,7 @@ public class ControlPane extends Pane {
 		Title.setLayoutY(content.getPrefHeight()*0.04);
 		//Title.setLayoutX(value);
 		//Title.setLayoutY();
-		
+
 
 
 	}
