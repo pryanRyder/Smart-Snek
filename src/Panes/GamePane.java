@@ -1,27 +1,17 @@
 package Panes;
 
-import java.util.Collection;
+import java.util.Arrays;
 
-import Agent.SnakeBrain;
-import Snake.CurrentDirection;
-import Snake.Snake;
-import Snake.SnakeManager;
+import Agent.SnakeDQN;
+import NeuralNetwork.*;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.geometry.Insets;
-import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.TextField;
-import javafx.scene.input.KeyCode;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.RowConstraints;
-import javafx.scene.layout.TilePane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
-import javafx.scene.text.Text;
 import javafx.util.Duration;
 
 /**
@@ -40,14 +30,23 @@ public class GamePane extends Pane {
 
 	GridPane gridpane = new GridPane();
 	boolean onlyOneDirection = true;
-	Rectangle recs[][] = new Rectangle[40][40];
+	 Rectangle recs[][] = new Rectangle[10][10];
 	Scene scene;
 
-	public SnakeManager m_SnakeManager;
-	Snake snek = new Snake(recs);
-    SnakeBrain snakeBrain = new SnakeBrain(snek);
     Pane displayPane;
     private int iteration = 0;
+
+	SnakeDQN dqn = new SnakeDQN(0.001, 0.995, 10, 10);
+
+
+	//The scale of the gridpane size to the gamepane size.
+	double scale = 0.9;
+
+	//The scaler for the borders.
+	double borderScale = 0.2;
+
+	//The scaler for the gaps.
+	double gapScale = 0.05;
 
 
 	//Color of the Snake
@@ -58,10 +57,68 @@ public class GamePane extends Pane {
 		super.finalize();
 	}
 
+	public void setSnek(double newLearningRate, double newDiscountFactor, double epsilonDecay, double hitWall, double ateApple, double idle, double hitSelf)
+	{
+		//	public SnakeDQN(int[] topology, double learningRate, double discountFactor, int width, int height, double hitWall, double ateApple, double idle)
+
+		dqn = new SnakeDQN(newLearningRate, newDiscountFactor, recs.length, recs[0].length, idle, ateApple, hitWall, hitSelf);
+
+		System.out.println(idle + " " + ateApple + " " + hitWall);
+
+		dqn.setEpsilonDecay(epsilonDecay);
+
+	}
+
+	public void appendConsoleDisplay(String s)
+	{
+		((DisplayPane) displayPane).appendConsole(s);
+	}
+
+	public void setConsole(String s)
+	{
+		((DisplayPane) displayPane).Console.setText(s);
+	}
+
+	public void trainSnek(int episodes)
+	{
+		((DisplayPane) displayPane).appendConsole("\nround\tavgScore\tmaxScore\n");
+		for(int round = 0; round < episodes; round++)
+		{
+			double averageScore = 0;
+			int maxScore = 0;
+			double averageEpsilon = 0;
+			int totalSteps = 0;
+			for(int gameIndex = 0; gameIndex < 1000; gameIndex++)
+			{
+				dqn.reset();
+
+				while(!dqn.isDone())
+				{
+					totalSteps++;
+					averageEpsilon += dqn.getEpsilon();
+					dqn.step();
+				}
+
+				averageScore += dqn.getScore();
+
+				if(dqn.getScore() > maxScore)
+				{
+					maxScore = dqn.getScore();
+				}
+			}
+
+			averageScore /= 1000.0;
+			averageEpsilon /= (double)totalSteps;
+			System.out.println(round + "," + averageScore + "," + maxScore + "," + averageEpsilon);
+
+			((DisplayPane) displayPane).appendConsole(round + "\t\t" + averageScore + "\t\t" + maxScore);
+
+		}
+		NeuralNetwork.saveNetwork(dqn.getNetwork(), "snake.nn");
+	}
 
 	public GamePane( double width, double height)
 	{
-
 	    //---------------------------- Set Up ------------------------------- //
 
 		//Create Display Pane
@@ -80,16 +137,7 @@ public class GamePane extends Pane {
 		setUpGridPane();
 
 	    // generate random Objective Item
-	    snek.randomObjectiveItem();
 
-	    // Display random Objective Item
-	    recs[snek.objectiveItem[0]][snek.objectiveItem[1]].setFill(Color.RED);
-
-	    // Set Each Tile In Grid Pane to White
-	    for(int i = 0; i < snek.Positions.size(); i++)
-	    {
-	    	recs[snek.Positions.get(i)[0]][snek.Positions.get(i)[1]].setFill(Color.WHITE);
-	    }
 
 
 	    //---------------------------- GAME LOOP ------------------------------- //
@@ -97,50 +145,39 @@ public class GamePane extends Pane {
 
 		timeline.setCycleCount(Timeline.INDEFINITE);
 
-		KeyFrame keyframe = new KeyFrame(Duration.millis(25), action ->
+		KeyFrame keyframe = new KeyFrame(Duration.millis(70), action ->
 		{
 			// Boolean Value that Determines whether you can go back on top of yourself
 			onlyOneDirection = true;
 
 		//---------------------------- GAME IMPLEMENTATION ------------------------------- //
 
-
-			//moves the snake based off of key presses
-			keyPressHandler();
-
-			//moves the snakes position
-		    snek.move();
-
-		    //Checks if snake hits wall and resets the snake if dead
-		    CheckIfSnakeHitWall();
-
-		    //Clears the Grid
 			ClearGrid();
 
-			//Displays Objective Item
-		    recs[snek.objectiveItem[0]][snek.objectiveItem[1]].setFill(Color.RED);
+			dqn.step();
+			dqn.UpdateGrid();
 
-		    //Moves the Snakes Position in GridPane
-			moveSnakeDisplay();
+			UpdateGrid();
 
-			//Checks if the Snake ran into itself and resets if true
-			CheckIfSnakeHitSelf();
+			//System.out.println(Arrays.toString(dqn.headNeighbors));
+
+			if(dqn.isDead())
+			{
+				iteration++;
+				dqn.reset();
+			}
 
 			//adds to score if snake eats objective item
-		    snek.ateObjectiveItem();
-		    ((DisplayPane) displayPane).setScore(snek.score+"");
-		    
-		    //adds to highscore if the int score is greater than int highscore. 
-		    ((DisplayPane) displayPane).setHighScore(snek.score);
+		    ((DisplayPane) displayPane).setScore(dqn.getScore()+"");
 
-		//---------------------------- AI Integration ------------------------------- //
+		    //adds to highscore if the int score is greater than int highscore.
+		    ((DisplayPane) displayPane).setHighScore(dqn.getScore());
 
-		    //updates brain with the environment
-		    snakeBrain.updateSnake(snek);
-		    //brain makes decision based off of the environment
-		    snakeBrain.MakeDecision();
-		    //brain decides on a direction and changes the path of the snake
-		    snek.changeDirection(snakeBrain.getDecidedDecidedDirection());
+		    ((DisplayPane) displayPane).setIteration(iteration+"");
+
+
+		    //---------------------------- AI Integration ------------------------------- //
+
 
 		});
 
@@ -151,6 +188,23 @@ public class GamePane extends Pane {
 
 	}
 
+	public void UpdateGrid()
+	{
+		for(int i = 0; i < recs.length; i++)
+		{
+			for( int j = 0; j < recs[0].length; j++)
+			{
+				if(dqn.Grid[i][j] == .5)
+					recs[i][j].setFill(Color.RED);
+				if(dqn.Grid[i][j] == 1)
+					recs[i][j].setFill(Color.BLACK);
+			}
+		}
+	}
+
+
+
+
 	public void setUpGridPane()
 	{
 		//The size of the gaps.
@@ -158,13 +212,13 @@ public class GamePane extends Pane {
 
 				//The thickness of the borders.
 				double topBorder, rightBorder, bottomBorder, leftBorder;
-				
+
 				//The scaler for the borders
 				double borderScale = 0.2;
-				
-				//The sclae of the gridpane size to the gamepane size. 
+
+				//The sclae of the gridpane size to the gamepane size.
 				double scale = 0.9;
-				
+
 				//The thickness of the borders.
 				double gapScale = 0.05;
 
@@ -218,38 +272,6 @@ public class GamePane extends Pane {
 			    gridpane.relocate(xPos, yPos);
 	}
 
-	public void CheckIfSnakeHitSelf()
-	{
-
-	    if( snek.checkIfDead())
-	    {
-	    	iteration++;
-	    	resetSnake();
-
-	    }
-	}
-
-	public void resetSnake()
-	{
-		snek = new Snake(recs);
-    	snakeBrain = new SnakeBrain(snek);
-    	((DisplayPane) displayPane).setIteration(iteration+"");
-	}
-
-	public void CheckIfSnakeHitWall()
-	{
-	    for( int i = 0; i < snek.Positions.size(); i++)
-	    {
-	    	if((snek.Positions.get(0)[0] > recs.length-1) 	||
-	    		(snek.Positions.get(0)[0] < 0) 				||
-	    		(snek.Positions.get(0)[1] > recs[0].length-1) ||
-	    		(snek.Positions.get(0)[1] < 0))
-	    	{
-	        	iteration++;
-		    	resetSnake();
-	    	}
-	    }
-	}
 
 	public void ClearGrid()
 	{
@@ -262,86 +284,8 @@ public class GamePane extends Pane {
 		}
 	}
 
-	public void moveSnakeDisplay()
-	{
-	    for(int i = 0; i < snek.Positions.size(); i++) //moves the display of the snake
-	    {
-	    	try
-	    	{
-	    		recs[snek.Positions.get(i)[0]][snek.Positions.get(i)[1]].setFill(colorOfSnake);
-	    	}
-	    	catch(ArrayIndexOutOfBoundsException e)
-	    	{
-	    		//:P
-	    	}
-	    }
-	}
-
-	public void keyPressHandler()
-	{
-		getScene().setOnKeyPressed(e ->
-		{	if(onlyOneDirection)
-			{
-				if(e.getCode() == KeyCode.A && snek.m_CurrentDirection != CurrentDirection.RIGHT)
-				{
-					snek.changeDirection(CurrentDirection.LEFT);
-					System.out.println("LEFT");
-					onlyOneDirection = false;
-				}
-				else if(e.getCode() == KeyCode.D && snek.m_CurrentDirection != CurrentDirection.LEFT)
-				{
-					snek.changeDirection(CurrentDirection.RIGHT);
-					System.out.println("RIGHT");
-					onlyOneDirection = false;
-
-				}
-				else if(e.getCode() == KeyCode.S && snek.m_CurrentDirection != CurrentDirection.UP)
-				{
-					snek.changeDirection(CurrentDirection.DOWN);
-					System.out.println("DOWN");
-					onlyOneDirection = false;
-
-				}
-				else if(e.getCode() == KeyCode.W && snek.m_CurrentDirection != CurrentDirection.DOWN)
-				{
-					snek.changeDirection(CurrentDirection.UP);
-					System.out.println("UP");
-					onlyOneDirection = false;
-
-				}
-
-				else if(e.getCode() == KeyCode.LEFT && snek.m_CurrentDirection != CurrentDirection.RIGHT)
-				{
-					snek.changeDirection(CurrentDirection.LEFT);
-					System.out.println("LEFT");
-					onlyOneDirection = false;
 
 
-				}
-				else if(e.getCode() == KeyCode.RIGHT && snek.m_CurrentDirection != CurrentDirection.LEFT)
-				{
-					snek.changeDirection(CurrentDirection.RIGHT);
-					System.out.println("RIGHT");
-					onlyOneDirection = false;
-
-				}
-				else if(e.getCode() == KeyCode.DOWN && snek.m_CurrentDirection != CurrentDirection.UP)
-				{
-					snek.changeDirection(CurrentDirection.DOWN);
-					System.out.println("DOWN");
-					onlyOneDirection = false;
-
-				}
-				else if(e.getCode() == KeyCode.UP && snek.m_CurrentDirection != CurrentDirection.DOWN)
-				{
-					snek.changeDirection(CurrentDirection.UP);
-					System.out.println("UP");
-					onlyOneDirection = false;
-
-				}
-			}
-		});
-	}
 	public void ChangeGridSize(int width, int height)
 	{
 		recs = new Rectangle[40][40];
@@ -363,6 +307,11 @@ public class GamePane extends Pane {
 	public void Stop()
 	{
 		timeline.stop();
+	}
+
+	public void reset()
+	{
+		dqn.reset();
 	}
 
 }//end GamePane

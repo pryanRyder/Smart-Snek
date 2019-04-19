@@ -3,7 +3,7 @@ package Panes;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
-import Snake.Snake;
+import javafx.scene.control.TextArea;
 
 /**
  * @author Danny
@@ -15,6 +15,7 @@ public class DisplayPane extends Pane {
 	Text Iteration = new Text();
 	Text score = new Text();
 	Text highscore = new Text();
+	public TextArea Console = new TextArea();
 	
 	int highscoreINT = 0;
 
@@ -30,6 +31,11 @@ public class DisplayPane extends Pane {
 	public void setScore(String scr)
 	{
 		score.setText(scr);
+	}
+	
+	public void appendConsole(String text)
+	{
+		Console.setText(Console.getText()+"\n"+text);
 	}
 	
 	public void setHighScore(int scr) {
@@ -121,8 +127,17 @@ public class DisplayPane extends Pane {
 
 					highscorePane.getChildren().addAll(highscoreTitle, highscore);
 			//   << End Scre Pane   >>
+					
+					
+		Console = new TextArea();
+		Console.setLayoutX(getPrefWidth()*0.45);
+		Console.setLayoutY(getPrefHeight()*0.05);
+		Console.setPrefHeight(getPrefHeight()*.75);
+		//Console.setDisable(true);
+		Console.setStyle("-fx-opacity: 1; -fx-text-fill: 'black';");
+		Console.setText("No Loaded Network");
 
-		content.getChildren().addAll(Title, iterationPane, scorePane, highscorePane);
+		content.getChildren().addAll(Title, iterationPane, scorePane, highscorePane, Console);
 
 
 
