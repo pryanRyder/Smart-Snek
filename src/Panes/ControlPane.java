@@ -296,14 +296,7 @@ public class ControlPane extends Pane {
 				txtEatsApple,tfEatsApple,
 				txtIdle, tfIdle);
 
-		Button btSaveNetwork = new Button("Save");
-		btSaveNetwork.setLayoutX(AgentPane.getPrefWidth()*.75);
-		btSaveNetwork.setLayoutY(AgentPane.getPrefHeight()*.77);
-		AgentPane.getChildren().add(btSaveNetwork);
 
-		btSaveNetwork.setOnAction( e ->{
-			((GamePane) gamePane).saveNetwork();
-		});
 		
 		Button btStatic = new Button("Static AI");
 		btStatic.setLayoutX(AgentPane.getPrefWidth()*.55);

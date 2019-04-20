@@ -68,18 +68,6 @@ public class GamePane extends Pane {
 		super.finalize();
 	}
 	
-	public void saveNetwork()
-	{
-		FileChooser fileChooser = new FileChooser();
-		fileChooser.setTitle("Save Network");
-		fileChooser.setInitialFileName("network.nn");
-		File file = fileChooser.showSaveDialog(new Stage());
-		
-		NeuralNetwork.saveNetwork(dqn.getNetwork(), file.getAbsolutePath());
-		//do I work?
-		System.out.println(file.getAbsolutePath());
-	}
-
 	//this shit doesn't fucking work
 	public void setNN(File nnFile) throws Exception
 	{
