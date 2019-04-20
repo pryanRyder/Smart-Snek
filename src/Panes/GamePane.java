@@ -53,7 +53,7 @@ public class GamePane extends Pane {
 	//Color of the Snake
 	 Color colorOfSnake = Color.BLACK;
 	 Timeline timeline = new Timeline();
-	 
+	 KeyFrame keyframe = new KeyFrame(Duration.millis(70));
 	public void finalize() throws Throwable {
 		super.finalize();
 	}
@@ -138,15 +138,23 @@ public class GamePane extends Pane {
 		setUpGridPane();
 
 	    // generate random Objective Item
-
-
-
+		timeline.getKeyFrames().add(KeyFrameContent(new Duration (70)));
 	    //---------------------------- GAME LOOP ------------------------------- //
 
 
 		timeline.setCycleCount(Timeline.INDEFINITE);
+		
+		
 
-		KeyFrame keyframe = new KeyFrame(Duration.millis(70), action ->
+		
+		//timeline.play();
+
+	getChildren().addAll(gridpane);
+
+	}
+	public KeyFrame KeyFrameContent (Duration x)
+	{
+		 KeyFrame keyframe = new KeyFrame(x, action ->
 		{
 			// Boolean Value that Determines whether you can go back on top of yourself
 			onlyOneDirection = true;
@@ -181,13 +189,25 @@ public class GamePane extends Pane {
 
 		    
 		});
-
-		timeline.getKeyFrames().add(keyframe);
-		//timeline.play();
-
-	getChildren().addAll(gridpane);
-
+		return keyframe; 
 	}
+		public void slower()
+	{
+			Duration time = keyframe.getTime();
+			Duration slower = new Duration (5); 
+			timeline.getKeyFrames().remove(keyframe);
+			KeyFrame keyframe2= KeyFrameContent(time.add(slower)); 
+			timeline.getKeyFrames().add(keyframe2);
+	}
+	public void faster()
+	{
+		Duration time = keyframe.getTime();
+		Duration fasterS = new Duration (5); 
+		timeline.getKeyFrames().remove(keyframe);
+		KeyFrame keyframe2= KeyFrameContent(time.subtract(fasterS)); 
+		timeline.getKeyFrames().add(keyframe2);
+	}
+
 	
 	public void UpdateGrid()
 	{
@@ -223,15 +243,6 @@ public class GamePane extends Pane {
 				//The thickness of the borders.
 				double topBorder, rightBorder, bottomBorder, leftBorder;
 				
-				//The scaler for the borders
-				double borderScale = 0.2;
-				
-				//The sclae of the gridpane size to the gamepane size. 
-				double scale = 0.9;
-				
-				//The thickness of the borders.
-				double gapScale = 0.05;
-
 				//The side length of the boxes.
 				double boxSide;
 
