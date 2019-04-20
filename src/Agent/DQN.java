@@ -83,6 +83,7 @@ public abstract class DQN
 	{
 		if(network != null)
 		{
+			System.out.println("I'm not null :)");
 			this.network = network;
 		}
 	}

@@ -289,14 +289,6 @@ public class SnakeDQN extends DQN
 	
 	public void randomFruit()
 	{
-		/*do
-		{
-			fruitX = (int) (Math.random() * width);
-			fruitY = (int) (Math.random() * height);
-		}
-		while(fruitX != Positions.get(0)[1] && fruitY != Positions.get(0)[0]);
-		*/
-		
 		//list of valid grid positions
 		ArrayList<int[]> VGP = new ArrayList<int[]>();
 		
@@ -310,7 +302,6 @@ public class SnakeDQN extends DQN
 				VGP.add(temp);
 			}
 		}
-		
 		//remove snake's positions from the list of valid grid positions
 		for(int i = 0; i < VGP.size(); i++)
 		{
@@ -324,7 +315,6 @@ public class SnakeDQN extends DQN
 				}
 			}
 		}
-		
 		int randomIndex = (int) (Math.random() * VGP.size());
 		
 		fruitX = VGP.get(randomIndex)[1];

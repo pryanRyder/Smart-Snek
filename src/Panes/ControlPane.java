@@ -296,36 +296,38 @@ public class ControlPane extends Pane {
 				txtEatsApple,tfEatsApple,
 				txtIdle, tfIdle);
 
+		Button btSaveNetwork = new Button("Save");
+		btSaveNetwork.setLayoutX(AgentPane.getPrefWidth()*.75);
+		btSaveNetwork.setLayoutY(AgentPane.getPrefHeight()*.77);
+		AgentPane.getChildren().add(btSaveNetwork);
+
+		btSaveNetwork.setOnAction( e ->{
+			((GamePane) gamePane).saveNetwork();
+		});
+		
 		Button btStatic = new Button("Static AI");
 		btStatic.setLayoutX(AgentPane.getPrefWidth()*.55);
 		btStatic.setLayoutY(AgentPane.getPrefHeight()*.1);
 		AgentPane.getChildren().add(btStatic);
 		btStatic.setStyle("-fx-background-color: 'white'; -fx-text-fill: '#006400';");
 
+		
+		
+		
 		btStatic.setOnAction(ex->{
 
 			btDQN.setStyle("-fx-background-color: 'white'; -fx-text-fill: '#301934';");
 			btStatic.setStyle("-fx-background-color: '#006400'; -fx-text-fill: 'white';");
 
-
 			((GamePane) gamePane).colorOfSnake(0.937, 0.525, 0.043);
-
 			tfDiscountFactor.setDisable(true);
-
 			tfEpsilonDecay.setDisable(true);
-
 			tfwallDeath.setDisable(true);
-
 			tfLearningRate.setDisable(true);
-
 			tfSelfDestruct.setDisable(true);
-
 			tfIdle.setDisable(true);
-
 			tfEatsApple.setDisable(true);
-
 			btStartTraining.setDisable(false);
-
 		});
 
 		btDQN.setOnAction(ex->{
@@ -334,22 +336,13 @@ public class ControlPane extends Pane {
 			btStatic.setStyle("-fx-background-color: 'white'; -fx-text-fill: '#006400';");
 
 			((GamePane) gamePane).colorOfSnake(0.529, 0.066, 0.611);
-
 			tfDiscountFactor.setDisable(false);
-
 			tfEpsilonDecay.setDisable(false);
-
 			tfwallDeath.setDisable(false);
-
 			tfLearningRate.setDisable(false);
-
 			tfSelfDestruct.setDisable(false);
-
 			tfIdle.setDisable(false);
-
 			tfEatsApple.setDisable(false);
-
-
 		});
 
 
@@ -434,7 +427,6 @@ public class ControlPane extends Pane {
 		TitlePane.setPrefWidth(content.getPrefWidth()*.95);
 		TitlePane.getChildren().add(Title);
 		content.getChildren().add(TitlePane);
-
 
 		Title.setStyle("-fx-font-size: 20;"); // NEEDS TO BE CHANGED BASED ON SIZE
 		Title.setLayoutX(content.getPrefWidth()*0.04);

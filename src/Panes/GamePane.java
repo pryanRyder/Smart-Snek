@@ -16,6 +16,8 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 
 /**
@@ -61,29 +63,40 @@ public class GamePane extends Pane {
 	boolean stat = false;
 
 
-
-
 	public void finalize() throws Throwable {
 		super.finalize();
 	}
+	
+	public void saveNetwork()
+	{
+		FileChooser fileChooser = new FileChooser();
+		fileChooser.setTitle("Save Network");
+		fileChooser.setInitialFileName("network.nn");
+		File file = fileChooser.showSaveDialog(new Stage());
+		
+		NeuralNetwork.saveNetwork(dqn.getNetwork(), file.getAbsolutePath());
+		//do I work?
+		System.out.println(file.getAbsolutePath());
+	}
 
+	//this shit doesn't fucking work
 	public void setNN(File nnFile) throws Exception
 	{
-		ObjectInputStream ois = new ObjectInputStream(new FileInputStream(nnFile));
-		NeuralNetwork nn = (NeuralNetwork)ois.readObject();
-		dqn.setNetwork(nn);
+//		System.out.println(dqn.getNetwork()); //this works
+//		ObjectInputStream ois = new ObjectInputStream(new FileInputStream(nnFile));
+//		NeuralNetwork nn = (NeuralNetwork)ois.readObject();
+		NeuralNetwork nn = NeuralNetwork.loadNetwork(nnFile.getAbsolutePath());
+		dqn.setNetwork(nn); //maybe this doesn't work?
+		//System.out.println(dqn.getNetwork());
 	}
 
 	public void setSnek(double newLearningRate, double newDiscountFactor, double epsilonDecay, double hitWall, double ateApple, double idle, double hitSelf)
 	{
-		//	public SnakeDQN(int[] topology, double learningRate, double discountFactor, int width, int height, double hitWall, double ateApple, double idle)
-
 		dqn = new SnakeDQN(newLearningRate, newDiscountFactor, recs.length, recs[0].length, idle, ateApple, hitWall, hitSelf);
 
 		System.out.println(idle + " " + ateApple + " " + hitWall);
 
 		dqn.setEpsilonDecay(epsilonDecay);
-
 	}
 
 	public void appendConsoleDisplay(String s)
@@ -129,9 +142,8 @@ public class GamePane extends Pane {
 			System.out.println(round + "," + averageScore + "," + maxScore + "," + averageEpsilon);
 
 			((DisplayPane) displayPane).appendConsole(round + "\t\t" + averageScore + "\t\t" + maxScore);
-
 		}
-		NeuralNetwork.saveNetwork(dqn.getNetwork(), "snake.nn");
+		NeuralNetwork.saveNetwork(dqn.getNetwork(), "tempSnake.nn");
 	}
 
 	public GamePane( double width, double height)
@@ -174,8 +186,6 @@ public class GamePane extends Pane {
 
 			UpdateGrid();
 
-			//System.out.println(Arrays.toString(dqn.headNeighbors));
-
 			if(dqn.isDead())
 			{
 				iteration++;
@@ -188,6 +198,7 @@ public class GamePane extends Pane {
 		    //adds to highscore if the int score is greater than int highscore.
 		    ((DisplayPane) displayPane).setHighScore(dqn.getScore());
 
+		    
 		    ((DisplayPane) displayPane).setIteration(iteration+"");
 
 
