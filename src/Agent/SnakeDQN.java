@@ -1,7 +1,13 @@
 package Agent;
 
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
+
+import NeuralNetwork.NeuralNetwork;
 
 public class SnakeDQN extends DQN
 {
@@ -332,6 +338,32 @@ public class SnakeDQN extends DQN
 		
 	}
 	
+	public static void saveSnakeDQN(SnakeDQN snek, String filePath)
+	{
+		try(FileOutputStream fout = new FileOutputStream(filePath);
+				ObjectOutputStream oos = new ObjectOutputStream(fout);)
+		{
+			oos.writeObject(snek);
+		}
+		catch(Exception e)
+		{
+			System.err.println("ERROR: Failure in saving network to " + filePath + ". Reason is " + e.getMessage());
+		}
+	}
+	
+	public static SnakeDQN loadSnakeDQN(String filePath)
+	{
+		try(FileInputStream fin = new FileInputStream(filePath);
+				ObjectInputStream ois = new ObjectInputStream(fin);)
+			{
+				return (SnakeDQN) ois.readObject();
+			}
+			catch(Exception e)
+			{
+				System.err.println("ERROR: Failure in loading network from " + filePath + ". Reason is " + e.getMessage());
+			}
+			return null;
+	}
 	
 	public boolean isDead()
 	{
