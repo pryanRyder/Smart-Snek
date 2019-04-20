@@ -70,8 +70,8 @@ public class GamePane extends Pane {
 	public void setNN(File nnFile) throws Exception
 	{
 		ObjectInputStream ois = new ObjectInputStream(new FileInputStream(nnFile));
-		NeuralNetwork nn = (NeuralNetwork)ois.readObject();
-		dqn.setNetwork(nn);
+		SnakeDQN nn = (SnakeDQN)ois.readObject();
+		dqn = nn;
 	}
 
 	public void setSnek(double newLearningRate, double newDiscountFactor, double epsilonDecay, double hitWall, double ateApple, double idle, double hitSelf)
@@ -84,6 +84,11 @@ public class GamePane extends Pane {
 
 		dqn.setEpsilonDecay(epsilonDecay);
 
+	}
+	
+	public void saveDQN(String filePath)
+	{
+		SnakeDQN.saveSnakeDQN(dqn, filePath);
 	}
 
 	public void appendConsoleDisplay(String s)

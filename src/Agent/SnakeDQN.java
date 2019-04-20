@@ -6,11 +6,19 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.io.Serializable;
 
 import NeuralNetwork.NeuralNetwork;
 
-public class SnakeDQN extends DQN
+public class SnakeDQN extends DQN implements Serializable
 {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 8320263365854467870L;
+	/**
+	 * 
+	 */
 	private boolean dead;
 	private int steps;
 	private int score;

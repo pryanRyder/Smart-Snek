@@ -370,6 +370,26 @@ public class ControlPane extends Pane {
 	        btTrain.setDisable(false);
 	        btStartTraining.setDisable(false);
 		});
+		
+		Button btSave = new Button("Save");
+		btSave.setLayoutX(AgentPane.getPrefWidth()*.7);
+		btSave.setLayoutY(AgentPane.getPrefHeight()*.77);
+		AgentPane.getChildren().add(btSave);
+		
+		btSave.setOnAction(e ->{
+			FileChooser  fileChooser = new FileChooser();
+	        Stage tempStage = new Stage();
+	        fileChooser.setInitialFileName("myDQN.nn");
+	       // tempStage.show();
+	        File dqnFile = fileChooser.showSaveDialog(tempStage);
+
+	        try {
+				((GamePane) gamePane).saveDQN(dqnFile.getAbsolutePath());
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		});
 
 		txtAgentPane = new Text("Agent Controller");
 		txtAgentPane.setLayoutX(AgentPane.getPrefWidth()*.02);
