@@ -19,6 +19,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import javafx.concurrent.Task;
 
 /**
  * @author Danny, Paul, Yara
@@ -82,12 +83,9 @@ public class GamePane extends Pane {
 	//this shit doesn't fucking work
 	public void setNN(File nnFile) throws Exception
 	{
-//		System.out.println(dqn.getNetwork()); //this works
-//		ObjectInputStream ois = new ObjectInputStream(new FileInputStream(nnFile));
-//		NeuralNetwork nn = (NeuralNetwork)ois.readObject();
-		NeuralNetwork nn = NeuralNetwork.loadNetwork(nnFile.getAbsolutePath());
-		dqn.setNetwork(nn); //maybe this doesn't work?
-		//System.out.println(dqn.getNetwork());
+		ObjectInputStream ois = new ObjectInputStream(new FileInputStream(nnFile));
+		SnakeDQN nn = (SnakeDQN)ois.readObject();
+		dqn = nn;
 	}
 
 	public void setSnek(double newLearningRate, double newDiscountFactor, double epsilonDecay, double hitWall, double ateApple, double idle, double hitSelf)
@@ -97,6 +95,11 @@ public class GamePane extends Pane {
 		System.out.println(idle + " " + ateApple + " " + hitWall);
 
 		dqn.setEpsilonDecay(epsilonDecay);
+	}
+	
+	public void saveDQN(String filePath)
+	{
+		SnakeDQN.saveSnakeDQN(dqn, filePath);
 	}
 
 	public void appendConsoleDisplay(String s)

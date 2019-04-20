@@ -1,10 +1,24 @@
 package Agent;
 
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.io.Serializable;
 
-public class SnakeDQN extends DQN
+import NeuralNetwork.NeuralNetwork;
+
+public class SnakeDQN extends DQN implements Serializable
 {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 8320263365854467870L;
+	/**
+	 * 
+	 */
 	private boolean dead;
 	private int steps;
 	private int score;
@@ -289,6 +303,7 @@ public class SnakeDQN extends DQN
 	
 	public void randomFruit()
 	{
+
 		//list of valid grid positions
 		ArrayList<int[]> VGP = new ArrayList<int[]>();
 		
@@ -322,6 +337,32 @@ public class SnakeDQN extends DQN
 		
 	}
 	
+	public static void saveSnakeDQN(SnakeDQN snek, String filePath)
+	{
+		try(FileOutputStream fout = new FileOutputStream(filePath);
+				ObjectOutputStream oos = new ObjectOutputStream(fout);)
+		{
+			oos.writeObject(snek);
+		}
+		catch(Exception e)
+		{
+			System.err.println("ERROR: Failure in saving network to " + filePath + ". Reason is " + e.getMessage());
+		}
+	}
+	
+	public static SnakeDQN loadSnakeDQN(String filePath)
+	{
+		try(FileInputStream fin = new FileInputStream(filePath);
+				ObjectInputStream ois = new ObjectInputStream(fin);)
+			{
+				return (SnakeDQN) ois.readObject();
+			}
+			catch(Exception e)
+			{
+				System.err.println("ERROR: Failure in loading network from " + filePath + ". Reason is " + e.getMessage());
+			}
+			return null;
+	}
 	
 	public boolean isDead()
 	{
