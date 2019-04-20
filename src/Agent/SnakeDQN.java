@@ -295,13 +295,6 @@ public class SnakeDQN extends DQN
 	
 	public void randomFruit()
 	{
-		/*do
-		{
-			fruitX = (int) (Math.random() * width);
-			fruitY = (int) (Math.random() * height);
-		}
-		while(fruitX != Positions.get(0)[1] && fruitY != Positions.get(0)[0]);
-		*/
 		
 		//list of valid grid positions
 		ArrayList<int[]> VGP = new ArrayList<int[]>();
