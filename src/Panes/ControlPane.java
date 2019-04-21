@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
+import Agent.SnakeBrain;
 import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
