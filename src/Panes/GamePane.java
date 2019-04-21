@@ -41,7 +41,7 @@ public class GamePane extends Pane {
 	Scene scene;
 
     Pane displayPane;
-    private int iteration = 0;
+    int iteration = 0;
 
 
 	SnakeDQN dqn = new SnakeDQN(0.001, 0.995, 10, 10);
@@ -67,7 +67,7 @@ public class GamePane extends Pane {
 	public void finalize() throws Throwable {
 		super.finalize();
 	}
-	
+
 	//this shit doesn't fucking work
 	public void setNN(File nnFile) throws Exception
 	{
@@ -84,7 +84,7 @@ public class GamePane extends Pane {
 
 		dqn.setEpsilonDecay(epsilonDecay);
 	}
-	
+
 	public void saveDQN(String filePath)
 	{
 		SnakeDQN.saveSnakeDQN(dqn, filePath);
@@ -189,7 +189,7 @@ public class GamePane extends Pane {
 		    //adds to highscore if the int score is greater than int highscore.
 		    ((DisplayPane) displayPane).setHighScore(dqn.getScore());
 
-		    
+
 		    ((DisplayPane) displayPane).setIteration(iteration+"");
 
 
@@ -197,10 +197,10 @@ public class GamePane extends Pane {
 
 
 		});
-		
+
 		timeline.getKeyFrames().add(keyframe);
 		//timeline.play();
-		
+
 
 	getChildren().addAll(gridpane);
 
