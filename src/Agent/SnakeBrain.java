@@ -64,7 +64,7 @@ public class SnakeBrain
 		fruitY = VGP.get(randomIndex)[0];
 		
 	}
-	
+/*	
 	public void UpdateGrid()
 	{
 		double[] tmp = {0, 0, 0, 0};
@@ -83,7 +83,7 @@ public class SnakeBrain
 			}
 		}
 	}
-	
+*/
 	
 	public void MakeDecision()
 	{
@@ -340,7 +340,7 @@ public class SnakeBrain
 					dead = true;
 				}
 				
-				// award if on fruit
+				// Grow if on fruit
 				if(Positions.get(0)[1] == fruitX && Positions.get(0)[0] == fruitY)
 				{
 					score++;
@@ -361,11 +361,45 @@ public class SnakeBrain
 					temp[1] = savedX;
 					
 					Positions.add(temp);
+					
 					f = false;
 				}	
 		UpdateGrid();		
 
 	}
+	
+	public void UpdateGrid()
+	{
+		{
+			double[] tmp = {0, 0, 0, 0};
+			headNeighbors = tmp;
+			
+			for(int i = 0; i < Grid.length; i++)
+			{
+				for( int j = 0; j < Grid[0].length; j++)
+				{
+					if(i == Positions.get(0)[0] && j == Positions.get(0)[1])
+						Grid[i][j] = 1;
+					else if(i == fruitY && j == fruitX)
+						Grid[i][j] = .5;
+					else
+						Grid[i][j] = 0;
+				}
+			}
+			
+			for(int i = 1; i < Positions.size(); i++)
+			{			
+				try {
+				Grid[Positions.get(i)[0]][Positions.get(i)[1]] = 1;
+				}
+				catch(ArrayIndexOutOfBoundsException e)
+				{
+					
+				}
+			}
+		}
+	}
+	
 	
 	public void reset() 
 	{
