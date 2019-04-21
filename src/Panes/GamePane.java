@@ -214,7 +214,7 @@ public class GamePane extends Pane {
 		//---------------------------- GAME IMPLEMENTATION 2 ------------------------------- //
 		timeline2.setCycleCount(Timeline.INDEFINITE);
 
-		KeyFrame keyframe2 = new KeyFrame(Duration.millis(700), action ->
+		KeyFrame keyframe2 = new KeyFrame(Duration.millis(70), action ->
 		{
 			// Boolean Value that Determines whether you can go back on top of yourself
 			onlyOneDirection = true;
