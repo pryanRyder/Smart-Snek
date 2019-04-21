@@ -1,35 +1,52 @@
 package Panes;
 
 import java.io.File;
+<<<<<<< HEAD
 
 import javafx.event.Event;
 import javafx.event.EventHandler;
+=======
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+
+import javafx.application.Platform;
+import javafx.scene.Scene;
+>>>>>>> Danny
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
+<<<<<<< HEAD
 import javafx.scene.shape.Rectangle;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+=======
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
+>>>>>>> Danny
 
 /**
  * @author Danny
  * @version 1.0
  * @created 17-Feb-2019 5:39:58 PM
  */
-public class ControlPane extends Pane {
-	
-	boolean GAChecked = false;
 
+
+//fuck this class
+public class ControlPane extends Pane {
+
+	boolean GAChecked = false;
 
 	public void finalize() throws Throwable {
 		super.finalize();
 	}
 	public ControlPane(double width, double height)
 	{
-		
+
 		Pane gamePane = new GamePane(width, height);
 		getChildren().add(gamePane);
 
@@ -39,34 +56,24 @@ public class ControlPane extends Pane {
 		setLayoutX(0);
 		setLayoutY(0);
 		setStyle("-fx-background-color: '#4f4f4f';");
-		
+
 		Pane content = new Pane();
 		content.setPrefSize(getPrefWidth()*0.95, getPrefHeight()*0.975);
 		content.setLayoutX(getPrefWidth()*0.02);
 		content.setLayoutY(getPrefHeight()*0.01);
 		content.setStyle("-fx-background-color: '#a5a5a5'");
-		
+
 		Text txtAgentPane = new Text("Agent");
 		Pane AgentPane = new Pane();
-		Text txtLearningRate = new Text("Learning Rate");
-		TextField tfLearningRate = new TextField();
-		Text txtDiscountFactor = new Text("Discount Factor");
-		TextField tfDiscountFactor = new TextField();
-		Text txtMaximumReward = new Text("Maximum Reward");
-		TextField tfMaximumReward = new TextField();
-		
 		Pane gridSizePane = new Pane();
-		
 
-		
 		gridSizePane.setStyle("-fx-background-color: '#e0e0e0'");
 		gridSizePane.setLayoutX(getPrefWidth()*0.02);
 		gridSizePane.setLayoutY(getPrefHeight()*0.6);
 		gridSizePane.setPrefHeight(content.getPrefHeight()*.195);
 		gridSizePane.setPrefWidth(content.getPrefWidth()*.95);
 		content.getChildren().add(gridSizePane);
-		
-		
+
 		Text txtgridSize = new Text("Grid Size");
 		txtgridSize.setStyle("-fx-font-size: 18");
 		txtgridSize.setLayoutX(gridSizePane.getPrefWidth()*0.02);
@@ -74,15 +81,13 @@ public class ControlPane extends Pane {
 		txtgridSize.setDisable(true);
 		gridSizePane.getChildren().add(txtgridSize);
 
-		
-		
 		Text txtWidth = new Text("Width Size");
 		txtWidth.setStyle("-fx-font-size: 15");
 		txtWidth.setLayoutX(gridSizePane.getPrefWidth()*0.02);
 		txtWidth.setLayoutY(gridSizePane.getPrefHeight()*0.35);
 
 		gridSizePane.getChildren().add(txtWidth);
-		
+
 		TextField tfWidth = new TextField();
 		tfWidth.setStyle("-fx-font-size: 15");
 		tfWidth.setLayoutX(gridSizePane.getPrefWidth()*0.02);
@@ -90,154 +95,424 @@ public class ControlPane extends Pane {
 		tfWidth.setPrefWidth(gridSizePane.getPrefWidth()*0.2);
 
 		gridSizePane.getChildren().add(tfWidth);
-		
+
 		Text txtHeight = new Text("Mutation Rate");
 		txtHeight.setStyle("-fx-font-size: 15");
 		txtHeight.setLayoutX(gridSizePane.getPrefWidth()*0.02);
 		txtHeight.setLayoutY(gridSizePane.getPrefHeight()*0.70);
 		gridSizePane.getChildren().add(txtHeight);
-		
+
 		TextField tfHeight = new TextField();
 		tfHeight.setStyle("-fx-font-size: 15");
 		tfHeight.setLayoutX(gridSizePane.getPrefWidth()*0.02);
 		tfHeight.setLayoutY(gridSizePane.getPrefHeight()*0.75);
 		tfHeight.setPrefWidth(gridSizePane.getPrefWidth()*0.2);
 		gridSizePane.getChildren().add(tfHeight);
-		
+
 		Button btChange = new Button("Change");
 		btChange.setStyle("-fx-font-size: 15");
 		btChange.setLayoutX(gridSizePane.getPrefWidth()*0.7);
 		btChange.setLayoutY(gridSizePane.getPrefHeight()*0.80);
 		gridSizePane.getChildren().add(btChange);
-		
+
 		btChange.setOnAction(e ->
 		{
 			((GamePane) gamePane).ChangeGridSize(Integer.parseInt(tfWidth.getText()), Integer.parseInt(tfHeight.getText()));
 		});
-		
-		
-		Button btCreateNew = new Button("Create New");
+
+
+		Button btCreateNew = new Button("Create Network");
+		Button btTrain = new Button("Train");
 		Button btUpload = new Button("Upload");
-		
+
+
 		Pane trainingPane = new Pane();
-		
+
 		trainingPane.setStyle("-fx-background-color: '#e0e0e0'");
 		trainingPane.setLayoutX(getPrefWidth()*0.02);
 		trainingPane.setLayoutY(getPrefHeight()*0.80);
 		trainingPane.setPrefHeight(content.getPrefHeight()*.15);
 		trainingPane.setPrefWidth(content.getPrefWidth()*.95);
 		content.getChildren().add(trainingPane);
-		
+
 		Button btStop = new Button("STOP");
-		Button btStartTraining = new Button("Start Training");
+		Button btStartTraining = new Button("Start Game");
 		Button btPlay = new Button("Play");
 		Button btPause = new Button("Pause");
 		Button btRestart = new Button("Restart");
-		
+
+		btStartTraining.setDisable(true);
+
 		Text txtTrainingController = new Text("Training Controller");
 		txtTrainingController.setStyle("-fx-font-size: 18");
 		txtTrainingController.setLayoutX(trainingPane.getPrefWidth()*0.02);
 		txtTrainingController.setLayoutY(trainingPane.getPrefHeight()*0.2);
 		trainingPane.getChildren().add(txtTrainingController);
-		
+
 		btStop.setLayoutX(trainingPane.getPrefWidth()*.4);
 		btStop.setLayoutY(trainingPane.getPrefHeight()*.6);
 		trainingPane.getChildren().add(btStop);
-		
+		btStop.setDisable(true);
+
+		btStop.setOnAction(e->
+		{
+			((GamePane) gamePane).Stop();
+			btPlay.setDisable(true);
+			btPause.setDisable(true);
+			btRestart.setDisable(true);
+			btStop.setDisable(true);
+			btStartTraining.setDisable(false);
+
+		});
+
 		btStartTraining.setLayoutX(trainingPane.getPrefWidth()*.02);
 		btStartTraining.setLayoutY(trainingPane.getPrefHeight()*.6);
 		trainingPane.getChildren().add(btStartTraining);
-		
+
+		btStartTraining.setOnAction(e->
+		{
+			((GamePane) gamePane).reset();
+			((GamePane) gamePane).Play();
+
+			btStartTraining.setDisable(true);
+			btPause.setDisable(false);
+			btRestart.setDisable(false);
+			btStop.setDisable(false);
+
+		});
+
 		btPlay.setLayoutX(trainingPane.getPrefWidth()*.02);
 		btPlay.setLayoutY(trainingPane.getPrefHeight()*.3);
 		trainingPane.getChildren().add(btPlay);
-		
+		btPlay.setDisable(true);
+
+		btPlay.setOnAction(e->
+		{
+			((GamePane) gamePane).Play();
+			btPlay.setDisable(true);
+			btPause.setDisable(false);
+		});
+
 		btPause.setLayoutX(trainingPane.getPrefWidth()*.2);
 		btPause.setLayoutY(trainingPane.getPrefHeight()*.3);
 		trainingPane.getChildren().add(btPause);
-		
+		btPause.setDisable(true);
+
+		btPause.setOnAction(e->
+		{
+			((GamePane) gamePane).Stop();
+			btPause.setDisable(true);
+			btPlay.setDisable(false);
+		});
+
 		btRestart.setLayoutX(trainingPane.getPrefWidth()*.4);
 		btRestart.setLayoutY(trainingPane.getPrefHeight()*.3);
 		trainingPane.getChildren().add(btRestart);
+		btRestart.setDisable(true);
 
-		
-		/*
-		txtAgentPane.setLayoutX(content.getPrefWidth()*.04);
-		txtAgentPane.setLayoutY(content.getPrefHeight()*.12);
-		txtAgentPane.setStyle("-fx-font-size: 18;");
-		content.getChildren().add(txtAgentPane);
-*/
+		btRestart.setOnAction(e->
+		{
+			btPlay.setDisable(true);
+			btPause.setDisable(false);
+			((GamePane) gamePane).reset();
+			((GamePane) gamePane).Play();
+		});
 
-		
-		btUpload.setLayoutX(content.getPrefWidth()*.02);
-		btUpload.setLayoutY(content.getPrefHeight()*.15);
-		content.getChildren().add(btUpload);
-		
 		AgentPane.setStyle("-fx-background-color: '#e0e0e0'");
 		AgentPane.setLayoutX(getPrefWidth()*0.02);
 		AgentPane.setLayoutY(getPrefHeight()*0.10);
 		AgentPane.setPrefHeight(content.getPrefHeight()*.50);
 		AgentPane.setPrefWidth(content.getPrefWidth()*.95);
 		content.getChildren().add(AgentPane);
+
+		Text txtLearningRate = new Text("Learning Rate");
+		TextField tfLearningRate = new TextField("0.001");
+		Text txtDiscountFactor = new Text("Discount Factor");
+		TextField tfDiscountFactor = new TextField("0.995");
+
+		/////////////////////////////////////////////////////
+
+		Text txtEpsilonDecay = new Text("Epsilon Decay");
+		TextField tfEpsilonDecay = new TextField("0.99999");
+
+		Text txtRewards = new Text("Rewards:");
+
+		Text txtwallDeath = new Text("Wall Death");
+		TextField tfwallDeath = new TextField("-1");
+
+		Text txtSelfDestruct = new Text("Hits Self");
+		TextField tfSelfDestruct = new TextField("-1");
+
+
+		Text txtEatsApple = new Text("Eats Apple");
+		TextField tfEatsApple = new TextField("3");
+
+		Text txtIdle = new Text("Idle");
+		TextField tfIdle = new TextField("0");
+
+
+
+
+		txtLearningRate.setLayoutX(AgentPane.getPrefWidth()*.02);
+		txtLearningRate.setLayoutY(AgentPane.getPrefHeight()*.20);
+		txtLearningRate.setStyle("-fx-font-size: 12;");
+		tfLearningRate.setLayoutX(AgentPane.getPrefWidth()*.02);
+		tfLearningRate.setLayoutY(AgentPane.getPrefHeight()* .21);
+
+		txtDiscountFactor.setLayoutX(AgentPane.getPrefWidth()*.02);
+		txtDiscountFactor.setLayoutY(AgentPane.getPrefHeight()*.30);
+		txtDiscountFactor.setStyle("-fx-font-size: 12;");
+		tfDiscountFactor.setLayoutX(AgentPane.getPrefWidth()*.02);
+		tfDiscountFactor.setLayoutY(AgentPane.getPrefHeight()*.31);
+
+		txtEpsilonDecay.setLayoutX(AgentPane.getPrefWidth()*.02);
+		txtEpsilonDecay.setLayoutY(AgentPane.getPrefHeight()*.40);
+		txtEpsilonDecay.setStyle("-fx-font-size: 12;");
+		tfEpsilonDecay.setLayoutX(AgentPane.getPrefWidth()*.02);
+		tfEpsilonDecay.setLayoutY(AgentPane.getPrefHeight()* .41);
+
+		txtRewards.setLayoutX(AgentPane.getPrefWidth()*.02);
+		txtRewards.setLayoutY(AgentPane.getPrefHeight()*.52);
+		txtRewards.setStyle("-fx-font-size: 15;");
+
+		txtwallDeath.setLayoutX(AgentPane.getPrefWidth()*.02);
+		txtwallDeath.setLayoutY(AgentPane.getPrefHeight()*.57);
+		txtwallDeath.setStyle("-fx-font-size: 12;");
+		tfwallDeath.setLayoutX(AgentPane.getPrefWidth()*.02);
+		tfwallDeath.setLayoutY(AgentPane.getPrefHeight()*.58);
+		tfwallDeath.setPrefWidth(60);
+
+		txtSelfDestruct.setLayoutX(AgentPane.getPrefWidth()*.50);
+		txtSelfDestruct.setLayoutY(AgentPane.getPrefHeight()*.57);
+		txtSelfDestruct.setStyle("-fx-font-size: 12;");
+		tfSelfDestruct.setLayoutX(AgentPane.getPrefWidth()*.50);
+		tfSelfDestruct.setLayoutY(AgentPane.getPrefHeight()*.58);
+		tfSelfDestruct.setPrefWidth(60);
+
+		txtEatsApple.setLayoutX(AgentPane.getPrefWidth()*.02);
+		txtEatsApple.setLayoutY(AgentPane.getPrefHeight()*.67);
+		txtEatsApple.setStyle("-fx-font-size: 12;");
+		tfEatsApple.setLayoutX(AgentPane.getPrefWidth()*.02);
+		tfEatsApple.setLayoutY(AgentPane.getPrefHeight()*.68);
+		tfEatsApple.setPrefWidth(60);
+
+		txtIdle.setLayoutX(AgentPane.getPrefWidth()*.50);
+		txtIdle.setLayoutY(AgentPane.getPrefHeight()*.67);
+		txtIdle.setStyle("-fx-font-size: 12;");
+		tfIdle.setLayoutX(AgentPane.getPrefWidth()*.50);
+		tfIdle.setLayoutY(AgentPane.getPrefHeight()*.68);
+		tfIdle.setPrefWidth(60);
+
+		Button btDQN = new Button("DQN");
+		btDQN.setLayoutX(AgentPane.getPrefWidth()*.02);
+		btDQN.setLayoutY(AgentPane.getPrefHeight()*.1);
+		btDQN.setStyle("-fx-background-color: '#301934'; -fx-text-fill: 'white';");
+		AgentPane.getChildren().add(btDQN);
+
+		AgentPane.getChildren().addAll(txtLearningRate, tfLearningRate,txtDiscountFactor, tfDiscountFactor,
+				txtEpsilonDecay, tfEpsilonDecay,txtRewards
+				,txtwallDeath,tfwallDeath,txtSelfDestruct,tfSelfDestruct,
+				txtEatsApple,tfEatsApple,
+				txtIdle, tfIdle);
+
+
 		
-		Button btDeepReinforcement = new Button("Deep Reinforcement");
-		btDeepReinforcement.setLayoutX(AgentPane.getPrefWidth()*.02);
-		btDeepReinforcement.setLayoutY(AgentPane.getPrefHeight()*.1);
-		AgentPane.getChildren().add(btDeepReinforcement);
+		Button btStatic = new Button("Static AI");
+		btStatic.setLayoutX(AgentPane.getPrefWidth()*.55);
+		btStatic.setLayoutY(AgentPane.getPrefHeight()*.1);
+		AgentPane.getChildren().add(btStatic);
+		btStatic.setStyle("-fx-background-color: 'white'; -fx-text-fill: '#006400';");
+
 		
-		Button btDeep2 = new Button("Deep2");
-		btDeep2.setLayoutX(AgentPane.getPrefWidth()*.50);
-		btDeep2.setLayoutY(AgentPane.getPrefHeight()*.1);
-		AgentPane.getChildren().add(btDeep2);
 		
-		Button btDeep3 = new Button("Deep3");
-		btDeep3.setLayoutX(AgentPane.getPrefWidth()*.75);
-		btDeep3.setLayoutY(AgentPane.getPrefHeight()*.1);
-		AgentPane.getChildren().add(btDeep3);
 		
+		btStatic.setOnAction(ex->{
+
+			btDQN.setStyle("-fx-background-color: 'white'; -fx-text-fill: '#301934';");
+			btStatic.setStyle("-fx-background-color: '#006400'; -fx-text-fill: 'white';");
+
+			((GamePane) gamePane).colorOfSnake(0.937, 0.525, 0.043);
+			tfDiscountFactor.setDisable(true);
+			tfEpsilonDecay.setDisable(true);
+			tfwallDeath.setDisable(true);
+			tfLearningRate.setDisable(true);
+			tfSelfDestruct.setDisable(true);
+			tfIdle.setDisable(true);
+			tfEatsApple.setDisable(true);
+			btStartTraining.setDisable(false);
+		});
+
+		btDQN.setOnAction(ex->{
+
+			btDQN.setStyle("-fx-background-color: '#301934'; -fx-text-fill: 'white';");
+			btStatic.setStyle("-fx-background-color: 'white'; -fx-text-fill: '#006400';");
+
+			((GamePane) gamePane).colorOfSnake(0.529, 0.066, 0.611);
+			tfDiscountFactor.setDisable(false);
+			tfEpsilonDecay.setDisable(false);
+			tfwallDeath.setDisable(false);
+			tfLearningRate.setDisable(false);
+			tfSelfDestruct.setDisable(false);
+			tfIdle.setDisable(false);
+			tfEatsApple.setDisable(false);
+		});
+
+
+		btUpload.setOnAction(e ->
+		{
+
+	        FileChooser  fileChooser = new FileChooser();
+	        Stage tempStage = new Stage();
+	       // tempStage.show();
+	        File neuralNetworkFile = fileChooser.showOpenDialog(tempStage);
+
+	        try {
+				((GamePane)gamePane).setNN(neuralNetworkFile);
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+	        btTrain.setDisable(false);
+	        btStartTraining.setDisable(false);
+		});
+		
+		Button btSave = new Button("Save");
+		btSave.setLayoutX(AgentPane.getPrefWidth()*.7);
+		btSave.setLayoutY(AgentPane.getPrefHeight()*.77);
+		AgentPane.getChildren().add(btSave);
+		
+		btSave.setOnAction(e ->{
+			FileChooser  fileChooser = new FileChooser();
+	        Stage tempStage = new Stage();
+	        fileChooser.setInitialFileName("myDQN.nn");
+	       // tempStage.show();
+	        File dqnFile = fileChooser.showSaveDialog(tempStage);
+
+	        try {
+				((GamePane) gamePane).saveDQN(dqnFile.getAbsolutePath());
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		});
+
 		txtAgentPane = new Text("Agent Controller");
 		txtAgentPane.setLayoutX(AgentPane.getPrefWidth()*.02);
 		txtAgentPane.setLayoutY(AgentPane.getPrefHeight()*.05);
 		txtAgentPane.setStyle("-fx-font-size: 18");
 		AgentPane.getChildren().add(txtAgentPane);
-		
-		txtLearningRate.setLayoutX(AgentPane.getPrefWidth()*.02);
-		txtLearningRate.setLayoutY(AgentPane.getPrefHeight()*.30);
-		AgentPane.getChildren().add(txtLearningRate);
-		txtLearningRate.setStyle("-fx-font-size: 15;");
+
+		btTrain.setLayoutX(AgentPane.getPrefWidth()*.02);
+		btTrain.setLayoutY(AgentPane.getPrefHeight()*.90);
+		AgentPane.getChildren().add(btTrain);
+
+		Text txtEpisodes = new Text("Episodes");
+		TextField tfEpisodes = new TextField("100");
+
+		txtEpisodes.setLayoutX(AgentPane.getPrefWidth()*.30);
+		txtEpisodes.setLayoutY(AgentPane.getPrefHeight()*.90);
+		txtEpisodes.setStyle("-fx-font-size: 12;");
+		tfEpisodes.setLayoutX(AgentPane.getPrefWidth()*.30);
+		tfEpisodes.setLayoutY(AgentPane.getPrefHeight()* .91);
+
+		btTrain.setDisable(true);
+		tfEpisodes.setDisable(true);
+
+		btTrain.setOnAction(e ->{
+
+			Stage stage = new Stage();
+			Pane pane = new Pane();
+			Scene scene = new Scene(pane, 400, 400);
+			stage.setScene(scene);
+			Image gif;
+			try {
+				gif = new Image(new FileInputStream("SnakeTraining.gif"));
+				
+
+			ImageView giffyboi = new ImageView(gif);
+			giffyboi.setLayoutX(70);
+			giffyboi.setLayoutY(50);
+			Text txtTrainingSnake = new Text("Training Snake...");
+			txtTrainingSnake.setLayoutX(160);
+			txtTrainingSnake.setLayoutY(360);
+			pane.getChildren().add(txtTrainingSnake);
+			
+			pane.getChildren().add(giffyboi);
+			} catch (FileNotFoundException f) {
+				// TODO Auto-generated catch block
+				f.printStackTrace();
+			}
+
+			new Thread(new Runnable() {
+
+			    @Override
+			    public void run() {
+
+			    	
+			        Platform.runLater(new Runnable() {
+
+			            @Override
+			            public void run() 
+			            {
+			    			stage.show();
+			            }
+			        });  
+			    }
+			}).start();
+			
+			new Thread(new Runnable() {
+
+			    @Override
+			    public void run() {
+						((GamePane) gamePane).trainSnek(Integer.parseInt(tfEpisodes.getText()));
 
 
-		tfLearningRate.setLayoutX(AgentPane.getPrefWidth()*.02);
-		tfLearningRate.setLayoutY(AgentPane.getPrefHeight()* .33);
-		AgentPane.getChildren().add(tfLearningRate);
-		
-		txtDiscountFactor.setLayoutX(AgentPane.getPrefWidth()*.02);
-		txtDiscountFactor.setLayoutY(AgentPane.getPrefHeight()*.46);
-		txtDiscountFactor.setStyle("-fx-font-size: 15;");
+						Platform.runLater(new Runnable() {
 
-		AgentPane.getChildren().add(txtDiscountFactor);
-		
-		tfDiscountFactor.setLayoutX(AgentPane.getPrefWidth()*.02);
-		tfDiscountFactor.setLayoutY(AgentPane.getPrefHeight()*.49);
-		AgentPane.getChildren().add(tfDiscountFactor);
-		
-		txtMaximumReward.setLayoutX(AgentPane.getPrefWidth()*.02);
-		txtMaximumReward.setLayoutY(AgentPane.getPrefHeight()*.61);
-		txtMaximumReward.setStyle("-fx-font-size: 15;");
+			            @Override
+			            public void run() 
+			            {
+			    			stage.close();
+			            }
+			        });  
+			    }
+			}).start();
 
-		AgentPane.getChildren().add(txtMaximumReward);		
-		
-		tfMaximumReward.setLayoutX(AgentPane.getPrefWidth()*.02);
-		tfMaximumReward.setLayoutY(AgentPane.getPrefHeight()*.64);
-		AgentPane.getChildren().add(tfMaximumReward);
-		
+
+
+
+			
+		});
+
+		AgentPane.getChildren().addAll(txtEpisodes, tfEpisodes);
+
+
 		btCreateNew.setLayoutX(AgentPane.getPrefWidth()*.02);
-		btCreateNew.setLayoutY(AgentPane.getPrefHeight()*.80);
+		btCreateNew.setLayoutY(AgentPane.getPrefHeight()*.77);
 		AgentPane.getChildren().add(btCreateNew);
 
-		
+
+		btUpload.setText("Upload Net");
+		btUpload.setLayoutX(AgentPane.getPrefWidth()*.4);
+		btUpload.setLayoutY(AgentPane.getPrefHeight()*.77);
+		AgentPane.getChildren().add(btUpload);
+
+		btCreateNew.setOnAction(e ->{
+			//	public SnakeDQN(int[] topology, double learningRate, double discountFactor, int width, int height, double hitWall, double ateApple, double idle)
+
+			((GamePane) gamePane).setSnek(Double.parseDouble(tfLearningRate.getText()), Double.parseDouble(tfDiscountFactor.getText()), Double.parseDouble(tfEpsilonDecay.getText()), Double.parseDouble(tfIdle.getText()), Double.parseDouble(tfEatsApple.getText()), Double.parseDouble(tfwallDeath.getText()), Double.parseDouble(tfSelfDestruct.getText()));
+
+			btTrain.setDisable(false);
+			tfEpisodes.setDisable(false);
+			btStartTraining.setDisable(false);
+
+			((GamePane)gamePane).setConsole("Created new network");
+
+		});
+
 		getChildren().add(content);
 		Text Title = new Text("Control Panel");
+<<<<<<< HEAD
 		//Image myPhoto = new Image(("qmark.png"));
 		//ImageView myViewImage = new ImageView(myPhoto);
 		//Image.getChildren().add(Pane);
@@ -255,6 +530,9 @@ public class ControlPane extends Pane {
 		content.getChildren().add(AgentPane);
 		*/
 		
+=======
+
+>>>>>>> Danny
 		Pane TitlePane = new Pane();
 		TitlePane.setStyle("-fx-background-color: '#e0e0e0'");
 		TitlePane.setLayoutX(getPrefWidth()*0.02);
@@ -263,17 +541,70 @@ public class ControlPane extends Pane {
 		TitlePane.setPrefWidth(content.getPrefWidth()*.95);
 		TitlePane.getChildren().add(Title);
 		content.getChildren().add(TitlePane);
+<<<<<<< HEAD
 		
        // TitlePane.getChildren().add(myViewImage);
 
 		
 		
+=======
+
+>>>>>>> Danny
 		Title.setStyle("-fx-font-size: 20;"); // NEEDS TO BE CHANGED BASED ON SIZE
 		Title.setLayoutX(content.getPrefWidth()*0.04);
 		Title.setLayoutY(content.getPrefHeight()*0.04);
 		//Title.setLayoutX(value);
 		//Title.setLayoutY();
 
+		btStatic.setOnAction(ex->{
+
+			btDQN.setStyle("-fx-background-color: 'white'; -fx-text-fill: '#301934';");
+			btStatic.setStyle("-fx-background-color: '#006400'; -fx-text-fill: 'white';");
+
+
+			((GamePane) gamePane).setColor(Color.ORANGE);
+			tfDiscountFactor.setDisable(true);
+			tfEpsilonDecay.setDisable(true);
+			tfwallDeath.setDisable(true);
+			tfLearningRate.setDisable(true);
+			tfSelfDestruct.setDisable(true);
+			tfIdle.setDisable(true);
+			tfEatsApple.setDisable(true);
+
+			btUpload.setDisable(true);
+			btCreateNew.setDisable(true);
+
+			btStartTraining.setDisable(true);
+
+			btTrain.setDisable(true);
+
+		});
+
+		btDQN.setOnAction(ex->{
+
+			btDQN.setStyle("-fx-background-color: '#301934'; -fx-text-fill: 'white';");
+			btStatic.setStyle("-fx-background-color: 'white'; -fx-text-fill: '#006400';");
+
+			((GamePane) gamePane).setColor(Color.PURPLE);
+
+			tfDiscountFactor.setDisable(false);
+			tfEpsilonDecay.setDisable(false);
+			tfwallDeath.setDisable(false);
+			tfLearningRate.setDisable(false);
+			tfSelfDestruct.setDisable(false);
+			tfIdle.setDisable(false);
+			tfEatsApple.setDisable(false);
+
+			btUpload.setDisable(false);
+			btCreateNew.setDisable(false);
+
+			btStartTraining.setDisable(true);
+
+
+
+		});
+
 
 	}
+
 }//end ControlPane

@@ -1,14 +1,13 @@
-package Package1;
+package Starter;
 
-import Panes.ControlPane;
-import Panes.DisplayPane;
-import Panes.GamePane;
-import Panes.HelpTabPane;
+
+import java.io.File;
+
 import Panes.MasterPane;
 import javafx.application.Application;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
-import javafx.scene.layout.Pane;
+import javafx.stage.FileChooser;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 
@@ -20,6 +19,8 @@ import javafx.stage.Stage;
 public class GUIManager extends Application
 {
 	Scene scene;
+	Stage stage;
+	
 	
 	public GUIManager()
 	{
@@ -39,7 +40,7 @@ public class GUIManager extends Application
 		double width, height;
 		//Get the dimensions of user's screen.
 	    Rectangle2D screenBounds = Screen.getPrimary().getBounds();
-	    
+
 	    //Test to see what the dimensions of the screen are.
 	    System.out.println(screenBounds);
 	    
