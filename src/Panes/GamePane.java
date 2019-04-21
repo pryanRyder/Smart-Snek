@@ -173,7 +173,7 @@ public class GamePane extends Pane {
 
 		timeline.setCycleCount(Timeline.INDEFINITE);
 
-		KeyFrame keyframe = new KeyFrame(Duration.millis(200), action ->
+		KeyFrame keyframe = new KeyFrame(Duration.millis(70), action ->
 		{
 			// Boolean Value that Determines whether you can go back on top of yourself
 			onlyOneDirection = true;
@@ -218,18 +218,21 @@ public class GamePane extends Pane {
 		{
 			// Boolean Value that Determines whether you can go back on top of yourself
 			onlyOneDirection = true;
+
+
 			
-			
-			// Need to make iteration go to zero
-			
-			
+
+			//clears the display grid
 			ClearGrid();
+
+			//makes a grid for brainySnake
 			UpdateGrid2();
 
+			//makes decision
 			brainySnek.MakeDecision();
 
-			UpdateGrid2();
-
+			//executes action
+			brainySnek.ExecuteAction();
 
 			if(brainySnek.isDead())
 			{
