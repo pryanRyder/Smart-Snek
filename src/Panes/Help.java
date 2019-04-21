@@ -57,8 +57,6 @@ public class Help extends Pane {
      tabC.setContent(tabC_vBox);
   
    
-   gamePane.prefHeightProperty().bind(scene.heightProperty());
-    gamePane.prefWidthProperty().bind(scene.widthProperty());
    
 
  }

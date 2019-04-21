@@ -18,7 +18,7 @@ public class DisplayPane extends Pane {
 	public TextArea Console = new TextArea();
 	
 	int highscoreINT = 0;
-
+	
 	public void finalize() throws Throwable {
 		super.finalize();
 	}
@@ -46,6 +46,8 @@ public class DisplayPane extends Pane {
     		highscore.setText(highscoreString);
     	}
 	}
+	
+	
 
 	public DisplayPane(double width, double height)
 	{
