@@ -1,9 +1,15 @@
 package Panes;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 
+import javafx.application.Platform;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
@@ -400,7 +406,69 @@ public class ControlPane extends Pane {
 		tfEpisodes.setDisable(true);
 
 		btTrain.setOnAction(e ->{
-			((GamePane) gamePane).trainSnek(Integer.parseInt(tfEpisodes.getText()));
+
+			Stage stage = new Stage();
+			Pane pane = new Pane();
+			Scene scene = new Scene(pane, 400, 400);
+			stage.setScene(scene);
+			Image gif;
+			try {
+				gif = new Image(new FileInputStream("SnakeTraining.gif"));
+				
+
+			ImageView giffyboi = new ImageView(gif);
+			giffyboi.setLayoutX(70);
+			giffyboi.setLayoutY(50);
+			Text txtTrainingSnake = new Text("Training Snake...");
+			txtTrainingSnake.setLayoutX(160);
+			txtTrainingSnake.setLayoutY(360);
+			pane.getChildren().add(txtTrainingSnake);
+			
+			pane.getChildren().add(giffyboi);
+			} catch (FileNotFoundException f) {
+				// TODO Auto-generated catch block
+				f.printStackTrace();
+			}
+
+			new Thread(new Runnable() {
+
+			    @Override
+			    public void run() {
+
+			    	
+			        Platform.runLater(new Runnable() {
+
+			            @Override
+			            public void run() 
+			            {
+			    			stage.show();
+			            }
+			        });  
+			    }
+			}).start();
+			
+			new Thread(new Runnable() {
+
+			    @Override
+			    public void run() {
+						((GamePane) gamePane).trainSnek(Integer.parseInt(tfEpisodes.getText()));
+
+
+						Platform.runLater(new Runnable() {
+
+			            @Override
+			            public void run() 
+			            {
+			    			stage.close();
+			            }
+			        });  
+			    }
+			}).start();
+
+
+
+
+			
 		});
 
 		AgentPane.getChildren().addAll(txtEpisodes, tfEpisodes);
