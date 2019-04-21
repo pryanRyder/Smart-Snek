@@ -42,7 +42,7 @@ public class GamePane extends Pane {
 	Scene scene;
 
     Pane displayPane;
-    private int iteration = 0;
+    int iteration = 0;
 
 
 	SnakeDQN dqn = new SnakeDQN(0.001, 0.995, 10, 10);
@@ -218,10 +218,11 @@ public class GamePane extends Pane {
 		{
 			// Boolean Value that Determines whether you can go back on top of yourself
 			onlyOneDirection = true;
-
-
-			iteration = 0;
-
+			
+			
+			// Need to make iteration go to zero
+			
+			
 			ClearGrid();
 			UpdateGrid2();
 
