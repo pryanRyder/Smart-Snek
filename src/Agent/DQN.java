@@ -1,12 +1,17 @@
 package Agent;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 import NeuralNetwork.NeuralNetwork;
 
-public abstract class DQN
+public abstract class DQN implements Serializable
 {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -2093909581694354285L;
 	private double discountFactor;
 	private double epsilon;
 	private double epsilonMin;
@@ -83,6 +88,7 @@ public abstract class DQN
 	{
 		if(network != null)
 		{
+			System.out.println("I'm not null :)");
 			this.network = network;
 		}
 	}
@@ -189,9 +195,13 @@ public abstract class DQN
 	
 
 	
-	class Experience
+	class Experience implements Serializable
 	{
 
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = -3109528438140969106L;
 		private final double[] state;
 		private final double[] nextState;
 		private final int actionIndex;
