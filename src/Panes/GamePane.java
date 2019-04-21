@@ -222,13 +222,17 @@ public class GamePane extends Pane {
 
 			iteration = 0;
 
+			//clears the display grid
 			ClearGrid();
+			
+			//makes a grid for brainySnake
 			UpdateGrid2();
 
+			//makes decision
 			brainySnek.MakeDecision();
-
-			UpdateGrid2();
-
+			
+			//executes action
+			brainySnek.ExecuteAction();
 
 			if(brainySnek.isDead())
 			{
