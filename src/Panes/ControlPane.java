@@ -23,8 +23,6 @@ import javafx.stage.Stage;
  * @created 17-Feb-2019 5:39:58 PM
  */
 
-
-//fuck this class
 public class ControlPane extends Pane {
 
 	boolean GAChecked = false;

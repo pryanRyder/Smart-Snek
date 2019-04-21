@@ -216,13 +216,9 @@ public class SnakeDQN extends DQN implements Serializable
 	@Override
 	protected double executeActionAndGetReward(int actionIndex)
 	{		
-		//TODO:
-		// make program a lot harder by
-		// limiting actions to 3 different directions
 		double[] tmp = {0, 0, 0, 0};
 		headNeighbors = tmp;
 		
-		//System.out.println(Arrays.toString(headNeighbors));
 		
 		for(int i = Positions.size()-1; i > 0; i--)
 		{
@@ -317,6 +313,7 @@ public class SnakeDQN extends DQN implements Serializable
 				VGP.add(temp);
 			}
 		}
+		
 		//remove snake's positions from the list of valid grid positions
 		for(int i = 0; i < VGP.size(); i++)
 		{

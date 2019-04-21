@@ -219,14 +219,10 @@ public class GamePane extends Pane {
 			// Boolean Value that Determines whether you can go back on top of yourself
 			onlyOneDirection = true;
 
-
-			
-
 			//clears the display grid
 			ClearGrid();
-
-			//makes a grid for brainySnake
-			UpdateGrid2();
+			
+			brainySnek.UpdateGrid();
 
 			//makes decision
 			brainySnek.MakeDecision();
@@ -234,12 +230,15 @@ public class GamePane extends Pane {
 			//executes action
 			brainySnek.ExecuteAction();
 
+			//makes a grid for brainySnake
+			UpdateGrid2();
+			
 			if(brainySnek.isDead())
 			{
 				iteration++;
 				brainySnek.reset();
 			}
-
+			
 			//adds to score if snake eats objective item
 		    ((DisplayPane) displayPane).setScore(brainySnek.getScore()+"");
 
@@ -247,8 +246,7 @@ public class GamePane extends Pane {
 		    ((DisplayPane) displayPane).setHighScore(brainySnek.getScore());
 
 		    ((DisplayPane) displayPane).setIteration(iteration+"");
-
-
+		    
 		    //---------------------------- AI Integration ------------------------------- //
 
 
@@ -384,11 +382,6 @@ public class GamePane extends Pane {
 
 
 	//---------------------------- Getters and Setters for timeline (DQN) ------------------------------- //
-
-
-	public void setColor(Color colorOfSnake) {
-		// this.colorOfSnake = colorOfSnake;
-	}
 
 	public Color getColor(Color colorOfSnake) {
 
