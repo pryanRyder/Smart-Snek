@@ -28,6 +28,8 @@ public class ControlPane extends Pane {
 
 	boolean GAChecked = false;
 
+	SnakeBrain brainyBoy = new SnakeBrain();
+
 	public void finalize() throws Throwable {
 		super.finalize();
 	}
@@ -303,16 +305,16 @@ public class ControlPane extends Pane {
 				txtIdle, tfIdle);
 
 
-		
+
 		Button btStatic = new Button("Static AI");
 		btStatic.setLayoutX(AgentPane.getPrefWidth()*.55);
 		btStatic.setLayoutY(AgentPane.getPrefHeight()*.1);
 		AgentPane.getChildren().add(btStatic);
 		btStatic.setStyle("-fx-background-color: 'white'; -fx-text-fill: '#006400';");
 
-		
-		
-		
+
+
+
 		btStatic.setOnAction(ex->{
 
 			btDQN.setStyle("-fx-background-color: 'white'; -fx-text-fill: '#301934';");
@@ -362,12 +364,12 @@ public class ControlPane extends Pane {
 	        btTrain.setDisable(false);
 	        btStartTraining.setDisable(false);
 		});
-		
+
 		Button btSave = new Button("Save");
 		btSave.setLayoutX(AgentPane.getPrefWidth()*.7);
 		btSave.setLayoutY(AgentPane.getPrefHeight()*.77);
 		AgentPane.getChildren().add(btSave);
-		
+
 		btSave.setOnAction(e ->{
 			FileChooser  fileChooser = new FileChooser();
 	        Stage tempStage = new Stage();
@@ -414,7 +416,7 @@ public class ControlPane extends Pane {
 			Image gif;
 			try {
 				gif = new Image(new FileInputStream("SnakeTraining.gif"));
-				
+
 
 			ImageView giffyboi = new ImageView(gif);
 			giffyboi.setLayoutX(70);
@@ -423,7 +425,7 @@ public class ControlPane extends Pane {
 			txtTrainingSnake.setLayoutX(160);
 			txtTrainingSnake.setLayoutY(360);
 			pane.getChildren().add(txtTrainingSnake);
-			
+
 			pane.getChildren().add(giffyboi);
 			} catch (FileNotFoundException f) {
 				// TODO Auto-generated catch block
@@ -435,18 +437,18 @@ public class ControlPane extends Pane {
 			    @Override
 			    public void run() {
 
-			    	
+
 			        Platform.runLater(new Runnable() {
 
 			            @Override
-			            public void run() 
+			            public void run()
 			            {
 			    			stage.show();
 			            }
-			        });  
+			        });
 			    }
 			}).start();
-			
+
 			new Thread(new Runnable() {
 
 			    @Override
@@ -457,18 +459,18 @@ public class ControlPane extends Pane {
 						Platform.runLater(new Runnable() {
 
 			            @Override
-			            public void run() 
+			            public void run()
 			            {
 			    			stage.close();
 			            }
-			        });  
+			        });
 			    }
 			}).start();
 
 
 
 
-			
+
 		});
 
 		AgentPane.getChildren().addAll(txtEpisodes, tfEpisodes);
@@ -521,7 +523,8 @@ public class ControlPane extends Pane {
 			btStatic.setStyle("-fx-background-color: '#006400'; -fx-text-fill: 'white';");
 
 
-			((GamePane) gamePane).setColor(Color.ORANGE);
+			((GamePane) gamePane).colorOfSnake(0.992, 0.666, 0.090);
+
 			tfDiscountFactor.setDisable(true);
 			tfEpsilonDecay.setDisable(true);
 			tfwallDeath.setDisable(true);
@@ -537,6 +540,9 @@ public class ControlPane extends Pane {
 
 			btTrain.setDisable(true);
 
+
+			((SnakeBrain) brainyBoy).SnakeBrain();						////// LOOK HERE FOR STATIC BUTTON STUFF ????????????!!!@!@?
+
 		});
 
 		btDQN.setOnAction(ex->{
@@ -544,7 +550,7 @@ public class ControlPane extends Pane {
 			btDQN.setStyle("-fx-background-color: '#301934'; -fx-text-fill: 'white';");
 			btStatic.setStyle("-fx-background-color: 'white'; -fx-text-fill: '#006400';");
 
-			((GamePane) gamePane).setColor(Color.PURPLE);
+			((GamePane) gamePane).colorOfSnake(0.552, 0.113, 0.584);
 
 			tfDiscountFactor.setDisable(false);
 			tfEpsilonDecay.setDisable(false);
