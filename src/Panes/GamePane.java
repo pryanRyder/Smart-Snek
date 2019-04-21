@@ -193,6 +193,51 @@ public class GamePane extends Pane {
 		    ((DisplayPane) displayPane).setIteration(iteration+"");
 
 
+		});
+
+		timeline.getKeyFrames().add(keyframe);
+
+
+
+
+
+
+		//---------------------------- GAME IMPLEMENTATION 2 ------------------------------- //
+		timeline2.setCycleCount(Timeline.INDEFINITE);
+
+		KeyFrame keyframe2 = new KeyFrame(Duration.millis(70), action ->
+		{
+			// Boolean Value that Determines whether you can go back on top of yourself
+			onlyOneDirection = true;
+
+			//clears the display grid
+			ClearGrid();
+
+			brainySnek.UpdateGrid();
+
+			//makes decision
+			brainySnek.MakeDecision();
+
+			//executes action
+			brainySnek.ExecuteAction();
+
+			//makes a grid for brainySnake
+			UpdateGrid2();
+
+			if(brainySnek.isDead())
+			{
+				iteration++;
+				brainySnek.reset();
+			}
+
+			//adds to score if snake eats objective item
+		    ((DisplayPane) displayPane).setScore(brainySnek.getScore()+"");
+
+		    //adds to highscore if the int score is greater than int highscore.
+		    ((DisplayPane) displayPane).setHighScore(brainySnek.getScore());
+
+		    ((DisplayPane) displayPane).setIteration(iteration+"");
+
 		    //---------------------------- AI Integration ------------------------------- //
 
 
@@ -317,9 +362,10 @@ public class GamePane extends Pane {
 		setUpGridPane();
 	}
 
-	public void setColor(Color colorOfSnake) {
-		// this.colorOfSnake = colorOfSnake;
-	}
+
+
+
+	//---------------------------- Getters and Setters for timeline (DQN) ------------------------------- //
 
 	public Color getColor(Color colorOfSnake) {
 

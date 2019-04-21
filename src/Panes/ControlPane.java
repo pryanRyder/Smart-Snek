@@ -29,8 +29,6 @@ import javafx.stage.Stage;
  * @created 17-Feb-2019 5:39:58 PM
  */
 
-
-
 public class ControlPane extends Pane {
 
 	boolean GAChecked = false;
@@ -515,10 +513,10 @@ public class ControlPane extends Pane {
 		//ImageView myViewImage = new ImageView(myPhoto);
 		//Image.getChildren().add(Pane);
         //.getChildren().add(TitlePane);
-	
-		
-		
-		
+
+
+
+
 		/*
 		AgentPane.setStyle("-fx-background-color: '#e0e0e0'");
 		AgentPane.setLayoutX(getPrefWidth()*0.02);
@@ -527,7 +525,7 @@ public class ControlPane extends Pane {
 		AgentPane.setPrefWidth(content.getPrefWidth()*.95);
 		content.getChildren().add(AgentPane);
 		*/
-		
+
 
 		Pane TitlePane = new Pane();
 		TitlePane.setStyle("-fx-background-color: '#e0e0e0'");
@@ -538,11 +536,11 @@ public class ControlPane extends Pane {
 		TitlePane.getChildren().add(Title);
 		content.getChildren().add(TitlePane);
 
-		
+
        // TitlePane.getChildren().add(myViewImage);
 
-		
-		
+
+
 
 		Title.setStyle("-fx-font-size: 20;"); // NEEDS TO BE CHANGED BASED ON SIZE
 		Title.setLayoutX(content.getPrefWidth()*0.04);
