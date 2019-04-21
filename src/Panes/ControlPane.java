@@ -31,6 +31,8 @@ public class ControlPane extends Pane {
 
 	SnakeBrain brainyBoy = new SnakeBrain();
 
+	boolean whichTimeline = true;
+
 	public void finalize() throws Throwable {
 		super.finalize();
 	}
@@ -146,12 +148,19 @@ public class ControlPane extends Pane {
 
 		btStop.setOnAction(e->
 		{
-			((GamePane) gamePane).Stop();
-			btPlay.setDisable(true);
+			if(whichTimeline) {
+				((GamePane) gamePane).Stop();
+				btPlay.setDisable(true);
+				btStartTraining.setDisable(false);
+			} else {
+				((GamePane) gamePane).Stop2();
+				btPlay.setDisable(false);
+				btStartTraining.setDisable(true);
+			}
+
 			btPause.setDisable(true);
 			btRestart.setDisable(true);
 			btStop.setDisable(true);
-			btStartTraining.setDisable(false);
 
 		});
 
@@ -178,9 +187,17 @@ public class ControlPane extends Pane {
 
 		btPlay.setOnAction(e->
 		{
-			((GamePane) gamePane).Play();
+			if(whichTimeline) {
+				((GamePane) gamePane).Play();
+				btStop.setDisable(false);
+			}else {
+				((GamePane) gamePane).Play2();
+				btStop.setDisable(true);
+			}
+
 			btPlay.setDisable(true);
 			btPause.setDisable(false);
+			btRestart.setDisable(false);
 		});
 
 		btPause.setLayoutX(trainingPane.getPrefWidth()*.2);
@@ -190,9 +207,18 @@ public class ControlPane extends Pane {
 
 		btPause.setOnAction(e->
 		{
-			((GamePane) gamePane).Stop();
+			if(whichTimeline)
+			{
+				((GamePane) gamePane).Stop();
+				btStop.setDisable(false);
+			}else{
+				((GamePane) gamePane).Stop2();
+				btStop.setDisable(true);
+				 }
+
 			btPause.setDisable(true);
 			btPlay.setDisable(false);
+			btRestart.setDisable(false);
 		});
 
 		btRestart.setLayoutX(trainingPane.getPrefWidth()*.4);
@@ -204,8 +230,19 @@ public class ControlPane extends Pane {
 		{
 			btPlay.setDisable(true);
 			btPause.setDisable(false);
-			((GamePane) gamePane).reset();
-			((GamePane) gamePane).Play();
+
+
+			if(whichTimeline)
+			{
+				((GamePane) gamePane).reset();
+				((GamePane) gamePane).Play();
+				btStop.setDisable(false);
+			}else{
+				((GamePane) gamePane).reset2();
+				((GamePane) gamePane).Play2();
+				btStop.setDisable(true);
+				 }
+
 		});
 
 		AgentPane.setStyle("-fx-background-color: '#e0e0e0'");
@@ -312,41 +349,6 @@ public class ControlPane extends Pane {
 		btStatic.setLayoutY(AgentPane.getPrefHeight()*.1);
 		AgentPane.getChildren().add(btStatic);
 		btStatic.setStyle("-fx-background-color: 'white'; -fx-text-fill: '#006400';");
-
-
-
-
-		btStatic.setOnAction(ex->{
-
-			btDQN.setStyle("-fx-background-color: 'white'; -fx-text-fill: '#301934';");
-			btStatic.setStyle("-fx-background-color: '#006400'; -fx-text-fill: 'white';");
-
-			((GamePane) gamePane).colorOfSnake(0.937, 0.525, 0.043);
-			tfDiscountFactor.setDisable(true);
-			tfEpsilonDecay.setDisable(true);
-			tfwallDeath.setDisable(true);
-			tfLearningRate.setDisable(true);
-			tfSelfDestruct.setDisable(true);
-			tfIdle.setDisable(true);
-			tfEatsApple.setDisable(true);
-			btStartTraining.setDisable(false);
-		});
-
-		btDQN.setOnAction(ex->{
-
-			btDQN.setStyle("-fx-background-color: '#301934'; -fx-text-fill: 'white';");
-			btStatic.setStyle("-fx-background-color: 'white'; -fx-text-fill: '#006400';");
-
-			((GamePane) gamePane).colorOfSnake(0.529, 0.066, 0.611);
-			tfDiscountFactor.setDisable(false);
-			tfEpsilonDecay.setDisable(false);
-			tfwallDeath.setDisable(false);
-			tfLearningRate.setDisable(false);
-			tfSelfDestruct.setDisable(false);
-			tfIdle.setDisable(false);
-			tfEatsApple.setDisable(false);
-		});
-
 
 		btUpload.setOnAction(e ->
 		{
@@ -520,6 +522,8 @@ public class ControlPane extends Pane {
 
 		btStatic.setOnAction(ex->{
 
+			whichTimeline = false;
+
 			btDQN.setStyle("-fx-background-color: 'white'; -fx-text-fill: '#301934';");
 			btStatic.setStyle("-fx-background-color: '#006400'; -fx-text-fill: 'white';");
 
@@ -541,12 +545,20 @@ public class ControlPane extends Pane {
 
 			btTrain.setDisable(true);
 
+			btStop.setDisable(true);
 
-			((SnakeBrain) brainyBoy).SnakeBrain();						////// LOOK HERE FOR STATIC BUTTON STUFF ????????????!!!@!@?
+			btRestart.setDisable(true);
+
+			btPlay.setDisable(false);
+
+			((GamePane) gamePane).Stop();
+
 
 		});
 
 		btDQN.setOnAction(ex->{
+
+			whichTimeline = true;
 
 			btDQN.setStyle("-fx-background-color: '#301934'; -fx-text-fill: 'white';");
 			btStatic.setStyle("-fx-background-color: 'white'; -fx-text-fill: '#006400';");
@@ -564,8 +576,19 @@ public class ControlPane extends Pane {
 			btUpload.setDisable(false);
 			btCreateNew.setDisable(false);
 
-			btStartTraining.setDisable(true);
+			btStop.setDisable(true);
+			btPlay.setDisable(true);
+			btRestart.setDisable(true);
+			btPause.setDisable(true);
 
+			btStartTraining.setDisable(false);
+
+
+
+			((GamePane) gamePane).Stop2();
+			((GamePane) gamePane).reset();
+			((GamePane) gamePane).Play();
+			((GamePane) gamePane).Stop();
 
 
 		});
