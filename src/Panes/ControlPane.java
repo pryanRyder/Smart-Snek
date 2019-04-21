@@ -2,6 +2,7 @@ package Panes;
 
 import java.io.File;
 
+import Agent.SnakeBrain;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
@@ -21,6 +22,8 @@ import javafx.stage.Stage;
 public class ControlPane extends Pane {
 
 	boolean GAChecked = false;
+	
+	SnakeBrain brainyBoy = new SnakeBrain();
 
 	public void finalize() throws Throwable {
 		super.finalize();
@@ -448,7 +451,8 @@ public class ControlPane extends Pane {
 			btStatic.setStyle("-fx-background-color: '#006400'; -fx-text-fill: 'white';");
 
 
-			((GamePane) gamePane).setColor(Color.ORANGE);
+			((GamePane) gamePane).colorOfSnake(0.992, 0.666, 0.090); 
+			
 			tfDiscountFactor.setDisable(true);
 			tfEpsilonDecay.setDisable(true);
 			tfwallDeath.setDisable(true);
@@ -463,6 +467,9 @@ public class ControlPane extends Pane {
 			btStartTraining.setDisable(true);
 
 			btTrain.setDisable(true);
+			
+			
+			((SnakeBrain) brainyBoy).SnakeBrain();						////// LOOK HERE FOR STATIC BUTTON STUFF ????????????!!!@!@?
 
 		});
 
@@ -471,7 +478,7 @@ public class ControlPane extends Pane {
 			btDQN.setStyle("-fx-background-color: '#301934'; -fx-text-fill: 'white';");
 			btStatic.setStyle("-fx-background-color: 'white'; -fx-text-fill: '#006400';");
 
-			((GamePane) gamePane).setColor(Color.PURPLE);
+			((GamePane) gamePane).colorOfSnake(0.552, 0.113, 0.584); 
 
 			tfDiscountFactor.setDisable(false);
 			tfEpsilonDecay.setDisable(false);
