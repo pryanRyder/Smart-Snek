@@ -60,9 +60,9 @@ public class GamePane extends Pane {
 	//Color of the Snake
 	 Color colorOfSnake = Color.PURPLE;
 	 Timeline timeline = new Timeline();
-	 
+
 	 Timeline timeline2 = new Timeline();
-	 
+
 	 SnakeBrain brainySnek = new SnakeBrain();
 
 	boolean dq = false;
@@ -282,6 +282,19 @@ public class GamePane extends Pane {
 		}
 	}
 
+	public void UpdateGrid2()
+	{
+		for(int i = 0; i < recs.length; i++)
+		{
+			for( int j = 0; j < recs[0].length; j++)
+			{
+				if(brainySnek.Grid[i][j] == .5)
+					recs[i][j].setFill(Color.RED);
+				if(brainySnek.Grid[i][j] == 1)
+					recs[i][j].setFill(colorOfSnake);
+			}
+		}
+	}
 	public void setUpGridPane()
 	{
 		//The size of the gaps.
