@@ -157,7 +157,7 @@ public class ControlPane extends Pane {
 				btPlay.setDisable(true);
 				btStartTraining.setDisable(false);
 			} else {
-				((GamePane) gamePane).Stop2();
+				//((GamePane) gamePane).Stop2();
 				btPlay.setDisable(false);
 				btStartTraining.setDisable(true);
 			}
@@ -195,7 +195,7 @@ public class ControlPane extends Pane {
 				((GamePane) gamePane).Play();
 				btStop.setDisable(false);
 			}else {
-				((GamePane) gamePane).Play2();
+				//((GamePane) gamePane).Play2();
 				btStop.setDisable(true);
 			}
 
@@ -216,7 +216,7 @@ public class ControlPane extends Pane {
 				((GamePane) gamePane).Stop();
 				btStop.setDisable(false);
 			}else{
-				((GamePane) gamePane).Stop2();
+				//((GamePane) gamePane).Stop2();
 				btStop.setDisable(true);
 				 }
 
@@ -242,8 +242,8 @@ public class ControlPane extends Pane {
 				((GamePane) gamePane).Play();
 				btStop.setDisable(false);
 			}else{
-				((GamePane) gamePane).reset2();
-				((GamePane) gamePane).Play2();
+				//((GamePane) gamePane).reset2();
+				//((GamePane) gamePane).Play2();
 				btStop.setDisable(true);
 				 }
 
@@ -617,7 +617,7 @@ public class ControlPane extends Pane {
 
 
 
-			((GamePane) gamePane).Stop2();
+			//((GamePane) gamePane).Stop2();
 			((GamePane) gamePane).reset();
 			((GamePane) gamePane).Play();
 			((GamePane) gamePane).Stop();

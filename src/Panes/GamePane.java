@@ -5,6 +5,7 @@ import java.io.FileInputStream;
 import java.io.ObjectInputStream;
 import java.util.Arrays;
 
+import Agent.SnakeBrain;
 import Agent.SnakeDQN;
 import NeuralNetwork.NeuralNetwork;
 import javafx.animation.KeyFrame;
@@ -57,8 +58,12 @@ public class GamePane extends Pane {
 	double gapScale = 0.05;
 
 	//Color of the Snake
-	 Color colorOfSnake = Color.BLACK;
+	 Color colorOfSnake = Color.PURPLE;
 	 Timeline timeline = new Timeline();
+	 
+	 Timeline timeline2 = new Timeline();
+	 
+	 SnakeBrain brainySnek = new SnakeBrain();
 
 	boolean dq = false;
 	boolean stat = false;
@@ -222,7 +227,7 @@ public class GamePane extends Pane {
 			brainySnek.ExecuteAction();
 
 			//makes a grid for brainySnake
-			UpdateGrid2();
+			//UpdateGrid2();
 
 			if(brainySnek.isDead())
 			{

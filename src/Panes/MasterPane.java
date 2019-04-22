@@ -9,11 +9,11 @@ public class MasterPane extends Pane
 	{
 		Pane controlPane = new ControlPane(width, height);
 		//Pane helpTabPane = new HelpTabPane(width, height);
-		//Pane HelpPane = new Help(width, height);
+		Pane helpPane = new HelpPane(width, height);
 
 
 		getChildren().add(controlPane);
-		//getChildren().add(helpTabPane);
+		getChildren().add(helpPane);
 	}
 
 }
