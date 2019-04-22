@@ -64,53 +64,34 @@ public class ControlPane extends Pane {
 		gridSizePane.setPrefWidth(content.getPrefWidth()*.95);
 		content.getChildren().add(gridSizePane);
 
-		Text txtgridSize = new Text("Grid Size");
+		Text txtgridSize = new Text("Generate Report");
 		txtgridSize.setStyle("-fx-font-size: 18");
 		txtgridSize.setLayoutX(gridSizePane.getPrefWidth()*0.02);
 		txtgridSize.setLayoutY(gridSizePane.getPrefHeight()*0.15);
 		txtgridSize.setDisable(true);
 		gridSizePane.getChildren().add(txtgridSize);
+		
+		Text OpenExcel = new Text("Open CSV");
+		OpenExcel.setStyle("-fx-font-size: 15");
+		OpenExcel.setLayoutX(gridSizePane.getPrefWidth()*0.02);
+		OpenExcel.setLayoutY(gridSizePane.getPrefHeight()*0.40);
 
-		Text txtWidth = new Text("Width Size");
-		txtWidth.setStyle("-fx-font-size: 15");
-		txtWidth.setLayoutX(gridSizePane.getPrefWidth()*0.02);
-		txtWidth.setLayoutY(gridSizePane.getPrefHeight()*0.35);
-
-		gridSizePane.getChildren().add(txtWidth);
-
-		TextField tfWidth = new TextField();
-		tfWidth.setStyle("-fx-font-size: 15");
-		tfWidth.setLayoutX(gridSizePane.getPrefWidth()*0.02);
-		tfWidth.setLayoutY(gridSizePane.getPrefHeight()*0.40);
-		tfWidth.setPrefWidth(gridSizePane.getPrefWidth()*0.2);
-
-		gridSizePane.getChildren().add(tfWidth);
-
-		Text txtHeight = new Text("Mutation Rate");
-		txtHeight.setStyle("-fx-font-size: 15");
-		txtHeight.setLayoutX(gridSizePane.getPrefWidth()*0.02);
-		txtHeight.setLayoutY(gridSizePane.getPrefHeight()*0.70);
-		gridSizePane.getChildren().add(txtHeight);
-
-		TextField tfHeight = new TextField();
-		tfHeight.setStyle("-fx-font-size: 15");
-		tfHeight.setLayoutX(gridSizePane.getPrefWidth()*0.02);
-		tfHeight.setLayoutY(gridSizePane.getPrefHeight()*0.75);
-		tfHeight.setPrefWidth(gridSizePane.getPrefWidth()*0.2);
-		gridSizePane.getChildren().add(tfHeight);
-
-		Button btChange = new Button("Change");
-		btChange.setStyle("-fx-font-size: 15");
-		btChange.setLayoutX(gridSizePane.getPrefWidth()*0.7);
-		btChange.setLayoutY(gridSizePane.getPrefHeight()*0.80);
-		gridSizePane.getChildren().add(btChange);
-
-		btChange.setOnAction(e ->
+		gridSizePane.getChildren().add(OpenExcel);
+		
+		
+		
+		Button openButton = new Button("Open");
+		openButton.setLayoutX(gridSizePane.getPrefWidth()*0.02);
+		openButton.setLayoutY(gridSizePane.getPrefHeight()*0.50);
+		
+		gridSizePane.getChildren().add(openButton);
+		
+		openButton.setOnAction( e->
 		{
-			((GamePane) gamePane).ChangeGridSize(Integer.parseInt(tfWidth.getText()), Integer.parseInt(tfHeight.getText()));
+			((GamePane) gamePane).slower();
+			//gamePane.openExcelSpreadsheet();
 		});
-
-
+		
 		Button btCreateNew = new Button("Create Network");
 		Button btTrain = new Button("Train");
 		Button btUpload = new Button("Upload");
