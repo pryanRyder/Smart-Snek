@@ -39,7 +39,6 @@ public class GamePane extends Pane {
 	GridPane gridpane = new GridPane();
 	boolean onlyOneDirection = true;
 	Rectangle recs[][] = new Rectangle[10][10];
-	KeyFrame keyframe = new KeyFrame(Duration.millis(70));
 	Scene scene;
 
     Pane displayPane;
@@ -174,17 +173,7 @@ public class GamePane extends Pane {
 
 		timeline.setCycleCount(Timeline.INDEFINITE);
 
-
-
-
-		//timeline.play();
-
-	getChildren().addAll(gridpane);
-
-	}
-	public KeyFrame KeyFrameContent (Duration x)
-	{
-		 KeyFrame keyframe = new KeyFrame(x, action ->
+		KeyFrame keyframe = new KeyFrame(Duration.millis(70), action ->
 		{
 			// Boolean Value that Determines whether you can go back on top of yourself
 			onlyOneDirection = true;
@@ -232,7 +221,7 @@ public class GamePane extends Pane {
 
 			//clears the display grid
 			ClearGrid();
-
+			
 			brainySnek.UpdateGrid();
 
 			//makes decision
@@ -243,13 +232,13 @@ public class GamePane extends Pane {
 
 			//makes a grid for brainySnake
 			UpdateGrid2();
-
+			
 			if(brainySnek.isDead())
 			{
 				iteration++;
 				brainySnek.reset();
 			}
-
+			
 			//adds to score if snake eats objective item
 		    ((DisplayPane) displayPane).setScore(brainySnek.getScore()+"");
 
@@ -257,7 +246,7 @@ public class GamePane extends Pane {
 		    ((DisplayPane) displayPane).setHighScore(brainySnek.getScore());
 
 		    ((DisplayPane) displayPane).setIteration(iteration+"");
-
+		    
 		    //---------------------------- AI Integration ------------------------------- //
 
 
@@ -266,25 +255,7 @@ public class GamePane extends Pane {
 		timeline2.getKeyFrames().add(keyframe2);
 
 	getChildren().addAll(gridpane);
-	return keyframe;
 
-	}
-
-	public void slower()
-	{
-			Duration time = keyframe.getTime();
-			Duration slower = new Duration (5);
-			//timeline.getKeyFrames().remove(keyframe);
-			KeyFrame keyframe2= KeyFrameContent(time.add(slower));
-			timeline.getKeyFrames().add(keyframe2);
-	}
-	public void faster()
-	{
-		Duration time = keyframe.getTime();
-		Duration fasterS = new Duration (5);
-		timeline.getKeyFrames().remove(keyframe);
-		KeyFrame keyframe2= KeyFrameContent(time.subtract(fasterS));
-		timeline.getKeyFrames().add(keyframe2);
 	}
 
 	//Color of the Snake
@@ -337,8 +308,6 @@ public class GamePane extends Pane {
 
 				//The thickness of the borders.
 				double gapScale = 0.05;
-
-
 
 				//The side length of the boxes.
 				double boxSide;
