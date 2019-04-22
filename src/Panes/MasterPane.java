@@ -8,7 +8,6 @@ public class MasterPane extends Pane
 	public MasterPane(double width, double height)
 	{
 		Pane controlPane = new ControlPane(width, height);
-		//Pane helpTabPane = new HelpTabPane(width, height);
 		Pane helpPane = new HelpPane(width, height);
 
 
