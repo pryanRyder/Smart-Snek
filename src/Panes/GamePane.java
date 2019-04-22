@@ -42,7 +42,7 @@ public class GamePane extends Pane {
 	Scene scene;
 
     Pane displayPane;
-    private int iteration = 0;
+    int iteration = 0;
 
 
 	SnakeDQN dqn = new SnakeDQN(0.001, 0.995, 10, 10);
@@ -219,27 +219,26 @@ public class GamePane extends Pane {
 			// Boolean Value that Determines whether you can go back on top of yourself
 			onlyOneDirection = true;
 
-
-			iteration = 0;
-
 			//clears the display grid
 			ClearGrid();
 			
-			//makes a grid for brainySnake
-			UpdateGrid2();
+			brainySnek.UpdateGrid();
 
 			//makes decision
 			brainySnek.MakeDecision();
-			
+
 			//executes action
 			brainySnek.ExecuteAction();
 
+			//makes a grid for brainySnake
+			UpdateGrid2();
+			
 			if(brainySnek.isDead())
 			{
 				iteration++;
 				brainySnek.reset();
 			}
-
+			
 			//adds to score if snake eats objective item
 		    ((DisplayPane) displayPane).setScore(brainySnek.getScore()+"");
 
@@ -247,8 +246,7 @@ public class GamePane extends Pane {
 		    ((DisplayPane) displayPane).setHighScore(brainySnek.getScore());
 
 		    ((DisplayPane) displayPane).setIteration(iteration+"");
-
-
+		    
 		    //---------------------------- AI Integration ------------------------------- //
 
 
@@ -294,7 +292,6 @@ public class GamePane extends Pane {
 			}
 		}
 	}
-
 	public void setUpGridPane()
 	{
 		//The size of the gaps.
@@ -384,11 +381,6 @@ public class GamePane extends Pane {
 
 
 	//---------------------------- Getters and Setters for timeline (DQN) ------------------------------- //
-
-
-	public void setColor(Color colorOfSnake) {
-		// this.colorOfSnake = colorOfSnake;
-	}
 
 	public Color getColor(Color colorOfSnake) {
 

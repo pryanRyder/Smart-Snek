@@ -23,8 +23,6 @@ import javafx.stage.Stage;
  * @created 17-Feb-2019 5:39:58 PM
  */
 
-
-//fuck this class
 public class ControlPane extends Pane {
 
 	boolean GAChecked = false;
@@ -530,6 +528,8 @@ public class ControlPane extends Pane {
 
 			((GamePane) gamePane).colorOfSnake(0.992, 0.666, 0.090);
 
+			((GamePane) gamePane).iteration = 0;
+
 			tfDiscountFactor.setDisable(true);
 			tfEpsilonDecay.setDisable(true);
 			tfwallDeath.setDisable(true);
@@ -557,6 +557,8 @@ public class ControlPane extends Pane {
 		});
 
 		btDQN.setOnAction(ex->{
+
+			((GamePane) gamePane).iteration = 0;
 
 			whichTimeline = true;
 
