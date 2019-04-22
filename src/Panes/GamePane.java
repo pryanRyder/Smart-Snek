@@ -43,7 +43,7 @@ public class GamePane extends Pane {
 	Scene scene;
 
     Pane displayPane;
-    private int iteration = 0;
+    int iteration = 0;
 
 
 	SnakeDQN dqn = new SnakeDQN(0.001, 0.995, 10, 10);
@@ -230,20 +230,19 @@ public class GamePane extends Pane {
 			// Boolean Value that Determines whether you can go back on top of yourself
 			onlyOneDirection = true;
 
-
-			iteration = 0;
-
 			//clears the display grid
 			ClearGrid();
 
-			//makes a grid for brainySnake
-			UpdateGrid2();
+			brainySnek.UpdateGrid();
 
 			//makes decision
 			brainySnek.MakeDecision();
 
 			//executes action
 			brainySnek.ExecuteAction();
+
+			//makes a grid for brainySnake
+			UpdateGrid2();
 
 			if(brainySnek.isDead())
 			{
@@ -259,7 +258,6 @@ public class GamePane extends Pane {
 
 		    ((DisplayPane) displayPane).setIteration(iteration+"");
 
-
 		    //---------------------------- AI Integration ------------------------------- //
 
 
@@ -268,24 +266,24 @@ public class GamePane extends Pane {
 		timeline2.getKeyFrames().add(keyframe2);
 
 	getChildren().addAll(gridpane);
-	return keyframe; 
+	return keyframe;
 
 	}
-	
+
 	public void slower()
 	{
 			Duration time = keyframe.getTime();
-			Duration slower = new Duration (5); 
+			Duration slower = new Duration (5);
 			//timeline.getKeyFrames().remove(keyframe);
-			KeyFrame keyframe2= KeyFrameContent(time.add(slower)); 
+			KeyFrame keyframe2= KeyFrameContent(time.add(slower));
 			timeline.getKeyFrames().add(keyframe2);
 	}
 	public void faster()
 	{
 		Duration time = keyframe.getTime();
-		Duration fasterS = new Duration (5); 
+		Duration fasterS = new Duration (5);
 		timeline.getKeyFrames().remove(keyframe);
-		KeyFrame keyframe2= KeyFrameContent(time.subtract(fasterS)); 
+		KeyFrame keyframe2= KeyFrameContent(time.subtract(fasterS));
 		timeline.getKeyFrames().add(keyframe2);
 	}
 
@@ -323,7 +321,6 @@ public class GamePane extends Pane {
 			}
 		}
 	}
-
 	public void setUpGridPane()
 	{
 		//The size of the gaps.
@@ -341,7 +338,7 @@ public class GamePane extends Pane {
 				//The thickness of the borders.
 				double gapScale = 0.05;
 
-				
+
 
 				//The side length of the boxes.
 				double boxSide;
@@ -411,15 +408,10 @@ public class GamePane extends Pane {
 		setUpGridPane();
 	}
 
-	
+
 
 
 	//---------------------------- Getters and Setters for timeline (DQN) ------------------------------- //
-
-
-	public void setColor(Color colorOfSnake) {
-		// this.colorOfSnake = colorOfSnake;
-	}
 
 	public Color getColor(Color colorOfSnake) {
 
