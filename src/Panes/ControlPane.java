@@ -246,7 +246,23 @@ public class ControlPane extends Pane {
 
 		});
 
-
+		Button snekSpeedSlow= new Button ("Slower");
+		snekSpeedSlow.setLayoutX(150);
+		snekSpeedSlow.setLayoutY(AgentPane.getPrefHeight()*.1);
+		AgentPane.getChildren().add(snekSpeedSlow);
+		
+		snekSpeedSlow.setOnAction(ex2->{
+			((GamePane) gamePane).slower();
+		});
+		
+		Button snekSpeed= new Button ("Faster");
+		snekSpeed.setLayoutX(AgentPane.getPrefWidth()*.75);
+		snekSpeed.setLayoutY(AgentPane.getPrefHeight()*.85);
+		AgentPane.getChildren().add(snekSpeed);
+		
+		snekSpeed.setOnAction(ex2->{
+			((GamePane) gamePane).faster();
+		});
 
 
 		AgentPane.setStyle("-fx-background-color: '#e0e0e0'");

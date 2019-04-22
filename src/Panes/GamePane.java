@@ -39,6 +39,7 @@ public class GamePane extends Pane {
 	GridPane gridpane = new GridPane();
 	boolean onlyOneDirection = true;
 	Rectangle recs[][] = new Rectangle[10][10];
+	KeyFrame keyframe = new KeyFrame(Duration.millis(70));
 	Scene scene;
 
     Pane displayPane;
@@ -267,7 +268,25 @@ public class GamePane extends Pane {
 		timeline2.getKeyFrames().add(keyframe2);
 
 	getChildren().addAll(gridpane);
+	return keyframe; 
 
+	}
+	
+	public void slower()
+	{
+			Duration time = keyframe.getTime();
+			Duration slower = new Duration (5); 
+			//timeline.getKeyFrames().remove(keyframe);
+			KeyFrame keyframe2= KeyFrameContent(time.add(slower)); 
+			timeline.getKeyFrames().add(keyframe2);
+	}
+	public void faster()
+	{
+		Duration time = keyframe.getTime();
+		Duration fasterS = new Duration (5); 
+		timeline.getKeyFrames().remove(keyframe);
+		KeyFrame keyframe2= KeyFrameContent(time.subtract(fasterS)); 
+		timeline.getKeyFrames().add(keyframe2);
 	}
 
 	//Color of the Snake
@@ -322,8 +341,7 @@ public class GamePane extends Pane {
 				//The thickness of the borders.
 				double gapScale = 0.05;
 
-				//The thickness of the borders.
-				double topBorder, rightBorder, bottomBorder, leftBorder;
+				
 
 				//The side length of the boxes.
 				double boxSide;
@@ -393,7 +411,7 @@ public class GamePane extends Pane {
 		setUpGridPane();
 	}
 
-
+	
 
 
 	//---------------------------- Getters and Setters for timeline (DQN) ------------------------------- //
