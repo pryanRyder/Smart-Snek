@@ -1,10 +1,13 @@
 package Starter;
 
 
+import java.io.File;
+
 import Panes.MasterPane;
 import javafx.application.Application;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
+import javafx.stage.FileChooser;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 
@@ -17,6 +20,7 @@ public class GUIManager extends Application
 {
 	Scene scene;
 	Stage stage;
+	
 	
 	public GUIManager()
 	{
@@ -36,7 +40,6 @@ public class GUIManager extends Application
 		double width, height;
 		//Get the dimensions of user's screen.
 	    Rectangle2D screenBounds = Screen.getPrimary().getBounds();
-		stage = primaryStage;
 
 	    //Test to see what the dimensions of the screen are.
 	    System.out.println(screenBounds);
@@ -45,14 +48,9 @@ public class GUIManager extends Application
 	    width = screenBounds.getWidth() * 1;
 	    height = screenBounds.getHeight() * 0.9;
 		scene = new Scene(new MasterPane(width, height), width, height);
-		stage.setTitle("Smart-Snek");
-		stage.setScene(scene);
-		stage.show();
-	}
-	
-	public Stage getStage()
-	{
-		return stage;
+		primaryStage.setTitle("Smart-Snek");
+		primaryStage.setScene(scene);
+		primaryStage.show();
 	}
 	
 	public static void main(String[] args)
