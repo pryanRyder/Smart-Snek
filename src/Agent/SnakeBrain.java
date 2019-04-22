@@ -19,7 +19,7 @@ public class SnakeBrain
 	int currentActionIndex;
 	
 	int savedX, savedY;
-	int f;
+	boolean f;
 
 	// Will move the snake based off hard inputs such as objective item location, snake head location, & snake body location. 
 	public SnakeBrain()
@@ -297,6 +297,8 @@ public class SnakeBrain
 	
 	public void ExecuteAction()
 	{
+
+		
 		for(int i = Positions.size()-1; i > 0; i--)
 		{
 			int[] temp = new int[2];
@@ -339,6 +341,16 @@ public class SnakeBrain
 					dead = true;
 				}
 				
+				if(f)
+				{
+					int[] temp = new int[2];
+					temp[0] = savedY;
+					temp[1] = savedX;
+					
+					Positions.add(temp);
+					f = false;
+				}
+				
 				// award if on fruit
 				if(Positions.get(0)[1] == fruitX && Positions.get(0)[0] == fruitY)
 				{
@@ -350,19 +362,10 @@ public class SnakeBrain
 					savedX = Positions.get(0)[1];
 					savedY = Positions.get(0)[0];
 					
-					f = 1;
-					f--;
+					f = true;
 				}	
 
-				if(f == 0)
-				{
-					int[] temp = new int[2];
-					temp[0] = savedY;
-					temp[1] = savedX;
-					
-					Positions.add(temp);
-					f--;
-				}		
+
 		UpdateGrid();		
 
 	}
