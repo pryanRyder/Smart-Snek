@@ -34,7 +34,7 @@ public class ControlPane extends Pane {
 	public void finalize() throws Throwable {
 		super.finalize();
 	}
-	public ControlPane(double width, double height)
+	public ControlPane(double width, double height) 
 	{
 
 		Pane gamePane = new GamePane(width, height);
@@ -64,53 +64,35 @@ public class ControlPane extends Pane {
 		gridSizePane.setPrefWidth(content.getPrefWidth()*.95);
 		content.getChildren().add(gridSizePane);
 
-		Text txtgridSize = new Text("Grid Size");
+		Text txtgridSize = new Text("Generate Report");
 		txtgridSize.setStyle("-fx-font-size: 18");
 		txtgridSize.setLayoutX(gridSizePane.getPrefWidth()*0.02);
 		txtgridSize.setLayoutY(gridSizePane.getPrefHeight()*0.15);
 		txtgridSize.setDisable(true);
 		gridSizePane.getChildren().add(txtgridSize);
+		
+		Text OpenExcel = new Text("Open CSV");
+		OpenExcel.setStyle("-fx-font-size: 15");
+		OpenExcel.setLayoutX(gridSizePane.getPrefWidth()*0.02);
+		OpenExcel.setLayoutY(gridSizePane.getPrefHeight()*0.40);
 
-		Text txtWidth = new Text("Width Size");
-		txtWidth.setStyle("-fx-font-size: 15");
-		txtWidth.setLayoutX(gridSizePane.getPrefWidth()*0.02);
-		txtWidth.setLayoutY(gridSizePane.getPrefHeight()*0.35);
-
-		gridSizePane.getChildren().add(txtWidth);
-
-		TextField tfWidth = new TextField();
-		tfWidth.setStyle("-fx-font-size: 15");
-		tfWidth.setLayoutX(gridSizePane.getPrefWidth()*0.02);
-		tfWidth.setLayoutY(gridSizePane.getPrefHeight()*0.40);
-		tfWidth.setPrefWidth(gridSizePane.getPrefWidth()*0.2);
-
-		gridSizePane.getChildren().add(tfWidth);
-
-		Text txtHeight = new Text("Mutation Rate");
-		txtHeight.setStyle("-fx-font-size: 15");
-		txtHeight.setLayoutX(gridSizePane.getPrefWidth()*0.02);
-		txtHeight.setLayoutY(gridSizePane.getPrefHeight()*0.70);
-		gridSizePane.getChildren().add(txtHeight);
-
-		TextField tfHeight = new TextField();
-		tfHeight.setStyle("-fx-font-size: 15");
-		tfHeight.setLayoutX(gridSizePane.getPrefWidth()*0.02);
-		tfHeight.setLayoutY(gridSizePane.getPrefHeight()*0.75);
-		tfHeight.setPrefWidth(gridSizePane.getPrefWidth()*0.2);
-		gridSizePane.getChildren().add(tfHeight);
-
-		Button btChange = new Button("Change");
-		btChange.setStyle("-fx-font-size: 15");
-		btChange.setLayoutX(gridSizePane.getPrefWidth()*0.7);
-		btChange.setLayoutY(gridSizePane.getPrefHeight()*0.80);
-		gridSizePane.getChildren().add(btChange);
-
-		btChange.setOnAction(e ->
+		gridSizePane.getChildren().add(OpenExcel);
+		
+		
+		
+		
+		
+		Button openButton = new Button("Open");
+		openButton.setLayoutX(gridSizePane.getPrefWidth()*0.02);
+		openButton.setLayoutY(gridSizePane.getPrefHeight()*0.50);
+		
+		gridSizePane.getChildren().add(openButton);
+		
+		openButton.setOnAction( e->
 		{
-			((GamePane) gamePane).ChangeGridSize(Integer.parseInt(tfWidth.getText()), Integer.parseInt(tfHeight.getText()));
+			((GamePane) gamePane).openExcelSpreadsheet();
 		});
-
-
+		
 		Button btCreateNew = new Button("Create Network");
 		Button btTrain = new Button("Train");
 		Button btUpload = new Button("Upload");
@@ -130,6 +112,27 @@ public class ControlPane extends Pane {
 		Button btPlay = new Button("Play");
 		Button btPause = new Button("Pause");
 		Button btRestart = new Button("Restart");
+		
+		
+		Button btFaster = new Button(">>");
+		btFaster.setLayoutX(trainingPane.getPrefWidth()*.6);
+		btFaster.setLayoutY(trainingPane.getPrefHeight()*.3);
+		btFaster.setDisable(true);
+		trainingPane.getChildren().add(btFaster);
+		
+		btFaster.setOnAction( e ->{
+			((GamePane)gamePane).faster();
+		});
+		
+		Button btSlower = new Button("<<");
+		btSlower.setLayoutX(trainingPane.getPrefWidth()*.6);
+		btSlower.setLayoutY(trainingPane.getPrefHeight()*.6);
+		btSlower.setDisable(true);
+		trainingPane.getChildren().add(btSlower);
+		
+		btSlower.setOnAction( e ->{
+			((GamePane)gamePane).slower();
+		});
 
 		btStartTraining.setDisable(true);
 
@@ -147,6 +150,7 @@ public class ControlPane extends Pane {
 		btStop.setOnAction(e->
 		{
 			if(whichTimeline) {
+				((GamePane) gamePane).ClearGrid();
 				((GamePane) gamePane).Stop();
 				btPlay.setDisable(true);
 				btStartTraining.setDisable(false);
@@ -159,7 +163,9 @@ public class ControlPane extends Pane {
 			btPause.setDisable(true);
 			btRestart.setDisable(true);
 			btStop.setDisable(true);
-
+			
+			btFaster.setDisable(true);
+			btSlower.setDisable(true);
 		});
 
 		btStartTraining.setLayoutX(trainingPane.getPrefWidth()*.02);
@@ -175,6 +181,9 @@ public class ControlPane extends Pane {
 			btPause.setDisable(false);
 			btRestart.setDisable(false);
 			btStop.setDisable(false);
+			
+			btFaster.setDisable(false);
+			btSlower.setDisable(false);
 
 		});
 
@@ -196,6 +205,9 @@ public class ControlPane extends Pane {
 			btPlay.setDisable(true);
 			btPause.setDisable(false);
 			btRestart.setDisable(false);
+			
+			btFaster.setDisable(false);
+			btSlower.setDisable(false);
 		});
 
 		btPause.setLayoutX(trainingPane.getPrefWidth()*.2);
@@ -217,6 +229,8 @@ public class ControlPane extends Pane {
 			btPause.setDisable(true);
 			btPlay.setDisable(false);
 			btRestart.setDisable(false);
+			btFaster.setDisable(true);
+			btSlower.setDisable(true);
 		});
 
 		btRestart.setLayoutX(trainingPane.getPrefWidth()*.4);
@@ -242,6 +256,7 @@ public class ControlPane extends Pane {
 				 }
 
 		});
+
 
 		AgentPane.setStyle("-fx-background-color: '#e0e0e0'");
 		AgentPane.setLayoutX(getPrefWidth()*0.02);
@@ -454,7 +469,15 @@ public class ControlPane extends Pane {
 
 			    @Override
 			    public void run() {
-						((GamePane) gamePane).trainSnek(Integer.parseInt(tfEpisodes.getText()));
+						try {
+							((GamePane) gamePane).trainSnek(Integer.parseInt(tfEpisodes.getText()));
+						} catch (NumberFormatException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						} catch (Exception e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
 
 
 						Platform.runLater(new Runnable() {

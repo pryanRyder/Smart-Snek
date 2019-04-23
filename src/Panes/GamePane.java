@@ -1,8 +1,13 @@
 package Panes;
 
+import java.awt.Desktop;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.util.ArrayList;
 import java.util.Arrays;
 
 import Agent.SnakeBrain;
@@ -10,6 +15,8 @@ import Agent.SnakeDQN;
 import NeuralNetwork.NeuralNetwork;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.application.Platform;
+import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.layout.GridPane;
@@ -48,6 +55,7 @@ public class GamePane extends Pane {
 	SnakeDQN dqn = new SnakeDQN(0.001, 0.995, 10, 10);
 
 	SnakeBrain brainySnek = new SnakeBrain();
+	Duration time;
 
 
 	//The scale of the gridpane size to the gamepane size.
@@ -67,17 +75,31 @@ public class GamePane extends Pane {
 
 	// Second Timeline for Static AI
 	 Timeline timeline2 = new Timeline();
+	 
+	 KeyFrame keyframe = new KeyFrame(Duration.millis(70));
+	 
+	 int speed = 20;
+	 
+	static ArrayList<String> dat = new ArrayList<String>();
+
 
 
 	boolean dq = false;
 	boolean stat = false;
 
+	public void openExcelSpreadsheet()
+	{
+		try {
+		    Desktop.getDesktop().open(new File("snakeData.csv"));
+		} catch (IOException e) {
+		    e.printStackTrace();
+		}
+	}	
 
 	public void finalize() throws Throwable {
 		super.finalize();
 	}
 
-	//this shit doesn't fucking work
 	public void setNN(File nnFile) throws Exception
 	{
 		ObjectInputStream ois = new ObjectInputStream(new FileInputStream(nnFile));
@@ -109,8 +131,13 @@ public class GamePane extends Pane {
 		((DisplayPane) displayPane).Console.setText(s);
 	}
 
-	public void trainSnek(int episodes)
+	public void trainSnek(int episodes) throws Exception
 	{
+		dat = new ArrayList<String>();
+		File RP = new File("snakeData.csv");
+ 		BufferedWriter writer = new BufferedWriter(new FileWriter(RP));
+		dat.add("Round,Average Score,Max Score");
+		
 		((DisplayPane) displayPane).appendConsole("\nround\tavgScore\tmaxScore\n");
 		for(int round = 0; round < episodes; round++)
 		{
@@ -139,7 +166,24 @@ public class GamePane extends Pane {
 
 			averageScore /= 1000.0;
 			averageEpsilon /= (double)totalSteps;
-			System.out.println(round + "," + averageScore + "," + maxScore + "," + averageEpsilon);
+			//System.out.println(round + "," + averageScore + "," + maxScore + "," + averageEpsilon);
+			dat.add(round + "," + averageScore + "," + maxScore + "," + averageEpsilon+"\n");
+
+			
+			//for(int i =0; i < dat.size(); i++)
+			//{
+				try {
+					//System.out.println("writing" + (dat.size()));
+						writer = new BufferedWriter(new FileWriter(RP, true));
+						writer.append(dat.get(dat.size()-1));
+						writer.flush();
+						writer.close();
+					}
+				catch(IOException f)
+					{
+						System.out.println("something didn't work");
+					}
+			//}
 
 			((DisplayPane) displayPane).appendConsole(round + "\t\t" + averageScore + "\t\t" + maxScore);
 		}
@@ -172,50 +216,35 @@ public class GamePane extends Pane {
 	    //---------------------------- GAME LOOPS ---------------------------------------------------------------------- //
 
 		timeline.setCycleCount(Timeline.INDEFINITE);
-
-		KeyFrame keyframe = new KeyFrame(Duration.millis(70), action ->
-		{
-			// Boolean Value that Determines whether you can go back on top of yourself
-			onlyOneDirection = true;
-
-		//---------------------------- GAME IMPLEMENTATION ------------------------------- //
-			ClearGrid();
-
-			dqn.step();
-			dqn.UpdateGrid();
-
-			UpdateGrid();
-
-			if(dqn.isDead())
-			{
-				iteration++;
-				dqn.reset();
-			}
-
-			//adds to score if snake eats objective item
-		    ((DisplayPane) displayPane).setScore(dqn.getScore()+"");
-
-		    //adds to highscore if the int score is greater than int highscore.
-		    ((DisplayPane) displayPane).setHighScore(dqn.getScore());
-
-
-		    ((DisplayPane) displayPane).setIteration(iteration+"");
-
-
-		});
-
-		timeline.getKeyFrames().add(keyframe);
-
-
-
-
-
+		timeline.getKeyFrames().add(KeyFrame1Content(Duration.millis(70)));
+		
 
 		//---------------------------- GAME IMPLEMENTATION 2 ------------------------------- //
 		timeline2.setCycleCount(Timeline.INDEFINITE);
+		timeline2.getKeyFrames().add(KeyFrame2Content(Duration.millis(70)));
+		
+		time = keyframe.getTime();
 
-		KeyFrame keyframe2 = new KeyFrame(Duration.millis(70), action ->
+	getChildren().addAll(gridpane);
+
+	}
+
+	//Color of the Snake
+	public void colorOfSnake(double red, double green, double blue)
+	{
+		colorOfSnake = Color.color(red, green, blue);
+	}
+	
+	public KeyFrame KeyFrame2Content(Duration x)
+	{
+		KeyFrame keyframe2 = new KeyFrame(x, action ->
 		{
+			try {
+				Thread.sleep(speed);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			// Boolean Value that Determines whether you can go back on top of yourself
 			onlyOneDirection = true;
 
@@ -251,18 +280,100 @@ public class GamePane extends Pane {
 
 
 		});
-
-		timeline2.getKeyFrames().add(keyframe2);
-
-	getChildren().addAll(gridpane);
-
+		
+		return keyframe2;
 	}
-
-	//Color of the Snake
-	public void colorOfSnake(double red, double green, double blue)
+	
+	
+	public KeyFrame KeyFrame1Content(Duration x)
 	{
-		colorOfSnake = Color.color(red, green, blue);
-	};
+		KeyFrame keyframe = new KeyFrame(x, action ->
+		{
+			
+			try {
+				Thread.sleep(speed);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			// Boolean Value that Determines whether you can go back on top of yourself
+			onlyOneDirection = true;
+
+		//---------------------------- GAME IMPLEMENTATION ------------------------------- //
+			ClearGrid();
+
+			dqn.step();
+			dqn.UpdateGrid();
+
+			UpdateGrid();
+
+			if(dqn.isDead())
+			{
+				iteration++;
+				dqn.reset();
+			}
+
+			//adds to score if snake eats objective item
+		    ((DisplayPane) displayPane).setScore(dqn.getScore()+"");
+
+		    //adds to highscore if the int score is greater than int highscore.
+		    ((DisplayPane) displayPane).setHighScore(dqn.getScore());
+
+
+		    ((DisplayPane) displayPane).setIteration(iteration+"");
+
+
+		});
+		
+		return keyframe;
+	}
+	
+	
+	public void slower()
+	{
+		Duration slower = new Duration(10);
+		
+		time = time.add(slower);
+		
+		KeyFrame tempKeyFrame = KeyFrame1Content(time);
+		//KeyFrame tempKeyFrame2 = KeyFrame2Content(time);
+		
+		timeline.getKeyFrames().add(tempKeyFrame);
+		timeline.stop();
+		timeline.getKeyFrames().remove(0);
+		timeline.play();
+		
+		
+		/*
+		timeline2.getKeyFrames().add(tempKeyFrame2);
+		timeline2.stop();
+		timeline2.getKeyFrames().remove(0);
+		timeline2.play();
+		*/
+	}
+	
+	public void faster()
+	{
+		Duration faster = new Duration(5);
+		
+		time = time.subtract(faster);
+		
+		KeyFrame tempKeyFrame = KeyFrame1Content(time);
+		//KeyFrame tempKeyFrame2 = KeyFrame2Content(time);
+		
+		timeline.getKeyFrames().add(tempKeyFrame);
+		timeline.stop();
+		timeline.getKeyFrames().remove(0);
+		timeline.play();
+		
+		
+		/*
+		timeline2.getKeyFrames().add(tempKeyFrame2);
+		timeline2.stop();
+		timeline2.getKeyFrames().remove(0);
+		timeline2.play();
+		*/
+	}
 
 
 	public void UpdateGrid()
