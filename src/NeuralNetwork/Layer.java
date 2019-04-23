@@ -48,7 +48,8 @@ public class Layer implements Serializable
 	}
 	
 	/**
-	 * @return
+	 * @return outputs 
+	 * gets the array of type double
 	 */
 	public double[] getOutputs()
 	{
@@ -61,14 +62,18 @@ public class Layer implements Serializable
 	}
 	
 	/**
-	 * @param x
-	 * @return
+	 * @param x double variable
+	 * @return return the length of the neuron
 	 */
 	public static double sigmoid(double x)
 	{
 		return 1 / (1 + Math.exp(-x));
 	}
 	
+	/**
+	 * @return length of neuron
+	 * gets the number of neurons
+	 */
 	public int getNumberOfNeurons()
 	{
 		return neurons.length;

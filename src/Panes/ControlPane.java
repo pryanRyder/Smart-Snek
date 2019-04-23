@@ -20,7 +20,6 @@ import javafx.stage.Stage;
 /**
  * @author Danny
  * @version 1.0
- * @created 17-Feb-2019 5:39:58 PM
  * This class contains one method called ControlPane that takes in two parameters of the type double
  */
 

@@ -14,7 +14,6 @@ import javafx.stage.Stage;
 /**
  * @author Danny
  * @version 1.0
- * @created 17-Feb-2019 5:39:59 PM
  * this class is the class that launches the program
  */
 public class GUIManager extends Application

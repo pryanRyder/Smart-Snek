@@ -51,16 +51,17 @@ public class SnakeDQN extends DQN implements Serializable
 		reset();
 	}
 	
+	
 	/**
-	 * @param learningRate
-	 * @param discountFactor
-	 * @param width
-	 * @param height
-	 * @param hitWall
-	 * @param ateApple
-	 * @param idle
-	 * @param hitSelf
-	 * Default constructor
+	 * @param learningRate double value
+	 * @param discountFactor double value
+	 * @param width double value
+	 * @param height double value
+	 * @param hitWall double value
+	 * @param ateApple double value
+	 * @param idle double value
+	 * @param hitSelf double value
+	 * default constructor
 	 */
 	public SnakeDQN(double learningRate, double discountFactor, int width, int height, double hitWall, double ateApple, double idle, double hitSelf)
 	{
@@ -358,8 +359,8 @@ public class SnakeDQN extends DQN implements Serializable
 	}
 	
 	/**
-	 * @param snek
-	 * @param filePath
+	 * @param snek variable of SnakeDQN
+	 * @param filePath string
 	 * This method can save and write to a file of a DQN traning session
 	 */
 	public static void saveSnakeDQN(SnakeDQN snek, String filePath)
@@ -376,7 +377,7 @@ public class SnakeDQN extends DQN implements Serializable
 	}
 	
 	/**
-	 * @param filePath
+	 * @param filePath string value
 	 * @return
 	 * this method uploads a saved training session 
 	 */

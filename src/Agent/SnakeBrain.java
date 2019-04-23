@@ -26,7 +26,7 @@ public class SnakeBrain
 	boolean f;
 
 	/**
-	 * Will move the snake based off hard inputs such as objective item location, snake head location, & snake body location
+	 * Will move the snake based off hard inputs such as objective item location, snake head location, snake body location
 	 */
 	public SnakeBrain()
 	{

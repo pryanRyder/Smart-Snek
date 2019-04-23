@@ -32,7 +32,6 @@ import javafx.concurrent.Task;
 /**
  * @author Danny, Paul, Yara
  * @version 1.0
- * @created 17-Feb-2019 5:39:59 PM
  * This class creates the timelines that the snake runs on.
  * Creates are the two algorithms and each one has its own timeline and keyframe.
  */
@@ -115,13 +114,13 @@ public class GamePane extends Pane {
 	}
 
 	/**
-	 * @param newLearningRate
-	 * @param newDiscountFactor
-	 * @param epsilonDecay
-	 * @param hitWall
-	 * @param ateApple
-	 * @param idle
-	 * @param hitSelf
+	 * @param newLearningRate double variable
+	 * @param newDiscountFactor double variable
+	 * @param epsilonDecay double variable
+	 * @param hitWall double variable
+	 * @param ateApple double variable
+	 * @param idle double variable
+	 * @param hitSelf double variable
 	 * Sets the new inputs of all these parameters
 	 */
 	public void setSnek(double newLearningRate, double newDiscountFactor, double epsilonDecay, double hitWall, double ateApple, double idle, double hitSelf)
@@ -134,7 +133,7 @@ public class GamePane extends Pane {
 	}
 
 	/**
-	 * @param filePath
+	 * @param filePath string 
 	 * Saves the DQN snake that the user trained
 	 */
 	public void saveDQN(String filePath)
@@ -143,7 +142,7 @@ public class GamePane extends Pane {
 	}
 
 	/**
-	 * @param s
+	 * @param s string 
 	 * calling the appendConsole method in the DisplayPane class and send it the parameter
 	 */
 	public void appendConsoleDisplay(String s)
@@ -152,7 +151,7 @@ public class GamePane extends Pane {
 	}
 
 	/**
-	 * @param s
+	 * @param s string
 	 * calling the setText method in the DisplayPane class and send it the parameter
 	 */
 	public void setConsole(String s)
@@ -161,10 +160,11 @@ public class GamePane extends Pane {
 	}
 
 	/**
-	 * @param episodes
+	 * @param episodes integer that represents the number of episodes 
 	 * this method trains the snake depending on the number of episodes the user inputs for the DQN algorithm
+	 * @throws Exception throws out an error 
 	 */
-	public void trainSnek(int episodes)
+	public void trainSnek(int episodes) throws Exception
 	{
 		dat = new ArrayList<String>();
 		File RP = new File("snakeData.csv");
@@ -269,10 +269,10 @@ public class GamePane extends Pane {
 
 	//Color of the Snake
 	/**
-	 * @param red
-	 * @param green
-	 * @param blue
-	 * this method gets called to set the color of the snake based on the algorothm
+	 * @param red snake color 
+	 * @param green snake color 
+	 * @param blue  snake color
+	 * this method gets called to set the color of the snake based on the algorithm
 	 */
 	public void colorOfSnake(double red, double green, double blue)
 	{
@@ -280,8 +280,8 @@ public class GamePane extends Pane {
 	}
 
 	/**
-	 * @param x
-	 * @return  keyframe
+	 * @param x the duration number
+	 * @return  keyframe return variable of type keyframe
 	 * this method creates a keyframe that correlates to the SnakeAI algorithm
 	 * and it'll get added to the correlating timeline
 	 * This also calls the needed methods to get the snake starting
@@ -337,8 +337,8 @@ public class GamePane extends Pane {
 
 
 	/**
-	 * @param x
-	 * @return keyframe
+	 * @param x duration number
+	 * @return  keyframe return variable of type keyframe
 	 * * this method creates a keyframe that correlates to the Deep Q Learning algorithm
 	 * and it'll get added to the correlating timeline
 	 * This also calls the needed methods to get the snake starting
@@ -575,8 +575,8 @@ public class GamePane extends Pane {
 	//---------------------------- Getters and Setters for timeline (DQN) ------------------------------- //
 
 	/**
-	 * @param colorOfSnake
-	 * @return
+	 * @param colorOfSnake value of type color that hold the color of the snake
+	 * @return return type of color snake
 	 * gets the color of the snake and returns it
 	 */
 	public Color getColor(Color colorOfSnake) {

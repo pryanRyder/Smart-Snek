@@ -20,9 +20,9 @@ public abstract class DQN implements Serializable
 	private final List<Experience> memory;
 	
 	/**
-	 * @param topology
-	 * @param learningRate
-	 * @param discountFactor
+	 * @param topology array of type integer
+	 * @param learningRate double value that represents the rate of learning 
+	 * @param discountFactor double value that represents the discount factor 
 	 * Default constructor 
 	 */
 	public DQN(int[] topology, double learningRate, double discountFactor)
@@ -36,7 +36,7 @@ public abstract class DQN implements Serializable
 	}
 	
 	/**
-	 * @return
+	 * @return the learning rate
 	 * gets the rate of learning of the snake
 	 */
 	public double getLearningRate()
