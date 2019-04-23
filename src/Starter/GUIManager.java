@@ -15,6 +15,7 @@ import javafx.stage.Stage;
  * @author Danny
  * @version 1.0
  * @created 17-Feb-2019 5:39:59 PM
+ * this class is the class that launches the program
  */
 public class GUIManager extends Application
 {
@@ -32,8 +33,8 @@ public class GUIManager extends Application
 
 	}
 	/**
-	 * 
 	 * @param primaryStage
+	 * this method creates the main stage and scene
 	 */
 	public void start(Stage primaryStage)
 	{		
@@ -53,6 +54,10 @@ public class GUIManager extends Application
 		primaryStage.show();
 	}
 	
+	/**
+	 * @param args
+	 * launches the program
+	 */
 	public static void main(String[] args)
 	{
 		launch(args);

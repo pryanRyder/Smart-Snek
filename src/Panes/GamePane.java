@@ -29,6 +29,8 @@ import javafx.concurrent.Task;
  * @author Danny, Paul, Yara
  * @version 1.0
  * @created 17-Feb-2019 5:39:59 PM
+ * This class creates the timelines that the snake runs on. 
+ * Creates are the two algorithms and each one has its own timeline and keyframe.
  */
 
 public class GamePane extends Pane {
@@ -85,6 +87,11 @@ public class GamePane extends Pane {
 		super.finalize();
 	}
 
+	/**
+	 * @param nnFile the saved file
+	 * @throws Exception
+	 * Takes in the saved file reads it then saves it as the current DQN game
+	 */
 	public void setNN(File nnFile) throws Exception
 	{
 		ObjectInputStream ois = new ObjectInputStream(new FileInputStream(nnFile));
@@ -92,6 +99,16 @@ public class GamePane extends Pane {
 		dqn = nn;
 	}
 
+	/**
+	 * @param newLearningRate
+	 * @param newDiscountFactor
+	 * @param epsilonDecay
+	 * @param hitWall
+	 * @param ateApple
+	 * @param idle
+	 * @param hitSelf
+	 * Sets the new inputs of all these parameters 
+	 */
 	public void setSnek(double newLearningRate, double newDiscountFactor, double epsilonDecay, double hitWall, double ateApple, double idle, double hitSelf)
 	{
 		dqn = new SnakeDQN(newLearningRate, newDiscountFactor, recs.length, recs[0].length, idle, ateApple, hitWall, hitSelf);
@@ -101,21 +118,37 @@ public class GamePane extends Pane {
 		dqn.setEpsilonDecay(epsilonDecay);
 	}
 
+	/**
+	 * @param filePath
+	 * Saves the DQN snake that the user trained 
+	 */
 	public void saveDQN(String filePath)
 	{
 		SnakeDQN.saveSnakeDQN(dqn, filePath);
 	}
 
+	/**
+	 * @param s
+	 * calling the appendConsole method in the DisplayPane class and send it the parameter
+	 */
 	public void appendConsoleDisplay(String s)
 	{
 		((DisplayPane) displayPane).appendConsole(s);
 	}
 
+	/**
+	 * @param s
+	 * calling the setText method in the DisplayPane class and send it the parameter
+	 */
 	public void setConsole(String s)
 	{
 		((DisplayPane) displayPane).Console.setText(s);
 	}
 
+	/**
+	 * @param episodes
+	 * this method trains the snake depending on the number of episodes the user inputs for the DQN algorithm
+	 */
 	public void trainSnek(int episodes)
 	{
 		((DisplayPane) displayPane).appendConsole("\nround\tavgScore\tmaxScore\n");
@@ -153,6 +186,11 @@ public class GamePane extends Pane {
 		NeuralNetwork.saveNetwork(dqn.getNetwork(), "tempSnake.nn");
 	}
 
+	/**
+	 * @param width This is the width of the Game pane
+	 * @param height This is the width of the Game pane
+	 * this method creates the two timelines for the two algorithms 
+	 */
 	public GamePane(double width, double height)
 	{
 	    //---------------------------- Set Up ------------------------------- //
@@ -193,11 +231,24 @@ public class GamePane extends Pane {
 	}
 
 	//Color of the Snake
+	/**
+	 * @param red
+	 * @param green
+	 * @param blue
+	 * this method gets called to set the color of the snake based on the algorothm 
+	 */
 	public void colorOfSnake(double red, double green, double blue)
 	{
 		colorOfSnake = Color.color(red, green, blue);
 	}
 	
+	/**
+	 * @param x
+	 * @return  keyframe
+	 * this method creates a keyframe that correlates to the SnakeAI algorithm 
+	 * and it'll get added to the correlating timeline
+	 * This also calls the needed methods to get the snake starting 
+	 */
 	public KeyFrame KeyFrame2Content(Duration x)
 	{
 		KeyFrame keyframe2 = new KeyFrame(x, action ->
@@ -248,6 +299,13 @@ public class GamePane extends Pane {
 	}
 	
 	
+	/**
+	 * @param x
+	 * @return keyframe
+	 * * this method creates a keyframe that correlates to the Deep Q Learning algorithm 
+	 * and it'll get added to the correlating timeline
+	 * This also calls the needed methods to get the snake starting
+	 */
 	public KeyFrame KeyFrame1Content(Duration x)
 	{
 		KeyFrame keyframe = new KeyFrame(x, action ->
@@ -292,6 +350,9 @@ public class GamePane extends Pane {
 	}
 	
 	
+	/**
+	 * this method gets called when a button is clicked to slow down the speed of the snake
+	 */
 	public void slower()
 	{
 		Duration slower = new Duration(10);
@@ -314,6 +375,9 @@ public class GamePane extends Pane {
 		timeline2.play();
 	}
 	
+	/**
+	 * this method gets called when a button is clicked to make the speed of the snake faster
+	 */
 	public void faster()
 	{
 		Duration faster = new Duration(5);
@@ -338,6 +402,9 @@ public class GamePane extends Pane {
 	}
 
 
+	/**
+	 * the grid is updated when the DQN algorithm is chosen setting the objective and snake color 
+	 */
 	public void UpdateGrid()
 	{
 		for(int i = 0; i < recs.length; i++)
@@ -352,6 +419,9 @@ public class GamePane extends Pane {
 		}
 	}
 
+	/**
+	 * the grid is updated when the Static algorithm is chosen setting the objective and snake color 
+	 */
 	public void UpdateGrid2()
 	{
 		for(int i = 0; i < recs.length; i++)
@@ -365,6 +435,9 @@ public class GamePane extends Pane {
 			}
 		}
 	}
+	/**
+	 * this method creates the grid that the objective appears on and the snake runs on
+	 */
 	public void setUpGridPane()
 	{
 		//The size of the gaps.
@@ -433,6 +506,9 @@ public class GamePane extends Pane {
 	}
 
 
+	/**
+	 * this method gets called to clear everything off the grid
+	 */
 	public void ClearGrid()
 	{
 		for(int i = 0; i < recs.length; i++)
@@ -444,6 +520,11 @@ public class GamePane extends Pane {
 		}
 	}
 
+	/**
+	 * @param width of the grid
+	 * @param height of the grid
+	 * this method gets called when the user inputs the width and the height of the grid
+	 */
 	public void ChangeGridSize(int width, int height)
 	{
 		recs = new Rectangle[40][40];
@@ -455,21 +536,35 @@ public class GamePane extends Pane {
 
 	//---------------------------- Getters and Setters for timeline (DQN) ------------------------------- //
 
+	/**
+	 * @param colorOfSnake
+	 * @return
+	 * gets the color of the snake and returns it
+	 */
 	public Color getColor(Color colorOfSnake) {
 
 		return colorOfSnake;
 	}
 
+	/**
+	 * gets called to start the timeline for the DQN algorithm
+	 */
 	public void Play()
 	{
 		timeline.play();
 	}
 
+	/**
+	 * gets called to stop the timeline for the DQN algorithm
+	 */
 	public void Stop()
 	{
 		timeline.stop();
 	}
 
+	/**
+	 * gets called to reset the timeline for the DQN algorithm
+	 */
 	public void reset()
 	{
 		dqn.reset();
@@ -478,15 +573,24 @@ public class GamePane extends Pane {
 
 
 	//---------------------------- Getters and Setters for timeline2 (Static AI) ------------------------------- //
+	/**
+	 * gets called to start the timeline for the StaticAI algorithm
+	 */
 	public void Play2() {
 		timeline2.play();
 
 	}
 
+	/**
+	 * gets called to stop the timeline for the StaticAI algorithm
+	 */
 	public void Stop2() {
 		timeline2.stop();
 	}
 
+	/**
+	 * gets called to reset the timeline for the StaticAI algorithm
+	 */
 	public void reset2() {
 		brainySnek.reset();
 	}

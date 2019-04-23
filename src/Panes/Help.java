@@ -21,11 +21,12 @@ import javafx.geometry.Side;
 import javafx.stage.Stage;
 
 /**
- * @author DannyIsTheBomb.com
+ * @author Sarai
  * @version 1.0
  * @created 17-Feb-2019 5:39:58 PM
+ * this class create a button and a pane that provides information on how to run the 
+ * program properly and what each button displayed means and what its used for 
  */
-
 public class Help extends Pane {
  
 

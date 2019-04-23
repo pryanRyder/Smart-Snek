@@ -7,6 +7,9 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.Arrays;
 
+/**
+ *
+ */
 public class NeuralNetwork implements Serializable
 {
 	private static final long serialVersionUID = 9131461560923296729L;
@@ -15,6 +18,11 @@ public class NeuralNetwork implements Serializable
 	public double learningRate;
 	public int numberOfLayers;
 	
+	/**
+	 * @param topology integer variable
+	 * @param learningRate double variable
+	 * @param momentum double variable
+	 */
 	public NeuralNetwork(int topology[], double learningRate, double momentum)
 	{
 		this.learningRate = learningRate;
@@ -30,6 +38,9 @@ public class NeuralNetwork implements Serializable
 		}
 	}
 	
+	/**
+	 * 
+	 */
 	public void feedForward()
 	{
 		for(int i = 0; i < layers[0].neurons.length; i++)
@@ -49,6 +60,9 @@ public class NeuralNetwork implements Serializable
 		}
 	}
 	
+	/**
+	 * 
+	 */
 	private void backpropagateError()
 	{
 		for(int i = numberOfLayers-1; i > 0; i--)
@@ -83,6 +97,9 @@ public class NeuralNetwork implements Serializable
 		}
 	}
 	
+	/**
+	 * @param expectedOutputs  output value
+	 */
 	private void calculateSignalErrors(double[] expectedOutputs)
 	{
 		int outputLayer = numberOfLayers - 1;
@@ -116,12 +133,21 @@ public class NeuralNetwork implements Serializable
 		}
 	}
 	
+	/**
+	 * @param expectedOutputs  value of expected output
+	 */
 	private void updateWeights(double[] expectedOutputs)
 	{
 		calculateSignalErrors(expectedOutputs);
 		backpropagateError();
 	}
 	
+	/**
+	 * @param inputs double variable
+	 * @param expectedOutputs value of expected output
+	 * @param print boolean variable
+	 * 
+	 */
 	public void train(double[] inputs, double[] expectedOutputs, boolean print)
 	{
 		for(int i = 0; i < layers[0].neurons.length; i++)
@@ -141,6 +167,10 @@ public class NeuralNetwork implements Serializable
 		}
 	}
 	
+	/**
+	 * @param expectedOutputs value of expected output
+	 * @return totalError is returned
+	 */
 	public double getOverallError(double[] expectedOutputs)
 	{
 		double totalError = 0;
@@ -156,6 +186,11 @@ public class NeuralNetwork implements Serializable
 		return totalError;
 	}
 	
+	/**
+	 * @param network NeuralNetwork variable
+	 * @param filePath string variable
+	 * saves a training session and then sees if an error occurs
+	 */
 	public static void saveNetwork(NeuralNetwork network, String filePath)
 	{
 		try(FileOutputStream fout = new FileOutputStream(filePath);
@@ -169,6 +204,11 @@ public class NeuralNetwork implements Serializable
 		}
 	}
 	
+	/**
+	 * @param filePath string variable
+	 * @return null
+	 * load a saved neural network/session then check if an error occurs
+	 */
 	public static NeuralNetwork loadNetwork(String filePath)
 	{
 		try(FileInputStream fin = new FileInputStream(filePath);
@@ -183,6 +223,10 @@ public class NeuralNetwork implements Serializable
 		return null;
 	}
 	
+	/**
+	 * @param inputs variable of type double 
+	 * @param print boolean variable
+	 */
 	public void predict(double[] inputs, boolean print)
 	{
 		for(int i = 0; i < layers[0].neurons.length; i++)
@@ -199,6 +243,11 @@ public class NeuralNetwork implements Serializable
 		}
 	}
 	
+	/**
+	 * @param inputs array with double values
+	 * @return layers
+	 * 
+	 */
 	public double[] predict(double[] inputs)
 	{
 		for(int i = 0; i < layers[0].neurons.length; i++)
@@ -211,16 +260,28 @@ public class NeuralNetwork implements Serializable
 		return layers[numberOfLayers-1].getOutputs();
 	}
 	
+	/**
+	 * @return layers
+	 * get output values
+	 */
 	public double[] getActualOutputs()
 	{
 		return layers[numberOfLayers-1].getOutputs();
 	}
 	
+	/**
+	 * @return layers
+	 * gets output size
+	 */
 	public int getOutputSize()
 	{
 		return layers[numberOfLayers-1].getNumberOfNeurons();
 	}
 	
+	/**
+	 * @return layers
+	 * gets input size
+	 */
 	public int getInputSize()
 	{
 		return layers[0].getNumberOfNeurons();

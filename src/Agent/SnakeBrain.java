@@ -6,6 +6,10 @@ import java.util.Random;
 
 import Snake.CurrentDirection;
 
+/**
+ * This class is solely for creating the StaticAI 
+ *
+ */
 public class SnakeBrain
 {
 	CurrentDirection DecidedDirection;
@@ -21,7 +25,9 @@ public class SnakeBrain
 	int savedX, savedY;
 	boolean f;
 
-	// Will move the snake based off hard inputs such as objective item location, snake head location, & snake body location.
+	/**
+	 * Will move the snake based off hard inputs such as objective item location, snake head location, & snake body location
+	 */
 	public SnakeBrain()
 	{
 		currentActionIndex = 3;
@@ -29,6 +35,9 @@ public class SnakeBrain
 		reset();
 	}
 
+	/**
+	 * this method generates a random objective item in the grid
+	 */
 	public void randomFruit()
 	{
 
@@ -85,6 +94,13 @@ public class SnakeBrain
 	}
 */
 
+	/**
+	 * this method is written to help the snake make a movement decision based on its 
+	 * previous decision and the location of the objective item
+	 */
+	/**
+	 * 
+	 */
 	public void MakeDecision()
 	{
 
@@ -295,6 +311,10 @@ public class SnakeBrain
 	}
 
 
+	/**
+	 * method that checks if the snake is dead or still alive and then 
+	 * updates the grid as the snake is moving
+	 */
 	public void ExecuteAction()
 	{
 
@@ -370,6 +390,9 @@ public class SnakeBrain
 
 	}
 
+	/**
+	 * this method gets called to update the grid
+	 */
 	public void UpdateGrid()
 	{
 		{
@@ -403,6 +426,9 @@ public class SnakeBrain
 	}
 
 
+	/**
+	 * method that gets called to resets the iteration then calls the UpdateGrid method 
+	 */
 	public void reset()
 	{
 		{
@@ -428,21 +454,37 @@ public class SnakeBrain
 
 	}
 
+	/**
+	 * @return
+	 * checks if the snake is dead
+	 */
 	public boolean isDead() {
 
 		return dead;
 	}
 
+	/**
+	 * @return
+	 * gets the score, which is how many objective items the snake has eaten
+	 */
 	public int getScore()
 	{
 		return score;
 	}
 
+	/**
+	 * @return
+	 * gets the x location of the objective item
+	 */
 	public int getFruitX()
 	{
 		return fruitX;
 	}
 
+	/**
+	 * @return
+	 * gets the y location of the objective item
+	 */
 	public int getFruitY()
 	{
 		return fruitY;

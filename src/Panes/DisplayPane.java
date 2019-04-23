@@ -5,12 +5,11 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.control.TextArea;
 
-/**
- * @author Danny
- * @version 1.0
- * @created 17-Feb-2019 5:39:58 PM
+ /**
+ * This class creates a pane in the Smart Snek GUI that displays the number of iterations and score
+ *
  */
-public class DisplayPane extends Pane {
+class DisplayPane extends Pane {
 
 	Text Iteration = new Text();
 	Text score = new Text();
@@ -23,21 +22,36 @@ public class DisplayPane extends Pane {
 		super.finalize();
 	}
 
+	/**
+	 * @param Iter this is a string that represents the number of iteration
+	 * This method sets the number of iterations
+	 */
 	public void setIteration(String Iter)
 	{
 		Iteration.setText(Iter);
 	}
 
+	/**
+	 * @param scr this is a string that represents the number of objectives that have been eaten
+	 * This method sets the number of objectives (score)
+	 */
 	public void setScore(String scr)
 	{
 		score.setText(scr);
 	}
 	
+	/**
+	 * @param text
+	 */
 	public void appendConsole(String text)
 	{
 		Console.setText(Console.getText()+"\n"+text);
 	}
 	
+	/**
+	 * @param scr this is a string that represents the number of objectives that have been eaten
+	 * This method finds and displays the high score of the game
+	 */
 	public void setHighScore(int scr) {
     	if(highscoreINT < scr)
     	{
@@ -49,6 +63,11 @@ public class DisplayPane extends Pane {
 	
 	
 
+	/**
+	 * @param width This is the width of the Display pane
+	 * @param height This is the width of the Display pane
+	 * This method creates the display pane and everything thats displayed in the GUI 
+	 */
 	public DisplayPane(double width, double height)
 	{
 

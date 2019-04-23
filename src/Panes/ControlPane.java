@@ -21,6 +21,7 @@ import javafx.stage.Stage;
  * @author Danny
  * @version 1.0
  * @created 17-Feb-2019 5:39:58 PM
+ * This class contains one method called ControlPane that takes in two parameters of the type double
  */
 
 public class ControlPane extends Pane {
@@ -34,6 +35,12 @@ public class ControlPane extends Pane {
 	public void finalize() throws Throwable {
 		super.finalize();
 	}
+	/**
+	 * @param width This is the width of the Control pane
+	 * @param height This is the width of the Control pane
+	 * This method has all the buttons and their actions that call functions in the GamePane and AgentPane Classes, text fields 
+	 *  that can be shown in the GUI on the Control Pane
+	 */
 	public ControlPane(double width, double height)
 	{
 

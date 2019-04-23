@@ -6,11 +6,11 @@ import java.util.List;
 
 import NeuralNetwork.NeuralNetwork;
 
+/**
+ * this class implements the Deep Q learning algorithm by using a neural network
+ */
 public abstract class DQN implements Serializable
 {
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -2093909581694354285L;
 	private double discountFactor;
 	private double epsilon;
@@ -19,6 +19,12 @@ public abstract class DQN implements Serializable
 	private NeuralNetwork network;
 	private final List<Experience> memory;
 	
+	/**
+	 * @param topology
+	 * @param learningRate
+	 * @param discountFactor
+	 * Default constructor 
+	 */
 	public DQN(int[] topology, double learningRate, double discountFactor)
 	{
 		network = new NeuralNetwork(topology, learningRate, 0);
@@ -29,61 +35,109 @@ public abstract class DQN implements Serializable
 		memory = new ArrayList<>();
 	}
 	
+	/**
+	 * @return
+	 * gets the rate of learning of the snake
+	 */
 	public double getLearningRate()
 	{
 		return network.learningRate;
 	}
 
+	/**
+	 * @param learningRate
+	 * sets the rate of learning of the snake
+	 */
 	public void setLearningRate(double learningRate)
 	{
 		network.learningRate = clamp(learningRate, 0, 1);
 	}
 
+	/**
+	 * @return
+	 * gets the discount factor
+	 */
 	public double getDiscountFactor()
 	{
 		return discountFactor;
 	}
 
+	/**
+	 * @param discountFactor
+	 * sets the discount factor
+	 */
 	public void setDiscountFactor(double discountFactor)
 	{
 		this.discountFactor = clamp(discountFactor, 0, 1);
 	}
 
+	/**
+	 * @return
+	 * gets the value of epsilon
+	 */
 	public double getEpsilon()
 	{
 		return epsilon;
 	}
 
+	/**
+	 * @param epsilon
+	 * sets the value of epsilon
+	 */
 	public void setEpsilon(double epsilon)
 	{
 		this.epsilon = clamp(epsilon, 0, 1);
 	}
 
+	/**
+	 * @return
+	 * gets the minimum number of epsilon
+	 */
 	public double getEpsilonMin()
 	{
 		return epsilonMin;
 	}
 
+	/**
+	 * @param epsilonMin
+	 * sets the minimum number of epsilon
+	 */
 	public void setEpsilonMin(double epsilonMin)
 	{
 		this.epsilonMin = clamp(epsilonMin, 0, 1);
 	}
 
+	/**
+	 * @return
+	 * gets the value of epsilondecay
+	 */
 	public double getEpsilonDecay()
 	{
 		return epsilonDecay;
 	}
 
+	/**
+	 * @param epsilonDecay
+	 * sets the value of epsilondecay
+	 */
 	public void setEpsilonDecay(double epsilonDecay)
 	{
 		this.epsilonDecay = clamp(epsilonDecay, 0, 1);
 	}
 
+	/**
+	 * @return
+	 * gets the neural network
+	 */
 	public NeuralNetwork getNetwork()
 	{
 		return network;
 	}
 
+	/**
+	 * @param network
+	 * sets the neural network
+	 */
 	public void setNetwork(NeuralNetwork network)
 	{
 		if(network != null)
@@ -93,6 +147,10 @@ public abstract class DQN implements Serializable
 		}
 	}
 
+	/**
+	 * @return
+	 * gets the meomry value
+	 */
 	public List<Experience> getMemory()
 	{
 		return memory;
@@ -104,6 +162,9 @@ public abstract class DQN implements Serializable
 	
 	protected abstract double executeActionAndGetReward(int actionIndex); // returns reward too
 	
+	/**
+	 * 
+	 */
 	public void step()
 	{
 		double[] state = getState();
@@ -130,6 +191,9 @@ public abstract class DQN implements Serializable
 		replay();
 	}
 	
+	/**
+	 * 
+	 */
 	private void replay()
 	{
 		if(memory.size() >= 10000)
@@ -142,6 +206,10 @@ public abstract class DQN implements Serializable
 		}
 	}
 	
+	/**
+	 * @param exp
+	 * this is the learning method of the DQN where the snake will understand the consequence of each movement that its made
+	 */
 	private void learn(Experience exp)
 	{
 		double[] state = exp.getState();
@@ -168,6 +236,11 @@ public abstract class DQN implements Serializable
 		network.train(exp.getState(), qValues, false);
 	}
 	
+	/**
+	 * @param outputs
+	 * @return
+	 * gets the highest value that the index can be
+	 */
 	private int getMaxIndex(double[] outputs)
 	{
 		double highestQvalue = Double.MIN_VALUE;
@@ -184,6 +257,12 @@ public abstract class DQN implements Serializable
 		return actionIndex;
 	}
 	
+	/**
+	 * @param value
+	 * @param min
+	 * @param max
+	 * @return
+	 */
 	private double clamp(double value, double min, double max)
 	{
 		if(value >= max)
@@ -195,18 +274,28 @@ public abstract class DQN implements Serializable
 	
 
 	
+	/**
+	 * 
+	 *
+	 */
 	class Experience implements Serializable
 	{
 
-		/**
-		 * 
-		 */
 		private static final long serialVersionUID = -3109528438140969106L;
 		private final double[] state;
 		private final double[] nextState;
 		private final int actionIndex;
 		private final double reward;
 		private final boolean done;
+		
+		/**
+		 * @param state
+		 * @param nextState
+		 * @param actionIndex
+		 * @param reward
+		 * @param done
+		 * Default constructor 
+		 */
 		public Experience(double[] state, double[] nextState, int actionIndex, double reward, boolean done)
 		{
 			this.state = state;
@@ -216,26 +305,46 @@ public abstract class DQN implements Serializable
 			this.done = done;
 		}
 		
+		/**
+		 * @return
+		 * gets the state
+		 */
 		public double[] getState()
 		{
 			return state;
 		}
 		
+		/**
+		 * @return
+		 * gets the next state
+		 */
 		public double[] getNextState()
 		{
 			return nextState;
 		}
 		
+		/**
+		 * @return
+		 * gets the value of the action index
+		 */
 		public int getActionIndex()
 		{
 			return actionIndex;
 		}
 		
+		/**
+		 * @return
+		 * gets the value of the reward
+		 */
 		public double getReward()
 		{
 			return reward;
 		}
 		
+		/**
+		 * @return
+		 * returns if it's done
+		 */
 		public boolean isDone()
 		{
 			return done;

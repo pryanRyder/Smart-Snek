@@ -10,15 +10,14 @@ import java.io.Serializable;
 
 import NeuralNetwork.NeuralNetwork;
 
+/**
+ * This class is solely for creating the Deep Q Learning Newtork 
+ *
+ */
 public class SnakeDQN extends DQN implements Serializable
 {
-	/**
-	 * 
-	 */
+
 	private static final long serialVersionUID = 8320263365854467870L;
-	/**
-	 * 
-	 */
 	private boolean dead;
 	private int steps;
 	private int score;
@@ -52,6 +51,17 @@ public class SnakeDQN extends DQN implements Serializable
 		reset();
 	}
 	
+	/**
+	 * @param learningRate
+	 * @param discountFactor
+	 * @param width
+	 * @param height
+	 * @param hitWall
+	 * @param ateApple
+	 * @param idle
+	 * @param hitSelf
+	 * Default constructor
+	 */
 	public SnakeDQN(double learningRate, double discountFactor, int width, int height, double hitWall, double ateApple, double idle, double hitSelf)
 	{
 		super(topology, learningRate, discountFactor);
@@ -66,6 +76,9 @@ public class SnakeDQN extends DQN implements Serializable
 		reset();
 	}
 
+	/**
+	 * this method gets called to update the grid
+	 */
 	public void UpdateGrid()
 	{
 		double[] tmp = {0, 0, 0, 0};
@@ -150,6 +163,9 @@ public class SnakeDQN extends DQN implements Serializable
 		}
 	}
 	
+	/**
+	 * method that gets called to resets the iteration then calls the UpdateGrid method 
+	 */
 	public void reset()
 	{
 		double[] tmp = {0, 0, 0, 0};
@@ -177,6 +193,10 @@ public class SnakeDQN extends DQN implements Serializable
 		UpdateGrid();
 	}
 	
+	/**
+	 * @return
+	 * method that flattens the grid 
+	 */
 	public double[] FlattenGrid()
 	{
 		double[] flattenedGrid = new double[Grid.length*Grid.length];
@@ -297,6 +317,9 @@ public class SnakeDQN extends DQN implements Serializable
 		return idle;		
 	}
 	
+	/**
+	 * this method generates a random objective item in the grid
+	 */
 	public void randomFruit()
 	{
 
@@ -334,6 +357,11 @@ public class SnakeDQN extends DQN implements Serializable
 		
 	}
 	
+	/**
+	 * @param snek
+	 * @param filePath
+	 * This method can save and write to a file of a DQN traning session
+	 */
 	public static void saveSnakeDQN(SnakeDQN snek, String filePath)
 	{
 		try(FileOutputStream fout = new FileOutputStream(filePath);
@@ -347,6 +375,11 @@ public class SnakeDQN extends DQN implements Serializable
 		}
 	}
 	
+	/**
+	 * @param filePath
+	 * @return
+	 * this method uploads a saved training session 
+	 */
 	public static SnakeDQN loadSnakeDQN(String filePath)
 	{
 		try(FileInputStream fin = new FileInputStream(filePath);
@@ -361,36 +394,64 @@ public class SnakeDQN extends DQN implements Serializable
 			return null;
 	}
 	
+	/**
+	 * @return
+	 * checks if the snake is dead and returns yes (1) or no (0)
+	 */
 	public boolean isDead()
 	{
 		return dead;
 	}
 
+	/**
+	 * @return
+	 * gets the number of steps
+	 */
 	public int getSteps()
 	{
 		return steps;
 	}
 
+	/**
+	 * @return
+	 * gets the score, which is how many objective items the snake has eaten
+	 */
 	public int getScore()
 	{
 		return score;
 	}
 
+	/**
+	 * @return
+	 * gets the x location of the objective item
+	 */
 	public int getFruitX()
 	{
 		return fruitX;
 	}
 
+	/**
+	 * @return
+	 * gets the y location of the objective item
+	 */
 	public int getFruitY()
 	{
 		return fruitY;
 	}
 
+	/**
+	 * @return
+	 * gets width
+	 */
 	public int getWidth()
 	{
 		return width;
 	}
 
+	/**
+	 * @return
+	 * gets height
+	 */
 	public int getHeight()
 	{
 		return height;
