@@ -34,7 +34,7 @@ public class ControlPane extends Pane {
 	public void finalize() throws Throwable {
 		super.finalize();
 	}
-	public ControlPane(double width, double height)
+	public ControlPane(double width, double height) 
 	{
 
 		Pane gamePane = new GamePane(width, height);
@@ -80,6 +80,8 @@ public class ControlPane extends Pane {
 		
 		
 		
+		
+		
 		Button openButton = new Button("Open");
 		openButton.setLayoutX(gridSizePane.getPrefWidth()*0.02);
 		openButton.setLayoutY(gridSizePane.getPrefHeight()*0.50);
@@ -88,8 +90,7 @@ public class ControlPane extends Pane {
 		
 		openButton.setOnAction( e->
 		{
-			((GamePane) gamePane).slower();
-			//gamePane.openExcelSpreadsheet();
+			((GamePane) gamePane).openExcelSpreadsheet();
 		});
 		
 		Button btCreateNew = new Button("Create Network");
@@ -111,6 +112,27 @@ public class ControlPane extends Pane {
 		Button btPlay = new Button("Play");
 		Button btPause = new Button("Pause");
 		Button btRestart = new Button("Restart");
+		
+		
+		Button btFaster = new Button(">>");
+		btFaster.setLayoutX(trainingPane.getPrefWidth()*.6);
+		btFaster.setLayoutY(trainingPane.getPrefHeight()*.3);
+		btFaster.setDisable(true);
+		trainingPane.getChildren().add(btFaster);
+		
+		btFaster.setOnAction( e ->{
+			((GamePane)gamePane).faster();
+		});
+		
+		Button btSlower = new Button("<<");
+		btSlower.setLayoutX(trainingPane.getPrefWidth()*.6);
+		btSlower.setLayoutY(trainingPane.getPrefHeight()*.6);
+		btSlower.setDisable(true);
+		trainingPane.getChildren().add(btSlower);
+		
+		btSlower.setOnAction( e ->{
+			((GamePane)gamePane).slower();
+		});
 
 		btStartTraining.setDisable(true);
 
@@ -128,6 +150,7 @@ public class ControlPane extends Pane {
 		btStop.setOnAction(e->
 		{
 			if(whichTimeline) {
+				((GamePane) gamePane).ClearGrid();
 				((GamePane) gamePane).Stop();
 				btPlay.setDisable(true);
 				btStartTraining.setDisable(false);
@@ -140,7 +163,9 @@ public class ControlPane extends Pane {
 			btPause.setDisable(true);
 			btRestart.setDisable(true);
 			btStop.setDisable(true);
-
+			
+			btFaster.setDisable(true);
+			btSlower.setDisable(true);
 		});
 
 		btStartTraining.setLayoutX(trainingPane.getPrefWidth()*.02);
@@ -156,6 +181,9 @@ public class ControlPane extends Pane {
 			btPause.setDisable(false);
 			btRestart.setDisable(false);
 			btStop.setDisable(false);
+			
+			btFaster.setDisable(false);
+			btSlower.setDisable(false);
 
 		});
 
@@ -177,6 +205,9 @@ public class ControlPane extends Pane {
 			btPlay.setDisable(true);
 			btPause.setDisable(false);
 			btRestart.setDisable(false);
+			
+			btFaster.setDisable(false);
+			btSlower.setDisable(false);
 		});
 
 		btPause.setLayoutX(trainingPane.getPrefWidth()*.2);
@@ -198,6 +229,8 @@ public class ControlPane extends Pane {
 			btPause.setDisable(true);
 			btPlay.setDisable(false);
 			btRestart.setDisable(false);
+			btFaster.setDisable(true);
+			btSlower.setDisable(true);
 		});
 
 		btRestart.setLayoutX(trainingPane.getPrefWidth()*.4);
@@ -223,6 +256,7 @@ public class ControlPane extends Pane {
 				 }
 
 		});
+
 
 		AgentPane.setStyle("-fx-background-color: '#e0e0e0'");
 		AgentPane.setLayoutX(getPrefWidth()*0.02);
@@ -435,7 +469,15 @@ public class ControlPane extends Pane {
 
 			    @Override
 			    public void run() {
-						((GamePane) gamePane).trainSnek(Integer.parseInt(tfEpisodes.getText()));
+						try {
+							((GamePane) gamePane).trainSnek(Integer.parseInt(tfEpisodes.getText()));
+						} catch (NumberFormatException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						} catch (Exception e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
 
 
 						Platform.runLater(new Runnable() {

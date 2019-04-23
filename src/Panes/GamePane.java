@@ -1,7 +1,11 @@
 package Panes;
 
+import java.awt.Desktop;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -75,11 +79,22 @@ public class GamePane extends Pane {
 	 KeyFrame keyframe = new KeyFrame(Duration.millis(70));
 	 
 	 int speed = 20;
+	 
+	static ArrayList<String> dat = new ArrayList<String>();
+
 
 
 	boolean dq = false;
 	boolean stat = false;
 
+	public void openExcelSpreadsheet()
+	{
+		try {
+		    Desktop.getDesktop().open(new File("snakeData.csv"));
+		} catch (IOException e) {
+		    e.printStackTrace();
+		}
+	}	
 
 	public void finalize() throws Throwable {
 		super.finalize();
@@ -116,8 +131,13 @@ public class GamePane extends Pane {
 		((DisplayPane) displayPane).Console.setText(s);
 	}
 
-	public void trainSnek(int episodes)
+	public void trainSnek(int episodes) throws Exception
 	{
+		dat = new ArrayList<String>();
+		File RP = new File("snakeData.csv");
+ 		BufferedWriter writer = new BufferedWriter(new FileWriter(RP));
+		dat.add("Round,Average Score,Max Score");
+		
 		((DisplayPane) displayPane).appendConsole("\nround\tavgScore\tmaxScore\n");
 		for(int round = 0; round < episodes; round++)
 		{
@@ -146,7 +166,24 @@ public class GamePane extends Pane {
 
 			averageScore /= 1000.0;
 			averageEpsilon /= (double)totalSteps;
-			System.out.println(round + "," + averageScore + "," + maxScore + "," + averageEpsilon);
+			//System.out.println(round + "," + averageScore + "," + maxScore + "," + averageEpsilon);
+			dat.add(round + "," + averageScore + "," + maxScore + "," + averageEpsilon+"\n");
+
+			
+			//for(int i =0; i < dat.size(); i++)
+			//{
+				try {
+					//System.out.println("writing" + (dat.size()));
+						writer = new BufferedWriter(new FileWriter(RP, true));
+						writer.append(dat.get(dat.size()-1));
+						writer.flush();
+						writer.close();
+					}
+				catch(IOException f)
+					{
+						System.out.println("something didn't work");
+					}
+			//}
 
 			((DisplayPane) displayPane).appendConsole(round + "\t\t" + averageScore + "\t\t" + maxScore);
 		}
@@ -299,7 +336,7 @@ public class GamePane extends Pane {
 		time = time.add(slower);
 		
 		KeyFrame tempKeyFrame = KeyFrame1Content(time);
-		KeyFrame tempKeyFrame2 = KeyFrame2Content(time);
+		//KeyFrame tempKeyFrame2 = KeyFrame2Content(time);
 		
 		timeline.getKeyFrames().add(tempKeyFrame);
 		timeline.stop();
@@ -307,11 +344,12 @@ public class GamePane extends Pane {
 		timeline.play();
 		
 		
-		
+		/*
 		timeline2.getKeyFrames().add(tempKeyFrame2);
 		timeline2.stop();
 		timeline2.getKeyFrames().remove(0);
 		timeline2.play();
+		*/
 	}
 	
 	public void faster()
@@ -321,7 +359,7 @@ public class GamePane extends Pane {
 		time = time.subtract(faster);
 		
 		KeyFrame tempKeyFrame = KeyFrame1Content(time);
-		KeyFrame tempKeyFrame2 = KeyFrame2Content(time);
+		//KeyFrame tempKeyFrame2 = KeyFrame2Content(time);
 		
 		timeline.getKeyFrames().add(tempKeyFrame);
 		timeline.stop();
@@ -329,12 +367,12 @@ public class GamePane extends Pane {
 		timeline.play();
 		
 		
-		
+		/*
 		timeline2.getKeyFrames().add(tempKeyFrame2);
 		timeline2.stop();
 		timeline2.getKeyFrames().remove(0);
 		timeline2.play();
-		
+		*/
 	}
 
 
