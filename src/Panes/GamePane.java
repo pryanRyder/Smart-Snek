@@ -1,7 +1,11 @@
 package Panes;
 
+import java.awt.Desktop;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -29,7 +33,7 @@ import javafx.concurrent.Task;
  * @author Danny, Paul, Yara
  * @version 1.0
  * @created 17-Feb-2019 5:39:59 PM
- * This class creates the timelines that the snake runs on. 
+ * This class creates the timelines that the snake runs on.
  * Creates are the two algorithms and each one has its own timeline and keyframe.
  */
 
@@ -73,15 +77,26 @@ public class GamePane extends Pane {
 
 	// Second Timeline for Static AI
 	 Timeline timeline2 = new Timeline();
-	 
+
 	 KeyFrame keyframe = new KeyFrame(Duration.millis(70));
-	 
+
 	 int speed = 20;
+
+	static ArrayList<String> dat = new ArrayList<String>();
+
 
 
 	boolean dq = false;
 	boolean stat = false;
 
+	public void openExcelSpreadsheet()
+	{
+		try {
+		    Desktop.getDesktop().open(new File("snakeData.csv"));
+		} catch (IOException e) {
+		    e.printStackTrace();
+		}
+	}
 
 	public void finalize() throws Throwable {
 		super.finalize();
@@ -107,7 +122,7 @@ public class GamePane extends Pane {
 	 * @param ateApple
 	 * @param idle
 	 * @param hitSelf
-	 * Sets the new inputs of all these parameters 
+	 * Sets the new inputs of all these parameters
 	 */
 	public void setSnek(double newLearningRate, double newDiscountFactor, double epsilonDecay, double hitWall, double ateApple, double idle, double hitSelf)
 	{
@@ -120,7 +135,7 @@ public class GamePane extends Pane {
 
 	/**
 	 * @param filePath
-	 * Saves the DQN snake that the user trained 
+	 * Saves the DQN snake that the user trained
 	 */
 	public void saveDQN(String filePath)
 	{
@@ -151,6 +166,11 @@ public class GamePane extends Pane {
 	 */
 	public void trainSnek(int episodes)
 	{
+		dat = new ArrayList<String>();
+		File RP = new File("snakeData.csv");
+ 		BufferedWriter writer = new BufferedWriter(new FileWriter(RP));
+		dat.add("Round,Average Score,Max Score");
+
 		((DisplayPane) displayPane).appendConsole("\nround\tavgScore\tmaxScore\n");
 		for(int round = 0; round < episodes; round++)
 		{
@@ -179,7 +199,24 @@ public class GamePane extends Pane {
 
 			averageScore /= 1000.0;
 			averageEpsilon /= (double)totalSteps;
-			System.out.println(round + "," + averageScore + "," + maxScore + "," + averageEpsilon);
+			//System.out.println(round + "," + averageScore + "," + maxScore + "," + averageEpsilon);
+			dat.add(round + "," + averageScore + "," + maxScore + "," + averageEpsilon+"\n");
+
+
+			//for(int i =0; i < dat.size(); i++)
+			//{
+				try {
+					//System.out.println("writing" + (dat.size()));
+						writer = new BufferedWriter(new FileWriter(RP, true));
+						writer.append(dat.get(dat.size()-1));
+						writer.flush();
+						writer.close();
+					}
+				catch(IOException f)
+					{
+						System.out.println("something didn't work");
+					}
+			//}
 
 			((DisplayPane) displayPane).appendConsole(round + "\t\t" + averageScore + "\t\t" + maxScore);
 		}
@@ -189,7 +226,7 @@ public class GamePane extends Pane {
 	/**
 	 * @param width This is the width of the Game pane
 	 * @param height This is the width of the Game pane
-	 * this method creates the two timelines for the two algorithms 
+	 * this method creates the two timelines for the two algorithms
 	 */
 	public GamePane(double width, double height)
 	{
@@ -218,12 +255,12 @@ public class GamePane extends Pane {
 
 		timeline.setCycleCount(Timeline.INDEFINITE);
 		timeline.getKeyFrames().add(KeyFrame1Content(Duration.millis(70)));
-		
+
 
 		//---------------------------- GAME IMPLEMENTATION 2 ------------------------------- //
 		timeline2.setCycleCount(Timeline.INDEFINITE);
 		timeline2.getKeyFrames().add(KeyFrame2Content(Duration.millis(70)));
-		
+
 		time = keyframe.getTime();
 
 	getChildren().addAll(gridpane);
@@ -235,19 +272,19 @@ public class GamePane extends Pane {
 	 * @param red
 	 * @param green
 	 * @param blue
-	 * this method gets called to set the color of the snake based on the algorothm 
+	 * this method gets called to set the color of the snake based on the algorothm
 	 */
 	public void colorOfSnake(double red, double green, double blue)
 	{
 		colorOfSnake = Color.color(red, green, blue);
 	}
-	
+
 	/**
 	 * @param x
 	 * @return  keyframe
-	 * this method creates a keyframe that correlates to the SnakeAI algorithm 
+	 * this method creates a keyframe that correlates to the SnakeAI algorithm
 	 * and it'll get added to the correlating timeline
-	 * This also calls the needed methods to get the snake starting 
+	 * This also calls the needed methods to get the snake starting
 	 */
 	public KeyFrame KeyFrame2Content(Duration x)
 	{
@@ -264,7 +301,7 @@ public class GamePane extends Pane {
 
 			//clears the display grid
 			ClearGrid();
-			
+
 			brainySnek.UpdateGrid();
 
 			//makes decision
@@ -275,13 +312,13 @@ public class GamePane extends Pane {
 
 			//makes a grid for brainySnake
 			UpdateGrid2();
-			
+
 			if(brainySnek.isDead())
 			{
 				iteration++;
 				brainySnek.reset();
 			}
-			
+
 			//adds to score if snake eats objective item
 		    ((DisplayPane) displayPane).setScore(brainySnek.getScore()+"");
 
@@ -289,20 +326,20 @@ public class GamePane extends Pane {
 		    ((DisplayPane) displayPane).setHighScore(brainySnek.getScore());
 
 		    ((DisplayPane) displayPane).setIteration(iteration+"");
-		    
+
 		    //---------------------------- AI Integration ------------------------------- //
 
 
 		});
-		
+
 		return keyframe2;
 	}
-	
-	
+
+
 	/**
 	 * @param x
 	 * @return keyframe
-	 * * this method creates a keyframe that correlates to the Deep Q Learning algorithm 
+	 * * this method creates a keyframe that correlates to the Deep Q Learning algorithm
 	 * and it'll get added to the correlating timeline
 	 * This also calls the needed methods to get the snake starting
 	 */
@@ -310,7 +347,7 @@ public class GamePane extends Pane {
 	{
 		KeyFrame keyframe = new KeyFrame(x, action ->
 		{
-			
+
 			try {
 				Thread.sleep(speed);
 			} catch (InterruptedException e) {
@@ -345,65 +382,66 @@ public class GamePane extends Pane {
 
 
 		});
-		
+
 		return keyframe;
 	}
-	
-	
+
+
 	/**
 	 * this method gets called when a button is clicked to slow down the speed of the snake
 	 */
 	public void slower()
 	{
 		Duration slower = new Duration(10);
-		
+
 		time = time.add(slower);
-		
+
 		KeyFrame tempKeyFrame = KeyFrame1Content(time);
-		KeyFrame tempKeyFrame2 = KeyFrame2Content(time);
-		
+		//KeyFrame tempKeyFrame2 = KeyFrame2Content(time);
+
 		timeline.getKeyFrames().add(tempKeyFrame);
 		timeline.stop();
 		timeline.getKeyFrames().remove(0);
 		timeline.play();
-		
-		
-		
+
+
+		/*
 		timeline2.getKeyFrames().add(tempKeyFrame2);
 		timeline2.stop();
 		timeline2.getKeyFrames().remove(0);
 		timeline2.play();
+		*/
 	}
-	
+
 	/**
 	 * this method gets called when a button is clicked to make the speed of the snake faster
 	 */
 	public void faster()
 	{
 		Duration faster = new Duration(5);
-		
+
 		time = time.subtract(faster);
-		
+
 		KeyFrame tempKeyFrame = KeyFrame1Content(time);
-		KeyFrame tempKeyFrame2 = KeyFrame2Content(time);
-		
+		//KeyFrame tempKeyFrame2 = KeyFrame2Content(time);
+
 		timeline.getKeyFrames().add(tempKeyFrame);
 		timeline.stop();
 		timeline.getKeyFrames().remove(0);
 		timeline.play();
-		
-		
-		
+
+
+		/*
 		timeline2.getKeyFrames().add(tempKeyFrame2);
 		timeline2.stop();
 		timeline2.getKeyFrames().remove(0);
 		timeline2.play();
-		
+		*/
 	}
 
 
 	/**
-	 * the grid is updated when the DQN algorithm is chosen setting the objective and snake color 
+	 * the grid is updated when the DQN algorithm is chosen setting the objective and snake color
 	 */
 	public void UpdateGrid()
 	{
@@ -420,7 +458,7 @@ public class GamePane extends Pane {
 	}
 
 	/**
-	 * the grid is updated when the Static algorithm is chosen setting the objective and snake color 
+	 * the grid is updated when the Static algorithm is chosen setting the objective and snake color
 	 */
 	public void UpdateGrid2()
 	{

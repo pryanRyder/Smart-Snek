@@ -38,7 +38,7 @@ public class ControlPane extends Pane {
 	/**
 	 * @param width This is the width of the Control pane
 	 * @param height This is the width of the Control pane
-	 * This method has all the buttons and their actions that call functions in the GamePane and AgentPane Classes, text fields 
+	 * This method has all the buttons and their actions that call functions in the GamePane and AgentPane Classes, text fields
 	 *  that can be shown in the GUI on the Control Pane
 	 */
 	public ControlPane(double width, double height)
@@ -77,28 +77,29 @@ public class ControlPane extends Pane {
 		txtgridSize.setLayoutY(gridSizePane.getPrefHeight()*0.15);
 		txtgridSize.setDisable(true);
 		gridSizePane.getChildren().add(txtgridSize);
-		
+
 		Text OpenExcel = new Text("Open CSV");
 		OpenExcel.setStyle("-fx-font-size: 15");
 		OpenExcel.setLayoutX(gridSizePane.getPrefWidth()*0.02);
 		OpenExcel.setLayoutY(gridSizePane.getPrefHeight()*0.40);
 
 		gridSizePane.getChildren().add(OpenExcel);
-		
-		
-		
+
+
+
+
+
 		Button openButton = new Button("Open");
 		openButton.setLayoutX(gridSizePane.getPrefWidth()*0.02);
 		openButton.setLayoutY(gridSizePane.getPrefHeight()*0.50);
-		
+
 		gridSizePane.getChildren().add(openButton);
-		
+
 		openButton.setOnAction( e->
 		{
-			((GamePane) gamePane).slower();
-			//gamePane.openExcelSpreadsheet();
+			((GamePane) gamePane).openExcelSpreadsheet();
 		});
-		
+
 		Button btCreateNew = new Button("Create Network");
 		Button btTrain = new Button("Train");
 		Button btUpload = new Button("Upload");
@@ -119,6 +120,27 @@ public class ControlPane extends Pane {
 		Button btPause = new Button("Pause");
 		Button btRestart = new Button("Restart");
 
+
+		Button btFaster = new Button(">>");
+		btFaster.setLayoutX(trainingPane.getPrefWidth()*.6);
+		btFaster.setLayoutY(trainingPane.getPrefHeight()*.3);
+		btFaster.setDisable(true);
+		trainingPane.getChildren().add(btFaster);
+
+		btFaster.setOnAction( e ->{
+			((GamePane)gamePane).faster();
+		});
+
+		Button btSlower = new Button("<<");
+		btSlower.setLayoutX(trainingPane.getPrefWidth()*.6);
+		btSlower.setLayoutY(trainingPane.getPrefHeight()*.6);
+		btSlower.setDisable(true);
+		trainingPane.getChildren().add(btSlower);
+
+		btSlower.setOnAction( e ->{
+			((GamePane)gamePane).slower();
+		});
+
 		btStartTraining.setDisable(true);
 
 		Text txtTrainingController = new Text("Training Controller");
@@ -135,6 +157,7 @@ public class ControlPane extends Pane {
 		btStop.setOnAction(e->
 		{
 			if(whichTimeline) {
+				((GamePane) gamePane).ClearGrid();
 				((GamePane) gamePane).Stop();
 				btPlay.setDisable(true);
 				btStartTraining.setDisable(false);
@@ -148,6 +171,8 @@ public class ControlPane extends Pane {
 			btRestart.setDisable(true);
 			btStop.setDisable(true);
 
+			btFaster.setDisable(true);
+			btSlower.setDisable(true);
 		});
 
 		btStartTraining.setLayoutX(trainingPane.getPrefWidth()*.02);
@@ -163,6 +188,9 @@ public class ControlPane extends Pane {
 			btPause.setDisable(false);
 			btRestart.setDisable(false);
 			btStop.setDisable(false);
+
+			btFaster.setDisable(false);
+			btSlower.setDisable(false);
 
 		});
 
@@ -184,6 +212,9 @@ public class ControlPane extends Pane {
 			btPlay.setDisable(true);
 			btPause.setDisable(false);
 			btRestart.setDisable(false);
+
+			btFaster.setDisable(false);
+			btSlower.setDisable(false);
 		});
 
 		btPause.setLayoutX(trainingPane.getPrefWidth()*.2);
@@ -205,6 +236,8 @@ public class ControlPane extends Pane {
 			btPause.setDisable(true);
 			btPlay.setDisable(false);
 			btRestart.setDisable(false);
+			btFaster.setDisable(true);
+			btSlower.setDisable(true);
 		});
 
 		btRestart.setLayoutX(trainingPane.getPrefWidth()*.4);
@@ -230,6 +263,7 @@ public class ControlPane extends Pane {
 				 }
 
 		});
+
 
 		AgentPane.setStyle("-fx-background-color: '#e0e0e0'");
 		AgentPane.setLayoutX(getPrefWidth()*0.02);
@@ -442,7 +476,15 @@ public class ControlPane extends Pane {
 
 			    @Override
 			    public void run() {
-						((GamePane) gamePane).trainSnek(Integer.parseInt(tfEpisodes.getText()));
+						try {
+							((GamePane) gamePane).trainSnek(Integer.parseInt(tfEpisodes.getText()));
+						} catch (NumberFormatException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						} catch (Exception e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
 
 
 						Platform.runLater(new Runnable() {
